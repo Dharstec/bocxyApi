@@ -58,9 +58,8 @@ module.exports = {
   },
   getOneProduct: async (req, res) => {
     try {
-      let getOneProduct = await productModel.findOne({productId:req.body._id});
-
-      if (!getOneProduct) {
+      let getOneProduct = await productModel.findOne({productId:req.params._id});
+      if (!getOneProduct) { 
         return res.status(400).send({
           message: "No Record Found",
           status: false,
