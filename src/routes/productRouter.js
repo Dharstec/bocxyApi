@@ -1,0 +1,40 @@
+const router = require("express").Router();
+
+const Product = require("../controllers/ProductControllers");
+
+/**
+ * @api {POST} /Product/createProduct
+ * @desc  Add Product API
+ * @access public
+ * **/
+router.post("/createProduct", Product.createProduct);
+/**
+ * @api {GET} /Product/getProduct
+ * @desc  Get Product API
+ * @access public
+ * **/
+router.get("/getProduct", Product.getProduct);
+
+/**
+ * @api {GET ONE Product} /Product/getOneProduct
+ * @desc  Get One Product API
+ * @access public
+ * **/
+router.get("/getOneProduct", Product.getOneProduct);
+
+/**
+ * @api {UPDATE} /Product/updateProduct
+ * @desc  Update Product API
+ * @access public
+ * **/
+
+router.put("/updateProduct", Product.updateProduct);
+
+/**
+ * @api {DELETE} /Product/deleteProduct
+ * @desc  Delete Product API
+ * @access public
+ * **/
+router.delete("/deleteProduct", Product.deleteProduct);
+
+module.exports = router;
