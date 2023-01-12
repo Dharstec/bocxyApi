@@ -3,18 +3,7 @@ const productModel = require("../models/productModels");
 module.exports = {
   createProduct: async (req, res) => {
     try {
-      let newproduct = new productModel({
-        productName: req.body.productName,
-        productImage: req.body.productImage,
-        discountPrice: req.body.discountPrice,
-        actualPrice: req.body.actualPrice,
-        description: req.body.description,
-        stock: req.body.stock,
-        category: req.body.category,
-        stone: req.body.stone,
-        colour: req.body.colour,
-        style: req.body.style,
-      });
+      let newproduct = new productModel(req.body)    
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
       console.log("createProduct", createProduct);
@@ -58,7 +47,7 @@ module.exports = {
   },
   getOneProduct: async (req, res) => {
     try {
-      let getOneProduct = await productModel.findOne({productId:req.params._id});
+      let getOneProduct = await productModel.findOne({productId:req.body.productId});
       if (!getOneProduct) { 
         return res.status(400).send({
           message: "No Record Found",
@@ -83,7 +72,7 @@ module.exports = {
     try {
       let updateProduct = await productModel.findOneAndUpdate(
         {
-          productId: req.body._id,
+          productId: req.body.productId,
         },
         {
           $set: req.body,
@@ -116,7 +105,7 @@ module.exports = {
     try {
       let deleteProduct = await productModel.findOneAndDelete(
         {
-          productId: req.body._id,
+          productId: req.body.productId,
         },
       );
 

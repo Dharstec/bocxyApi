@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
-
+const { v4: uuidv4 } = require("uuid");
 const productSchema = new mongoose.Schema(
     {
+        productId: {
+            type: String,
+            default: uuidv4
+        },
         productName: {
             type: String,
             required: true,
@@ -23,25 +27,56 @@ const productSchema = new mongoose.Schema(
             required: true
         },
         stock: {
-            type: String,
+            type: Number,
             required: true
         },
-        category: {
+        // category: [ "ring",]
+        category: [
+            {
+                type: String,
+                required: true
+            }
+        ],
+        stone: [
+            {
             type: String,
             required: true
-        },
-        stone: {
+        }
+    ],
+        colour: [
+            {
             type: String,
             required: true
-        },
-        colour: {
+        }
+    ],
+        style: [{
             type: String,
             required: true
-        },
-        style: {
+        }],
+        for: [{
             type: String,
             required: true
+        }],
+        
+        gift: {
+            type: Boolean,
+            required: true
         },
+        personalised: {
+            type: Boolean,
+            required: true
+        },
+        latest: {
+            type: Boolean,
+            required: true
+        },
+        collections:[
+            {
+                type:String,
+                required:true
+            }
+        ]
+       
     },
     { timestamps: true }
 );
