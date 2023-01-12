@@ -2,6 +2,12 @@ const router = require("express").Router();
 
 const Product = require("../controllers/ProductControllers");
 
+router.get('/', async (req,res,next)=>{
+return res.status(200).json({
+    title:"Express Testing",
+    message:"the app is working properl!!"
+})
+})
 /**
  * @api {POST} /Product/createProduct
  * @desc  Add Product API
