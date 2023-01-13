@@ -3,7 +3,7 @@ const productModel = require("../models/productModels");
 module.exports = {
   createProduct: async (req, res) => {
     try {
-      let newproduct = new productModel(req.body)    
+      let newproduct = new productModel(req.body)
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
       console.log("createProduct", createProduct);
@@ -47,8 +47,8 @@ module.exports = {
   },
   getOneProduct: async (req, res) => {
     try {
-      let getOneProduct = await productModel.findOne({productId:req.body.productId});
-      if (!getOneProduct) { 
+      let getOneProduct = await productModel.findOne({ productId: req.body.productId });
+      if (!getOneProduct) {
         return res.status(400).send({
           message: "No Record Found",
           status: false,
