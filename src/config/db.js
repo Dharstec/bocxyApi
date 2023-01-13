@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const db = "mongodb+srv://dharstec:dharstec123@cluster0.m03c45q.mongodb.net/product?retryWrites=true&w=majority"
+const db = "mongodb+srv://dharstec:dharstec123@cluster0.m03c45q.mongodb.net/ecommerce?retryWrites=true&w=majority"
 
 mongoose.connect(
     db,
