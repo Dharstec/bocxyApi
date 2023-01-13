@@ -10,4 +10,3 @@ app.use(bodyParser.json({ limit: "500mb" }));
 require("./baseRouter")(app);
 
 module.exports = app;
-//npm run start
