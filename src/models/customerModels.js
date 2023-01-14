@@ -26,10 +26,10 @@ const customerSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
         },
-        // orderHistory: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: 'Order',
-        // },
+        orderHistory: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Order',
+        },
 
     },
     { timestamps: true }

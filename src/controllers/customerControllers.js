@@ -23,7 +23,7 @@ module.exports = {
     },
     getAllCustomer: async (req, res) => {
         try {
-            let getCustomer = await customerModel.find({}).populate('wishlistProductDetails')
+            let getCustomer = await customerModel.find({}).populate('wishlistProductDetails').populate('orderHistory')
 
             if (!getCustomer) {
                 return res.status(400).send({
@@ -47,7 +47,8 @@ module.exports = {
     },
     getOneCustomer: async (req, res) => {
         try {
-            let getOneCustomer = await customerModel.findOne({ customerId: req.body.customerId });
+            let getOneCustomer = await customerModel.findOne({ customerId: req.body.customerId })
+            .populate('wishlistProductDetails').populate('orderHistory');
             if (!getOneCustomer) {
                 return res.status(400).send({
                     message: "No Record Found",

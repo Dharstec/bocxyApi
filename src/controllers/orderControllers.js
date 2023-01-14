@@ -1,3 +1,4 @@
+const { populate } = require("../models/orderModels");
 const orderModel = require("../models/orderModels");
 
 module.exports = {
@@ -23,8 +24,19 @@ module.exports = {
   },
   getAllOrder: (req, res) => {
     orderModel.find({})
-      .populate('customerDetails',)
-      .populate('productDetails')
+      .populate('orderedBy')
+     .populate({
+      path:'orders',
+      populate:[
+        {
+          path:'order1',
+          select:'productDetails'
+        }
+      ]
+     })
+      // .populate('orders.order1.productDetails')
+      // .populate({path:'orders.order1.productDetails'})
+      // .populate('order1')
       .exec((err, result) => {
         if (err) {
           console.log("err", err);
