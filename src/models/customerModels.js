@@ -22,10 +22,14 @@ const customerSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        orderHistory: {
+        wishlistProductDetails:{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Order',
+            ref: 'Product',
         },
+        // orderHistory: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'Order',
+        // },
 
     },
     { timestamps: true }
