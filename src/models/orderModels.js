@@ -42,30 +42,30 @@ const orderSchema = new mongoose.Schema(
                         },
                     },
 
-                    // order2:
-                    // {
-                    //     type: Array,
-                    //     productDetails: {
-                    //         type: mongoose.Schema.Types.ObjectId,
-                    //         ref: 'Product',
-                    //     },
-                    //     quantity: {
-                    //         type: Number,
-                    //         required: true
-                    //     },
-                    // },
-                    // order3:
-                    // {
-                    //     type: Array,
-                    //     productDetails: {
-                    //         type: mongoose.Schema.Types.ObjectId,
-                    //         ref: 'Product',
-                    //     },
-                    //     quantity: {
-                    //         type: Number,
-                    //         required: true
-                    //     },
-                    // },
+                    order2:
+                    {
+                        type: Array,
+                        productDetails: {
+                            type: mongoose.Schema.Types.ObjectId,
+                            ref: 'Product',
+                        },
+                        quantity: {
+                            type: Number,
+                            required: true
+                        },
+                    },
+                    order3:
+                    {
+                        type: Array,
+                        productDetails: {
+                            type: mongoose.Schema.Types.ObjectId,
+                            ref: 'Product',
+                        },
+                        quantity: {
+                            type: Number,
+                            required: true
+                        },
+                    },
                 }],
 
         orderStatus: [{
