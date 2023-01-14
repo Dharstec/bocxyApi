@@ -47,7 +47,7 @@ module.exports = {
     },
     getOneCustomer: async (req, res) => {
         try {
-            let getOneCustomer = await customerModel.findOne({ customerId: req.body.customerId })
+            let getOneCustomer = await customerModel.findOne({ customerId: req.body._id })
             .populate('wishlistProductDetails').populate('orderHistory');
             if (!getOneCustomer) {
                 return res.status(400).send({
@@ -73,7 +73,7 @@ module.exports = {
         try {
             let updateCustomer = await customerModel.findOneAndUpdate(
                 {
-                    customerId: req.body.customerId,
+                    customerId: req.body._id,
                 },
                 {
                     $set: req.body,
@@ -106,7 +106,7 @@ module.exports = {
         try {
             let deleteCustomer = await customerModel.findOneAndDelete(
                 {
-                    customerId: req.body.customerId,
+                    customerId: req.body._id,
                 },
             );
 

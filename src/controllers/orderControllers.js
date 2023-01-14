@@ -51,7 +51,7 @@ module.exports = {
 
   getOneOrder: async (req, res) => {
     try {
-      let getOneOrder = await orderModel.findOne({ orderId: req.body.orderId });
+      let getOneOrder = await orderModel.findOne({ orderId: req.body._id });
       if (!getOneOrder) {
         return res.status(400).send({
           message: "No Record Found",
@@ -76,7 +76,7 @@ module.exports = {
     try {
       let updateOrder = await orderModel.findOneAndUpdate(
         {
-          orderId: req.body.orderId,
+          orderId: req.body._id,
         },
         {
           $set: req.body,
@@ -110,7 +110,7 @@ module.exports = {
     try {
       let deleteOrder = await orderModel.findOneAndDelete(
         {
-          orderId: req.body.orderId,
+          orderId: req.body._id,
         },
       );
 
