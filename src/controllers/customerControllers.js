@@ -7,6 +7,7 @@ var fs = require('fs');
 const { template } = require('handlebars');
 const jwt = require("jsonwebtoken");
 const salt = bcrypt.genSaltSync(10);
+require("dotenv").config();
 module.exports = {
     createCustomer(req, res) {
         customerModel.find({ email: req.body.email })
@@ -315,8 +316,10 @@ function sendEmail(num, email, customerName) {
         port: 465,
 
         auth: {
-            user: 'kumari@dharstec.com',
-            pass: 'yyhqtosivbdgjmqv'
+            user:process.env.USEREMAIL,
+            pass:process.env.USERPASS
+            // user: 'kumari@dharstec.com',
+            // pass: 'yyhqtosivbdgjmqv'
         },
     });
     // smtpTransport = nodemailer.createTransport(smtpTransport({
@@ -337,7 +340,7 @@ function sendEmail(num, email, customerName) {
         };
         var htmlToSend = template(replacements);
         var mailOptions = {
-            from: 'kumari@dharstec.com',
+            from: process.env.USEREMAIL,
             to: email,
             subject: "Dharstec ✔",
             html: htmlToSend
