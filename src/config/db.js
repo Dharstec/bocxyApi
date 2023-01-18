@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-const db = "mongodb+srv://dharstec:dharstec123@cluster0.m03c45q.mongodb.net/ecommerce?retryWrites=true&w=majority"
+const db = process.env.MONGOBDURL
 
 mongoose.connect(
     db,
