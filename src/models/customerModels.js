@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const customerSchema = new mongoose.Schema(
     {
-        customerId: {
-            type: Number,
-            required: true
-        },
+        // customerId: {
+        //     type: Number,
+        //     required: true
+        // },
         customerName: {
             type: String,
             required: true,
@@ -14,13 +14,24 @@ const customerSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        emailId: {
+        email: {
             type: String,
             required: true
         },
         customerAddress: {
             type: String,
             required: true
+        },
+        password:{
+            type:String,
+            required:true
+        },
+        otp:{
+            type:String
+        },
+        isOtpVerified:{
+            type: String,
+            default: '0'
         },
         wishlistProductDetails:{
             type: mongoose.Schema.Types.ObjectId,
