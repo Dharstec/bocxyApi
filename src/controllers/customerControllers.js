@@ -315,8 +315,8 @@ function sendEmail(num, email, customerName) {
     };
 
     let transporter = nodemailer.createTransport({
-        // host: "smtp.gmail.com",
-        service: 'Gmail',
+        host: "smtp.gmail.com",
+        // service: 'Gmail',
         secure: true,
         port:587,
         // port: 465,
