@@ -320,13 +320,13 @@ function sendEmail(num, email, customerName) {
         secure: false,
         port:587,
         // port: 465,
-        tls: {
-            rejectUnauthorized: true
-         },
         auth: {
             user:process.env.USEREMAIL,
             pass:process.env.USERPASS
         },
+        tls: {
+            rejectUnauthorized: true
+         },
     });
     // var apiKey = defaultClient.authentications['api-key'];
     // apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
