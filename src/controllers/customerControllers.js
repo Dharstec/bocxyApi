@@ -315,10 +315,11 @@ function sendEmail(num, email, customerName) {
     };
 
     let transporter = nodemailer.createTransport({
-        host: "smtp-relay.sendinblue.com",
-        // service: 'gmail',
-        // secure: true,
-        port: 587,
+        // host: "smtp.gmail.com",
+        service: 'Gmail',
+        secure: true,
+        port:587,
+        // port: 465,
 
         auth: {
             user:process.env.USEREMAIL,
