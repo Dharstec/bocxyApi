@@ -7,7 +7,12 @@ var fs = require('fs');
 const { template } = require('handlebars');
 const jwt = require("jsonwebtoken");
 const salt = bcrypt.genSaltSync(10);
+// var SibApiV3Sdk = require('sib-api-v3-sdk');
+// var defaultClient = SibApiV3Sdk.ApiClient.instance;
+
 require("dotenv").config();
+
+
 module.exports = {
     createCustomer(req, res) {
         customerModel.find({ email: req.body.email })
@@ -17,7 +22,7 @@ module.exports = {
                 }
                 else {
                     if (reuslt.length > 0) {
-                        res.send("Allerdy Use These Email");
+                        res.send("Already Use These Email");
                     }
                     else {
                         let user = new customerModel(req.body)
@@ -310,27 +315,22 @@ function sendEmail(num, email, customerName) {
     };
 
     let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
+        host: "smtp-relay.sendinblue.com",
         // service: 'gmail',
-        secure: true,
-        port: 465,
+        // secure: true,
+        port: 587,
 
         auth: {
             user:process.env.USEREMAIL,
             pass:process.env.USERPASS
-            // user: 'kumari@dharstec.com',
-            // pass: 'yyhqtosivbdgjmqv'
         },
     });
-    // smtpTransport = nodemailer.createTransport(smtpTransport({
-    //     host: "smtp.gmail.com",
-    //     secure: true,
-    //     port: 465,
-    //     auth: {
-    //         user: 'kumari@dharstec.com',
-    //         pass: 'rmeutkgghwlojbui'
-    //     }
-    // }));
+    // var apiKey = defaultClient.authentications['api-key'];
+    // apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
+    // console.log("apiKey",apiKey);
+    // var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+    // var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+
     readHTMLFile(__dirname + '/views/layouts/first.html', function (err, html) {
         var template = handlebars.compile(html);
         var replacements = {
@@ -339,6 +339,17 @@ function sendEmail(num, email, customerName) {
 
         };
         var htmlToSend = template(replacements);
+        // sendSmtpEmail = {
+        //     from: process.env.USEREMAIL,
+        //     to: email,
+        //     subject: "Dharstec ✔",
+        //     html: htmlToSend
+        // };
+        // apiInstance.sendTransacEmail(sendSmtpEmail).then(function(data) {
+        //     console.log('API called successfully Email is send. Returned data: ' + data);
+        //   }, function(error) {
+        //     console.error(error);
+        //   });
         var mailOptions = {
             from: process.env.USEREMAIL,
             to: email,
@@ -354,3 +365,33 @@ function sendEmail(num, email, customerName) {
         });
     });
 }
+
+
+
+// var SibApiV3Sdk = require('sib-api-v3-sdk');
+// var defaultClient = SibApiV3Sdk.ApiClient.instance;
+
+// Configure API key authorization: api-key
+// var apiKey = defaultClient.authentications['api-key'];
+// apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
+
+// Uncomment below two lines to configure authorization using: partner-key
+// var partnerKey = defaultClient.authentications['partner-key'];
+// partnerKey.apiKey = 'YOUR API KEY';
+
+// var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+// var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail(); // SendSmtpEmail | Values to send a transactional email
+
+// sendSmtpEmail = {
+//     from: process.env.USEREMAIL,
+//     to: email,
+//     subject: "Dharstec ✔",
+//     html: htmlToSend
+// };
+
+// apiInstance.sendTransacEmail(sendSmtpEmail).then(function(data) {
+//   console.log('API called successfully. Returned data: ' + data);
+// }, function(error) {
+//   console.error(error);
+// });
