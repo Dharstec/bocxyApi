@@ -320,7 +320,9 @@ function sendEmail(num, email, customerName) {
         secure: false,
         port:587,
         // port: 465,
-
+        tls: {
+            rejectUnauthorized: true
+         },
         auth: {
             user:process.env.USEREMAIL,
             pass:process.env.USERPASS
