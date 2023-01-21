@@ -192,7 +192,7 @@ module.exports = {
     },
     getAllCustomer: async (req, res) => {
         try {
-            let getCustomer = await customerModel.find({}).populate('wishlistProductDetails').populate('orderHistory')
+            let getCustomer = await customerModel.find({}).populate('wishlistProductDetails').populate('orderHistory').populate('cartProductDetails');
 
             if (!getCustomer) {
                 return res.status(400).send({
