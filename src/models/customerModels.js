@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const customerSchema = new mongoose.Schema(
     {
-        // customerId: {
-        //     type: Number,
-        //     required: true
-        // },
+        
         customerName: {
             type: String,
             required: true,
@@ -22,33 +19,56 @@ const customerSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        password:{
-            type:String,
-            required:true
+        password: {
+            type: String,
+            required: true
         },
-        otp:{
-            type:String
+        otp: {
+            type: String
         },
-        isOtpVerified:{
+        isOtpVerified: {
             type: String,
             default: '0'
         },
-        wishlistProductDetails:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
+        wishlistProductIdDetails: [
+            {
+                type: String,
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product',
+            }
+        ],
+        cartProductDetails: {
+            type: Array,
+            productId: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product',
+            }],
+            quantity: [{
+                type: Number,
+            }],
         },
-        cartProductDetails:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
-        },
-        orderHistory: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Order',
-        },
+        orderHistory: [
+            {
+                type: String,
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Order',
+            }
+        ],
+        // wishlistProductDetails:{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'Product',
+        // },
+        // cartProductDetails:{
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'Product',
+        // },
+        // orderHistory: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'Order',
+        // },
 
     },
     { timestamps: true }
 );
 
 module.exports = mongoose.model("Customer", customerSchema);
-
