@@ -315,10 +315,11 @@ function sendEmail(num, email, customerName) {
     };
 
     let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        type:'SMTP',
         host: "smtp.gmail.com",
-        // service: 'Gmail',
-        secure: false,
-        port:587,
+        secure: true,
+        // port:587,
         // port: 465,
         auth: {
             user:process.env.USEREMAIL,
@@ -363,7 +364,7 @@ function sendEmail(num, email, customerName) {
             if (error) {
                 console.log(error);
             } else {
-                console.log("Email sent");
+                console.log("Email sent",response);
             }
         });
     });
@@ -398,3 +399,15 @@ function sendEmail(num, email, customerName) {
 // }, function(error) {
 //   console.error(error);
 // });
+
+
+// Download the helper library from https://www.twilio.com/docs/node/install
+// Set environment variables for your credentials
+// Read more at http://twil.io/secure
+// const accountSid = "ACe5fdb2752c9eb06f028263a1b2431d9c";
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const client = require("twilio")(accountSid, authToken);
+
+// client.messages
+//   .create({ body: "Hello from Twilio", from: "", to: "+919940537528" })
+//   .then(message => console.log(message.sid));
