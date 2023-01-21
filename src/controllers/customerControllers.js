@@ -315,19 +315,17 @@ function sendEmail(num, email, customerName) {
     };
 
     let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        type:'SMTP',
         host: "smtp.gmail.com",
         secure: true,
         // port:587,
-        // port: 465,
+        port: 465,
         auth: {
             user:process.env.USEREMAIL,
             pass:process.env.USERPASS
         },
-        tls: {
-            rejectUnauthorized: true
-         },
+        // tls: {
+        //     rejectUnauthorized: true
+        //  },
     });
     // var apiKey = defaultClient.authentications['api-key'];
     // apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
