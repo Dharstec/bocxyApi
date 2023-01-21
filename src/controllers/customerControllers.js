@@ -302,6 +302,7 @@ module.exports = {
 }
 
 function sendEmail(num, email, customerName) {
+    console.log("Send email checking");
     var readHTMLFile = function (path, callback) {
         fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
             if (err) {
@@ -311,6 +312,7 @@ function sendEmail(num, email, customerName) {
             else {
                 callback(null, html);
             }
+            console.log("Send email checking readFile");
         });
     };
 
