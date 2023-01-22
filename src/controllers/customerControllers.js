@@ -302,9 +302,10 @@ module.exports = {
 }
 
 
-try {
+// try {
     function sendEmail(num, email, customerName) {
-        console.log("Send email checking");
+        try {
+            console.log("Send email checking");
         var readHTMLFile = function (path, callback) {
             fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
                 if (err) {
@@ -370,10 +371,14 @@ try {
                 }
             });
         });
+        } catch (error) {
+            console.log('errrrrrrr 1st',error);
+        }
+        
     }
-} catch (error) {
-    console.log('errrrr',error)
-}
+// } catch (error) {
+//     console.log('errrrr',error)
+// }
 
 
 
