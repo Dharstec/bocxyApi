@@ -302,7 +302,7 @@ module.exports = {
 }
 
 
-// try {
+try {
     function sendEmail(num, email, customerName) {
         // try {
             console.log("Send email checking");
@@ -368,9 +368,9 @@ module.exports = {
         // }
         
     }
-// } catch (error) {
-//     console.log('errrrr',error)
-// }
+} catch (error) {
+    console.log('errrrr',error)
+}
 
 
 
