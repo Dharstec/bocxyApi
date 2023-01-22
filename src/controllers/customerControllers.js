@@ -320,10 +320,11 @@ try {
         };
     
         let transporter = nodemailer.createTransport({
-            host: process.env.host,
-            secure: false,
-            port:587,
-            // port: 465,
+            service:process.env.service,
+            // host: process.env.host,
+            secure: true,
+            // port:587,
+            port: 465,
             auth: {
                 user:process.env.USEREMAIL,
                 pass:process.env.USERPASS
