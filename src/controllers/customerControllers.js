@@ -321,7 +321,7 @@ try {
     
         let transporter = nodemailer.createTransport({
             service:process.env.service,
-            host: process.env.host,
+            // host: process.env.host,
             secure: true,
             // port:587,
             port: 465,
