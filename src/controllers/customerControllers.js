@@ -320,7 +320,7 @@ try {
         };
     
         let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
+            host: process.env.host,
             secure: false,
             port:587,
             // port: 465,
