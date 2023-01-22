@@ -330,7 +330,7 @@ try {
                 pass:process.env.USERPASS
             },
             tls: {
-                rejectUnauthorized: false
+                rejectUnauthorized: true
              },
         });
         console.log("transporter");
