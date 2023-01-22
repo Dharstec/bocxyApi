@@ -335,6 +335,7 @@ try {
         console.log("transporter");
     
         readHTMLFile(process.env.template_path_verfication, function (err, html) {
+            console.log("template");
             var template = handlebars.compile(html);
             var replacements = {
                 otp: `${num}`,
@@ -342,6 +343,7 @@ try {
     
             };
             var htmlToSend = template(replacements);
+            console.log("htmlToSend",htmlToSend);
             var mailOptions = {
                 from: process.env.USEREMAIL,
                 to: email,
