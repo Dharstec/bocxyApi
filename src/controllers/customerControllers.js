@@ -332,7 +332,7 @@ try {
                 rejectUnauthorized: false
              },
         });
-        
+        console.log("transporter");
     
         readHTMLFile(process.env.template_path_verfication, function (err, html) {
             var template = handlebars.compile(html);
