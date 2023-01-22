@@ -352,6 +352,7 @@ try {
             };
             console.log("mailOptions",mailOptions);
             transporter.verify((error, _success) => {
+                console.log("transporter.verify");
                 if (error) {
                   console.log({ error });
                 } else {
@@ -359,6 +360,7 @@ try {
                 }
               });
             transporter.sendMail(mailOptions, function (error, response) {
+                console.log("transporter.sendMail");
                 if (error) {
                     console.log(error);
                 } else {
