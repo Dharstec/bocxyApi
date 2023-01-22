@@ -301,74 +301,80 @@ module.exports = {
     }
 }
 
-function sendEmail(num, email, customerName) {
-    console.log("Send email checking");
-    var readHTMLFile = function (path, callback) {
-        fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
-            if (err) {
-                throw err;
-                callback(err);
-            }
-            else {
-                callback(null, html);
-            }
-            console.log("Send email checking readFile");
-        });
-    };
 
-    let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        secure: true,
-        // port:587,
-        port: 465,
-        auth: {
-            user:process.env.USEREMAIL,
-            pass:process.env.USERPASS
-        },
-        // tls: {
-        //     rejectUnauthorized: true
-        //  },
-    });
-    // var apiKey = defaultClient.authentications['api-key'];
-    // apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
-    // console.log("apiKey",apiKey);
-    // var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-    // var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-
-    readHTMLFile(__dirname + '/views/layouts/first.html', function (err, html) {
-        var template = handlebars.compile(html);
-        var replacements = {
-            otp: `${num}`,
-            customerName: `${customerName}`
-
+try {
+    function sendEmail(num, email, customerName) {
+        console.log("Send email checking");
+        var readHTMLFile = function (path, callback) {
+            fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
+                if (err) {
+                    throw err;
+                    callback(err);
+                }
+                else {
+                    callback(null, html);
+                }
+                console.log("Send email checking readFile");
+            });
         };
-        var htmlToSend = template(replacements);
-        // sendSmtpEmail = {
-        //     from: process.env.USEREMAIL,
-        //     to: email,
-        //     subject: "Dharstec ✔",
-        //     html: htmlToSend
-        // };
-        // apiInstance.sendTransacEmail(sendSmtpEmail).then(function(data) {
-        //     console.log('API called successfully Email is send. Returned data: ' + data);
-        //   }, function(error) {
-        //     console.error(error);
-        //   });
-        var mailOptions = {
-            from: process.env.USEREMAIL,
-            to: email,
-            subject: "Dharstec ✔",
-            html: htmlToSend
-        };
-        transporter.sendMail(mailOptions, function (error, response) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log("Email sent",response);
-            }
+    
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            secure: true,
+            // port:587,
+            port: 465,
+            auth: {
+                user:process.env.USEREMAIL,
+                pass:process.env.USERPASS
+            },
+            // tls: {
+            //     rejectUnauthorized: true
+            //  },
         });
-    });
+        // var apiKey = defaultClient.authentications['api-key'];
+        // apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
+        // console.log("apiKey",apiKey);
+        // var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+        // var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+    
+        readHTMLFile(__dirname + '/views/layouts/first.html', function (err, html) {
+            var template = handlebars.compile(html);
+            var replacements = {
+                otp: `${num}`,
+                customerName: `${customerName}`
+    
+            };
+            var htmlToSend = template(replacements);
+            // sendSmtpEmail = {
+            //     from: process.env.USEREMAIL,
+            //     to: email,
+            //     subject: "Dharstec ✔",
+            //     html: htmlToSend
+            // };
+            // apiInstance.sendTransacEmail(sendSmtpEmail).then(function(data) {
+            //     console.log('API called successfully Email is send. Returned data: ' + data);
+            //   }, function(error) {
+            //     console.error(error);
+            //   });
+            var mailOptions = {
+                from: process.env.USEREMAIL,
+                to: email,
+                subject: "Dharstec ✔",
+                html: htmlToSend
+            };
+            transporter.sendMail(mailOptions, function (error, response) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log("Email sent",response);
+                }
+            });
+        });
+    }
+} catch (error) {
+    console.log('errrrr',error)
 }
+
 
 
 
