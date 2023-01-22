@@ -304,8 +304,6 @@ module.exports = {
 
 try {
     function sendEmail(num, email, customerName) {
-        // try {
-            console.log("Send email checking");
         var readHTMLFile = function (path, callback) {
             fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
                 if (err) {
@@ -315,7 +313,6 @@ try {
                 else {
                     callback(null, html);
                 }
-                console.log("Send email checking readFile");
             });
         };
     
@@ -332,10 +329,8 @@ try {
                 rejectUnauthorized: false
              },
         });
-        console.log("transporter");
     
         readHTMLFile(process.env.template_path_verfication, function (err, html) {
-            console.log("template");
             var template = handlebars.compile(html);
             var replacements = {
                 otp: `${num}`,
@@ -343,16 +338,13 @@ try {
     
             };
             var htmlToSend = template(replacements);
-            console.log("htmlToSend",htmlToSend);
             var mailOptions = {
                 from: process.env.USEREMAIL,
                 to: email,
                 subject: "Dharstec ✔",
                 html: htmlToSend
             };
-            console.log("mailOptions",mailOptions);
             transporter.verify((error, _success) => {
-                console.log("transporter.verify");
                 if (error) {
                   console.log({ error });
                 } else {
@@ -360,7 +352,6 @@ try {
                 }
               });
             transporter.sendMail(mailOptions, function (error, response) {
-                console.log("transporter.sendMail");
                 if (error) {
                     console.log(error);
                 } else {
@@ -368,10 +359,6 @@ try {
                 }
             });
         });
-        // } catch (error) {
-        //     console.log('errrrrrrr 1st',error);
-        // }
-        
     }
 } catch (error) {
     console.log('errrrr',error)
