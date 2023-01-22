@@ -350,6 +350,7 @@ try {
                 subject: "Dharstec ✔",
                 html: htmlToSend
             };
+            console.log("mailOptions",mailOptions);
             transporter.verify((error, _success) => {
                 if (error) {
                   console.log({ error });
