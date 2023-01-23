@@ -37,16 +37,15 @@ const customerSchema = new mongoose.Schema(
                 ref: 'Product',
             }
         ],
-        cartProductDetails: {
-            type: Array,
-            productId: [{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Product',
-            }],
-            quantity: [{
-                type: Number,
-            }],
-        },
+        cartProductDetails: [{
+          productId:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Product',  
+          },
+             quantity: {
+                 type: Number,
+            },
+        }],
         orderHistory: [
             {
                 type: String,

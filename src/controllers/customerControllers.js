@@ -217,7 +217,7 @@ module.exports = {
     getOneCustomer: async (req, res) => {
         try {
             let getOneCustomer = await customerModel.findOne({ _id: req.body._id })
-                .populate('wishlistProductIdDetails').populate('orderHistory').populate('cartProductDetails')
+                .populate('wishlistProductIdDetails').populate('orderHistory').populate('cartProductDetails.productId')
             if (!getOneCustomer) {
                 return res.status(400).send({
                     message: "No Record Found",
