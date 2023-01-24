@@ -157,10 +157,12 @@ module.exports = {
             return res.send({
                 message: "reset your password",
                 status: 1,
-                data: {
-                    _id: findUser._id
-                }
+                data:findUser
+                // data: {
+                //     _id: findUser._id
+                // }
             })
+            
         } catch (error) {
             console.log('forgetuserpassword', error);
             return error
@@ -173,7 +175,7 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(req.body.password, salt)
             req.body.password = hashedPassword
 
-            let resetpassword = await customerModel.findOneAndUpdate({ _id: req.body._id },
+            let resetpassword = await customerModel.findOneAndUpdate({ email:req.body.email},
                 { $set: { password: req.body.password } }, { new: true })
             if (!resetpassword) {
                 return message = "please enter a customer details"
@@ -216,7 +218,7 @@ module.exports = {
     },
     getOneCustomer: async (req, res) => {
         try {
-            let getOneCustomer = await customerModel.findOne({ _id: req.body._id })
+            let getOneCustomer = await customerModel.findOne({email:req.body.email})
                 .populate('wishlistProductIdDetails').populate('orderHistory').populate('cartProductDetails.productId')
             if (!getOneCustomer) {
                 return res.status(400).send({
@@ -242,7 +244,8 @@ module.exports = {
         try {
             let updateCustomer = await customerModel.findOneAndUpdate(
                 {
-                    _id: req.body._id,
+                    email:req.body.email
+                    // _id: req.body._id,
                 },
                 {
                     $set: req.body,
@@ -275,7 +278,8 @@ module.exports = {
         try {
             let deleteCustomer = await customerModel.findOneAndDelete(
                 {
-                    _id: req.body._id
+                    email:req.body.email
+                    // _id: req.body._id
                 },
             );
 

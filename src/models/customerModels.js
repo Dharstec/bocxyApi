@@ -3,7 +3,15 @@ const { v4: uuidv4 } = require("uuid");
 const customerSchema = new mongoose.Schema(
     {
         
-        customerName: {
+        firstName: {
+            type: String,
+            required: true,
+        },
+        lastName: {
+            type: String,
+            required: true,
+        },
+        gender:{
             type: String,
             required: true,
         },
@@ -17,11 +25,16 @@ const customerSchema = new mongoose.Schema(
         },
         customerAddress: {
             type: String,
-            required: true
+            // required: true
         },
         password: {
             type: String,
             required: true
+        },
+        dateOfBirth:{
+            type: Date,
+            required: true,
+            trim: true,
         },
         otp: {
             type: String
