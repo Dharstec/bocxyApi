@@ -1,4 +1,3 @@
-const { populate } = require("../models/orderModels");
 const orderModel = require("../models/orderModels");
 
 module.exports = {

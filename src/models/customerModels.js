@@ -32,7 +32,7 @@ const customerSchema = new mongoose.Schema(
             required: true
         },
         dateOfBirth:{
-            type: Date,
+            type: String,
             required: true,
             trim: true,
         },
@@ -84,3 +84,4 @@ const customerSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Customer", customerSchema);
+
