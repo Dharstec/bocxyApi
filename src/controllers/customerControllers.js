@@ -58,7 +58,7 @@ module.exports = {
                                                         }
                                                         else {
                                                             console.log("OTP As Update");
-                                                            sendEmail(num, req.body.email, req.body.customerName)
+                                                            sendEmail(num, req.body.email, req.body.firstName)
                                                             return res.send({
                                                                 message: "Customer Created Successfully",
                                                                 status: 1,
@@ -307,7 +307,7 @@ module.exports = {
 
 
 try {
-    function sendEmail(num, email, customerName) {
+    function sendEmail(num, email, firstName) {
         var readHTMLFile = function (path, callback) {
             fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
                 if (err) {
@@ -338,7 +338,7 @@ try {
             var template = handlebars.compile(html);
             var replacements = {
                 otp: `${num}`,
-                customerName: `${customerName}`
+                firstName: `${firstName}`
     
             };
             var htmlToSend = template(replacements);
