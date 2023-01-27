@@ -52,7 +52,7 @@ module.exports = {
                                                 console.log("The OTP As Sended");
 
                                                 customerModel.updateMany({ email: req.body.email },
-                                                    { otp: num }, { customerName: req.body.customerName }, (err, result) => {
+                                                    { otp: num },{firstName:req.body.firstName}, (err, result) => {
                                                         if (err) {
                                                             console.log("Error", err);
                                                         }
@@ -89,7 +89,7 @@ module.exports = {
             return res.send({
                 message: "OTP verifed successfully",
                 status: 1,
-                data: findUser
+                // data: findUser
             })
         } catch (error) {
             console.log("please enter all the mandatory fields otpverify errors", error);
@@ -151,16 +151,14 @@ module.exports = {
             var num
             num = Math.floor((Math.random() * 1000000));
 
-            findUser = await customerModel.findOneAndUpdate({ _id: findUser._id },
+            findUser = await customerModel.findOneAndUpdate({email: req.body.email },
                 { $set: { otp: num, isOtpVerified: '0' } }, { new: true });
-            sendEmail(num, req.body.email,req.body.firstName)
+            sendEmail(num, req.body.email, findUser.firstName )
             return res.send({
                 message: "reset your password",
                 status: 1,
-                data:findUser
-                // data: {
-                //     _id: findUser._id
-                // }
+                // data:findUser
+                // data: forgetPassword
             })
             
         } catch (error) {
