@@ -52,7 +52,7 @@ module.exports = {
                                                 console.log("The OTP As Sended");
 
                                                 customerModel.updateMany({ email: req.body.email },
-                                                    { otp: num },{firstName:req.body.firstName}, (err, result) => {
+                                                    { otp: num }, { firstName: req.body.firstName }, (err, result) => {
                                                         if (err) {
                                                             console.log("Error", err);
                                                         }
@@ -151,16 +151,16 @@ module.exports = {
             var num
             num = Math.floor((Math.random() * 1000000));
 
-            findUser = await customerModel.findOneAndUpdate({email: req.body.email },
+            findUser = await customerModel.findOneAndUpdate({ email: req.body.email },
                 { $set: { otp: num, isOtpVerified: '0' } }, { new: true });
-            sendEmail(num, req.body.email, findUser.firstName )
+            sendEmail(num, req.body.email, findUser.firstName)
             return res.send({
                 message: "reset your password",
                 status: 1,
                 // data:findUser
                 // data: forgetPassword
             })
-            
+
         } catch (error) {
             console.log('forgetuserpassword', error);
             return error
@@ -173,7 +173,7 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(req.body.password, salt)
             req.body.password = hashedPassword
 
-            let resetpassword = await customerModel.findOneAndUpdate({ email:req.body.email},
+            let resetpassword = await customerModel.findOneAndUpdate({ email: req.body.email },
                 { $set: { password: req.body.password } }, { new: true })
             if (!resetpassword) {
                 return message = "please enter a customer details"
@@ -216,7 +216,7 @@ module.exports = {
     },
     getOneCustomer: async (req, res) => {
         try {
-            let getOneCustomer = await customerModel.findOne({email:req.body.email})
+            let getOneCustomer = await customerModel.findOne({ email: req.body.email })
                 .populate('wishlistProductIdDetails').populate('orderHistory').populate('cartProductDetails.productId')
             if (!getOneCustomer) {
                 return res.status(400).send({
@@ -242,7 +242,7 @@ module.exports = {
         try {
             let updateCustomer = await customerModel.findOneAndUpdate(
                 {
-                    email:req.body.email
+                    email: req.body.email
                     // _id: req.body._id,
                 },
                 {
@@ -276,7 +276,7 @@ module.exports = {
         try {
             let deleteCustomer = await customerModel.findOneAndDelete(
                 {
-                    email:req.body.email
+                    email: req.body.email
                     // _id: req.body._id
                 },
             );
@@ -300,8 +300,60 @@ module.exports = {
                 error: error,
             });
         }
-    }
+    },
+
+    resendOtp: async (req, res) => {
+        try {
+            var num;
+            num = Math.floor(100000 + Math.random() * 900000);
+            let resendOtp = await customerModel.findOneAndUpdate({
+                email: req.body.email
+            },
+                { $set: { otp: num, isOtpVerified: "0" } }, { new: true })
+            sendEmail(num, req.body.email, resendOtp.firstName)
+            return res.send({
+                message: 'Resend OTP to Customer',
+                status: true,
+                // data: resendOtp
+            })
+
+        } catch (error) {
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error
+            })
+        }
+    },
+
+    // resendOtp: async (req, res) => {
+    //     try {
+    //       var num;
+    //       num = Math.floor(100000 + Math.random() * 900000);
+
+    //       let resendOtp = await customerModel.findOneAndUpdate(
+    //         {
+    //           email: req.body.email,
+    //         },
+    //         { $set: { otp: num, isOtpVerified: "0" } },
+    //         { new: true }
+    //       );
+
+    //       sendEmail(num, req.body.email, resendOtp.firstName);
+
+    //       return res.send({
+    //         message: "Resend OTP For Customer",
+    //         status: true,
+    //         data: resendOtp,
+    //       });
+    //     } catch (error) {
+    //       return res
+    //         .status(400)
+    //         .send({ message: "Something Went Wrong", status: false });
+    //     }
+    //   },
 }
+
 
 
 try {
@@ -317,27 +369,27 @@ try {
                 }
             });
         };
-    
+
         let transporter = nodemailer.createTransport({
             host: process.env.host,
             secure: false,
-            port:587,
+            port: 587,
             // port: 465,
             auth: {
-                user:process.env.USEREMAIL,
-                pass:process.env.USERPASS
+                user: process.env.USEREMAIL,
+                pass: process.env.USERPASS
             },
             tls: {
                 rejectUnauthorized: false
-             },
+            },
         });
-    
+
         readHTMLFile(process.env.template_path_verfication, function (err, html) {
             var template = handlebars.compile(html);
             var replacements = {
                 otp: `${num}`,
                 firstName: `${firstName}`
-    
+
             };
             var htmlToSend = template(replacements);
             var mailOptions = {
@@ -348,22 +400,22 @@ try {
             };
             transporter.verify((error, _success) => {
                 if (error) {
-                  console.log({ error });
+                    console.log({ error });
                 } else {
-                  console.log("Server is ready to take our messages");
+                    console.log("Server is ready to take our messages");
                 }
-              });
+            });
             transporter.sendMail(mailOptions, function (error, response) {
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log("Email sent",response);
+                    console.log("Email sent", response);
                 }
             });
         });
     }
 } catch (error) {
-    console.log('errrrr',error)
+    console.log('errrrr', error)
 }
 
 

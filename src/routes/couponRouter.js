@@ -11,7 +11,7 @@ router.get('/',async(req,res,next)=>{
 
 
 /**
- * @api {POST} /Coupon/createOrder
+ * @api {POST} /Coupon/createCoupon
  * @desc  Add Coupon API
  * @access public
  * **/

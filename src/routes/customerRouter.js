@@ -70,4 +70,11 @@ router.put("/updateCustomer", Customer.updateCustomer);
  * **/
 router.delete("/deleteCustomer", Customer.deleteCustomer);
 
+/**
+ * @api {POST} /Customer/resendOtp
+ * @desc  Resend OTP API To Customer
+ * @access public
+ * **/
+router.post("/resendOtp", Customer.resendOtp);
+
 module.exports = router;
