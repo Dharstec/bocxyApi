@@ -22,7 +22,9 @@ module.exports = {
                 }
                 else {
                     if (reuslt.length > 0) {
-                        res.send("Already Use These Email");
+                        res.send({
+                            message: "Already Use These Email",
+                        })
                     }
                     else {
                         let user = new customerModel(req.body)
