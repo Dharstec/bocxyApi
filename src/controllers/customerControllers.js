@@ -153,7 +153,7 @@ module.exports = {
 
             findUser = await customerModel.findOneAndUpdate({ _id: findUser._id },
                 { $set: { otp: num, isOtpVerified: '0' } }, { new: true });
-            sendEmail(num, req.body.email)
+            sendEmail(num, req.body.email,req.body.firstName)
             return res.send({
                 message: "reset your password",
                 status: 1,
