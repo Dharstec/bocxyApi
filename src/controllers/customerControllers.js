@@ -325,33 +325,6 @@ module.exports = {
             })
         }
     },
-
-    // resendOtp: async (req, res) => {
-    //     try {
-    //       var num;
-    //       num = Math.floor(100000 + Math.random() * 900000);
-
-    //       let resendOtp = await customerModel.findOneAndUpdate(
-    //         {
-    //           email: req.body.email,
-    //         },
-    //         { $set: { otp: num, isOtpVerified: "0" } },
-    //         { new: true }
-    //       );
-
-    //       sendEmail(num, req.body.email, resendOtp.firstName);
-
-    //       return res.send({
-    //         message: "Resend OTP For Customer",
-    //         status: true,
-    //         data: resendOtp,
-    //       });
-    //     } catch (error) {
-    //       return res
-    //         .status(400)
-    //         .send({ message: "Something Went Wrong", status: false });
-    //     }
-    //   },
 }
 
 
