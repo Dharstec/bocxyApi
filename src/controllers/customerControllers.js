@@ -24,6 +24,7 @@ module.exports = {
                     if (reuslt.length > 0) {
                         res.send({
                             message: "Already Use These Email",
+                            status: false,
                         })
                     }
                     else {
