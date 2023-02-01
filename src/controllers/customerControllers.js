@@ -86,7 +86,9 @@ module.exports = {
                 otp: req.params.otp
             },
                 { $set: { isOtpVerified: "1" } }, { new: true })
+                
             if (!findUser) {
+                console.log("please enter valid OTP");
                 return res.send({
                     message:"please enter a valid OTP",
                     status:false
