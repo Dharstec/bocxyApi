@@ -87,13 +87,19 @@ module.exports = {
             },
                 { $set: { isOtpVerified: "1" } }, { new: true })
             if (!findUser) {
-                return message = "please enter a valid OTP"
+                return res.send({
+                    message:"please enter a valid OTP",
+                    status:false
+                }) 
             }
-            return res.send({
-                message: "OTP verifed successfully",
-                status: 1,
-                // data: findUser
-            })
+            else{
+                return res.send({
+                    message: "OTP verifed successfully",
+                    status: 1,
+                    // data: findUser
+                }) 
+            }
+            
         } catch (error) {
             console.log("please enter all the mandatory fields otpverify errors", error);
             return error
@@ -126,6 +132,11 @@ module.exports = {
                             message: "Wrong password!",
                         });
                     else
+                    // return res.send({
+                    //     message:"Login Successfully",
+                    //     status: 1,
+                    //     data: user.wishlistProductIdDetails
+                    // })
                         return res.status(200).send({
                             status: true,
                             token: jwt.sign(
@@ -135,6 +146,7 @@ module.exports = {
                             ),
                             data: user,
                         });
+                        
                 });
             });
         } catch (error) {
