@@ -53,7 +53,7 @@ router.get("/getAllCustomer", Customer.getAllCustomer);
  * @desc  Get One Customer API
  * @access public
  * **/
-router.get("/getOneCustomer", Customer.getOneCustomer);
+router.post("/getOneCustomer", Customer.getOneCustomer);
 
 /**
  * @api {UPDATE} /Customer/updateCustomer
