@@ -2,10 +2,13 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const productSchema = new mongoose.Schema(
     {
-        productId: {
-          type: Number,
-          required:true
-        },
+        // productId:{ 
+        //     type:String,
+        //     required: true,
+        //     default: uuidv4,
+        // },
+        //   type: Number,
+        //   required:true
         productName: {
             type: String,
             required: true,
@@ -39,16 +42,16 @@ const productSchema = new mongoose.Schema(
         ],
         stone: [
             {
-            type: String,
-            required: true
-        }
-    ],
+                type: String,
+                required: true
+            }
+        ],
         colour: [
             {
-            type: String,
-            required: true
-        }
-    ],
+                type: String,
+                required: true
+            }
+        ],
         style: [{
             type: String,
             required: true
@@ -57,7 +60,7 @@ const productSchema = new mongoose.Schema(
             type: String,
             required: true
         }],
-        
+
         gift: {
             type: Boolean,
             required: true
@@ -70,13 +73,22 @@ const productSchema = new mongoose.Schema(
             type: Boolean,
             required: true
         },
-        collections:[
+        collections: [
             {
-                type:String,
-                required:true
+                type: String,
+                required: true
             }
-        ]
-       
+        ],
+        viewedBy: {
+            customerId: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Customer',
+            }],
+        },
+        noOfViews: Number,
+        noOfSales: Number,
+        productAge: String
+
     },
     { timestamps: true }
 );

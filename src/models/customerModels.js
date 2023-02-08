@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const customerSchema = new mongoose.Schema(
     {
-        
+
         firstName: {
             type: String,
             required: true,
@@ -11,7 +11,7 @@ const customerSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        gender:{
+        gender: {
             type: String,
             required: true,
         },
@@ -31,7 +31,7 @@ const customerSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        dateOfBirth:{
+        dateOfBirth: {
             type: String,
             required: true,
             trim: true,
@@ -51,12 +51,12 @@ const customerSchema = new mongoose.Schema(
             }
         ],
         cartProductDetails: [{
-          productId:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',  
-          },
-             quantity: {
-                 type: Number,
+            productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product',
+            },
+            quantity: {
+                type: Number,
             },
         }],
         orderHistory: [
@@ -66,6 +66,45 @@ const customerSchema = new mongoose.Schema(
                 ref: 'Order',
             }
         ],
+
+        productsViewed: {
+            productId: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Product',
+            }],
+        },
+        Address: {
+            type: Array,
+            currentAddress: {
+                doorNo: String,
+                street: String,
+                city: String,
+                state: String,
+                pincode: Number,
+                landmark: String,
+                country: String
+            },
+            permanentAddress: {
+                doorNo: String,
+                street: String,
+                city: String,
+                state: String,
+                pincode: Number,
+                landmark: String,
+                country: String
+
+            },
+            otherAddress: {
+                doorNo: String,
+                street: String,
+                city: String,
+                state: String,
+                pincode: Number,
+                landmark: String,
+                country: String
+            }
+
+        }
         // wishlistProductDetails:{
         //     type: mongoose.Schema.Types.ObjectId,
         //     ref: 'Product',
@@ -84,4 +123,3 @@ const customerSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Customer", customerSchema);
-

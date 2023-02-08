@@ -47,7 +47,7 @@ module.exports = {
   },
   getOneProduct: async (req, res) => {
     try {
-      let getOneProduct = await productModel.findOne({ productId: req.body.productId });
+      let getOneProduct = await productModel.findOne({ _id: req.body._id });
       if (!getOneProduct) {
         return res.status(400).send({
           message: "No Record Found",
@@ -72,7 +72,7 @@ module.exports = {
     try {
       let updateProduct = await productModel.findOneAndUpdate(
         {
-          productId: req.body.productId,
+          _id: req.body._id,
         },
         {
           $set: req.body,
@@ -105,7 +105,7 @@ module.exports = {
     try {
       let deleteProduct = await productModel.findOneAndDelete(
         {
-          productId: req.body.productId,
+          _id: req.body._id 
         },
       );
 
