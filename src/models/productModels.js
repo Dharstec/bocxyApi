@@ -11,72 +11,72 @@ const productSchema = new mongoose.Schema(
         //   required:true
         productName: {
             type: String,
-            required: true,
+            // required: true,
         },
         productImage: {
             type: String,
-            required: true,
+            // required: true,
         },
         discountPrice: {
             type: Number,
-            required: true
+            // required: true
         },
         actualPrice: {
             type: Number,
-            required: true
+            // required: true
         },
         description: {
             type: String,
-            required: true
+            // required: true
         },
         stock: {
             type: Number,
-            required: true
+            // required: true
         },
         // category: [ "ring",]
         category: [
             {
                 type: String,
-                required: true
+                // required: true
             }
         ],
         stone: [
             {
                 type: String,
-                required: true
+                // required: true
             }
         ],
         colour: [
             {
                 type: String,
-                required: true
+                // required: true
             }
         ],
         style: [{
             type: String,
-            required: true
+            // required: true
         }],
         for: [{
             type: String,
-            required: true
+            // required: true
         }],
 
         gift: {
             type: Boolean,
-            required: true
+            // required: true
         },
         personalised: {
             type: Boolean,
-            required: true
+            // required: true
         },
         latest: {
             type: Boolean,
-            required: true
+            // required: true
         },
         collections: [
             {
                 type: String,
-                required: true
+                // required: true
             }
         ],
         viewedBy: {
@@ -87,8 +87,7 @@ const productSchema = new mongoose.Schema(
         },
         noOfViews: Number,
         noOfSales: Number,
-        productAge: String
-
+        productAge: String,
     },
     { timestamps: true }
 );

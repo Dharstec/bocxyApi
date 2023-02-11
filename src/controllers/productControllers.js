@@ -1,9 +1,32 @@
 const productModel = require("../models/productModels");
+// const multer = require ('multer')
+
+// const upload = multer({dest:'/uploads/'})
 
 module.exports = {
-  createProduct: async (req, res) => {
+  createProduct: async (req,res)=>{
     try {
       let newproduct = new productModel(req.body)
+      // let newproduct = new productModel({
+      //   productName:req.body.productName,
+      //   productImage: req.file.path,
+      //   discountPrice:req.body.discountPrice,
+      //   actualPrice:req.body.actualPrice,
+      //   description:req.body.description,
+      //   stock:req.body.stock,
+      //   category:req.body.category,
+      //   colour:req.body.colour,
+      //   style:req.body.style,
+      //   for:req.body.for,
+      //   gift:req.body.gift,
+      //   personalised:req.body.personalised,
+      //   latest:req.body.latest,
+      //   collections:req.body.collections,
+      //   viewedBy:req.body.viewedBy,
+      //   noOfViews:req.body.noOfViews,
+      //   noOfSales:req.body.noOfSales,
+      //   productAge:req.body.productAge
+      // })
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
       console.log("createProduct", createProduct);
