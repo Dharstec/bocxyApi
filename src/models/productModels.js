@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema(
         //   required:true
         productName: {
             type: String,
-            // required: true,
+            required: true,
         },
         productImage: {
             type: String,
@@ -19,15 +19,15 @@ const productSchema = new mongoose.Schema(
         },
         discountPrice: {
             type: Number,
-            // required: true
+            required: true
         },
         actualPrice: {
             type: Number,
-            // required: true
+            required: true
         },
         description: {
             type: String,
-            // required: true
+            required: true
         },
         stock: {
             type: Number,
@@ -37,28 +37,28 @@ const productSchema = new mongoose.Schema(
         category: [
             {
                 type: String,
-                // required: true
+                required: true
             }
         ],
         stone: [
             {
                 type: String,
-                // required: true
+                required: true
             }
         ],
         colour: [
             {
                 type: String,
-                // required: true
+                required: true
             }
         ],
         style: [{
             type: String,
-            // required: true
+            required: true
         }],
         for: [{
             type: String,
-            // required: true
+            required: true
         }],
 
         gift: {
