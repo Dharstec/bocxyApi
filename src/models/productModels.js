@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema(
         },
         stock: {
             type: Number,
-            // required: true
+            required: true
         },
         // category: [ "ring",]
         category: [
@@ -60,7 +60,10 @@ const productSchema = new mongoose.Schema(
             type: String,
             required: true
         }],
-
+        referenceProductId:{
+            type:Number,
+            required:true
+        },
         gift: {
             type: Boolean,
             // required: true
@@ -91,6 +94,6 @@ const productSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
-
+//refe id for product for our referece 
 module.exports = mongoose.model("Product", productSchema);
 

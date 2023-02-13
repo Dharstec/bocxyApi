@@ -25,7 +25,8 @@ module.exports = {
       //   viewedBy:req.body.viewedBy,
       //   noOfViews:req.body.noOfViews,
       //   noOfSales:req.body.noOfSales,
-      //   productAge:req.body.productAge
+      //   productAge:req.body.productAge,
+      // referenceProductId:req.body.referenceProductId
       // })
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
