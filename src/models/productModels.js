@@ -60,7 +60,7 @@ const productSchema = new mongoose.Schema(
             type: String,
             required: true
         }],
-        referenceProductId:{
+        referenceId:{
             type:Number,
             required:true
         },
