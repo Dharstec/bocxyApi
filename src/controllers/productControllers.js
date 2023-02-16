@@ -132,6 +132,7 @@ module.exports = {
           _id: req.body._id 
         },
       );
+      console.log("deleteProduct-1",deleteProduct._id)
 
       if (!deleteProduct) {
         return res.status(400).send({
@@ -139,11 +140,14 @@ module.exports = {
           status: false,
         });
       } else {
+        console.log("deleteProduct",deleteProduct);
+        console.log("data",deleteProduct);
         return res.status(200).send({
           message: "Delete Product Successfully",
           status: true,
           data: deleteProduct,
         });
+
       }
     } catch (error) {
       return res.status(400).send({
