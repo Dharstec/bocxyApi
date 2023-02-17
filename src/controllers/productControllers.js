@@ -129,7 +129,7 @@ module.exports = {
     try {
       let deleteProduct = await productModel.findOneAndDelete(
         {
-          _id: req.body._id 
+          _id: req.params._id  // _id:req.body._id is not working in frontend
         },
       );
       console.log("deleteProduct-1",deleteProduct._id)

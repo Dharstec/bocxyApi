@@ -41,6 +41,6 @@ router.put("/updateProduct", Product.updateProduct);
  * @desc  Delete Product API
  * @access public
  * **/
-router.delete("/deleteProduct", Product.deleteProduct);
+router.delete("/deleteProduct/:_id", Product.deleteProduct);
 
 module.exports = router;

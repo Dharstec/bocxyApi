@@ -23,7 +23,7 @@ module.exports = {
   },
   getAllOrder: (req, res) => {
     orderModel.find({})
-      .populate('orderedBy')
+      .populate('orderedBy').populate('orders')
     //  .populate({
     //   path:'orders',
     //   populate:[
@@ -55,7 +55,15 @@ module.exports = {
 
   getOneOrder: async (req, res) => {
     try {
-      let getOneOrder = await orderModel.findOne({ orderId: req.body._id }) .populate('orderedBy');
+      let getOneOrder = await orderModel.findOne({ _id: req.body._id }) 
+      .populate('orderedBy')
+      // .populate({
+      //   path:'orders',
+      //   populate:{
+      //     path:'productId'
+      //   }
+      // })
+      .populate('orders.productId');
       if (!getOneOrder) {
         return res.status(400).send({
           message: "No Record Found",

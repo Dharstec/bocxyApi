@@ -27,52 +27,70 @@ const orderSchema = new mongoose.Schema(
             required: true
         },
         orders:
-            [
-                {
-                    order1:
-                    {
-                        type: Array,
-                        productDetails: {
-                            type: mongoose.Schema.Types.ObjectId,
-                            ref: 'Product',
-                        },
-                        quantity: {
-                            type: Number,
-                            required: true
-                        },
-                    },
+            [{
+                productId: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Product',
+                },
+                quantity: {
+                    type: Number,
+                },
+            }],
+            orderStatus: [{
+                type: String,
+                required: true
+            }]
+    
+        // {
+        //     type:Array,
+        //     productId: {
+        //         type: mongoose.Schema.Types.ObjectId,
+        //         ref: 'Product'
+        //     },
+        //     quantity: {
+        //         type: Number,
+        //         required: true
+        //     },
+        // },
+        // orders:
+        //     [
+        //         {
+        //                 productDetails:[ {
+        //                     type: mongoose.Schema.Types.ObjectId,
+        //                     ref: 'Product',
+        //                 }],
+        //                 quantity: {
+        //                     type: Number,
+        //                     required: true
+        //                 },
 
-                    order2:
-                    {
-                        type: Array,
-                        productDetails: {
-                            type: mongoose.Schema.Types.ObjectId,
-                            ref: 'Product',
-                        },
-                        quantity: {
-                            type: Number,
-                            required: true
-                        },
-                    },
-                    order3:
-                    {
-                        type: Array,
-                        productDetails: {
-                            type: mongoose.Schema.Types.ObjectId,
-                            ref: 'Product',
-                        },
-                        quantity: {
-                            type: Number,
-                            required: true
-                        },
-                    },
-                }],
+        //             // order2:
+        //             // {
+        //             //     type: Array,
+        //             //     productDetails: {
+        //             //         type: mongoose.Schema.Types.ObjectId,
+        //             //         ref: 'Product',
+        //             //     },
+        //             //     quantity: {
+        //             //         type: Number,
+        //             //         required: true
+        //             //     },
+        //             // },
+        //             // order3:
+        //             // {
+        //             //     type: Array,
+        //             //     productDetails: {
+        //             //         type: mongoose.Schema.Types.ObjectId,
+        //             //         ref: 'Product',
+        //             //     },
+        //             //     quantity: {
+        //             //         type: Number,
+        //             //         required: true
+        //             //     },
+        //             // },
+        //         }
 
-        orderStatus: [{
-            type: String,
-            required: true
-        }]
-
+        //     ],
     },
     { timestamps: true }
 );
@@ -109,3 +127,4 @@ module.exports = mongoose.model("Order", orderSchema);
 //     }
 
 // ]
+
