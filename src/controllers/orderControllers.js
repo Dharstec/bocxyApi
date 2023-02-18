@@ -23,19 +23,14 @@ module.exports = {
   },
   getAllOrder: (req, res) => {
     orderModel.find({})
-      .populate('orderedBy').populate('orders')
-    //  .populate({
-    //   path:'orders',
-    //   populate:[
-    //     {
-    //       path:'order1',
-    //       select:'productDetails'
-    //     }
-    //   ]
-    //  })
-      // .populate('orders.order1.productDetails')
-      // .populate({path:'orders.order1.productDetails'})
-      // .populate('order1')
+    .populate('orderedBy')
+    .populate({
+      path:'orders',
+      populate:{
+        path:'productId'
+      }
+    })
+    // .populate('orders.productId')
       .exec((err, result) => {
         if (err) {
           console.log("err", err);
