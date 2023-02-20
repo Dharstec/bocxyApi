@@ -43,4 +43,11 @@ router.put("/updateOrder", Order.updateOrder);
  * **/
 router.delete("/deleteOrder", Order.deleteOrder);
 
+/**
+ * @api {updateOrderStatus} /Order/updateOrderStatus
+ * @desc  updateOrderStatus Order API
+ * @access public
+ * **/
+router.post("/updateOrderStatus", Order.updateOrderStatus);
+
 module.exports = router;

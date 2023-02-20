@@ -36,11 +36,32 @@ const orderSchema = new mongoose.Schema(
                     type: Number,
                 },
             }],
-            orderStatus: [{
-                type: String,
-                required: true
-            }]
-    
+            orderStatus: {
+                type: Array,
+                default: [{
+                    status: {
+                        type: String,
+                        default: 0
+                    },
+                    comment: {
+                        type: String,
+                    },
+                    updateDate: {
+                        type: Date,
+                        default: Date.now
+                    }
+                }]
+            },
+            // orderStatus: [{
+            //     type: String,
+            //     required: true
+            // }],
+    // modeOfPayment:{
+    //     type: String,
+    //     default: '0' 
+    // }
+    // cod==>(status)=>succes
+    // raz==>(status)=>pending===>succes
         // {
         //     type:Array,
         //     productId: {
