@@ -203,12 +203,12 @@ module.exports = {
       .exec();
       if (!getOrder) {
         return res.send({
-          message: "order status update",
+          message: "order status update already ",
           status: 0
         })
       }
       return res.send({
-        message: "Order Details",
+        message: "Order Status Update  and Order Details",
         status: 1,
         data: {
           order: getOrder
