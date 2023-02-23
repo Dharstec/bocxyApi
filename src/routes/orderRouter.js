@@ -48,6 +48,6 @@ router.delete("/deleteOrder", Order.deleteOrder);
  * @desc  updateOrderStatus Order API
  * @access public
  * **/
-router.post("/updateOrderStatus", Order.updateOrderStatus);
+// router.post("/updateOrderStatus", Order.updateOrderStatus);
 
 module.exports = router;

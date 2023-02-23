@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const Product = require("../controllers/productControllers");
-
+const upload = require('../middleware/multer');
 router.get('/', async (req,res,next)=>{
 return res.status(200).json({
     title:"Express Testing",
@@ -13,7 +13,14 @@ return res.status(200).json({
  * @desc  Add Product API
  * @access public
  * **/
-router.post("/createProduct", Product.createProduct);
+
+// multerInstance.upload.single('image'),
+// router.post("/createProduct",upload.single('image'),Product.createProduct);
+
+
+
+
+
 /**
  * @api {GET} /Product/getProduct
  * @desc  Get Product API
@@ -42,5 +49,4 @@ router.put("/updateProduct", Product.updateProduct);
  * @access public
  * **/
 router.delete("/deleteProduct/:_id", Product.deleteProduct);
-
 module.exports = router;

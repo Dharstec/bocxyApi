@@ -1,15 +1,41 @@
 const productModel = require("../models/productModels");
 // const multer = require ('multer')
-
 // const upload = multer({dest:'/uploads/'})
+// const multer = require('../multer/multer')
+// const path = require("path");
+// const storage = multer.diskStorage({
+//   destination:function(req,file,cb){
+//     cb(null,'./uploads');
+//   },
+//   filename:function(req,file,cb){
+//     cb(null,new Date().toISOString() + file.originalname)
+//   }
+// })
+// // const upload = multer ({storage:storage})
+// const fileFilter = (req, file, cb) => {
+//   // reject a file
+//   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+//     cb(null, true);
+//   } else {
+//     cb(null, false);
+//   }
+// };
 
+// const upload = multer({
+//   storage: storage,
+//   limits: {
+//     fileSize: 1024 * 1024 * 5
+//   },
+//   fileFilter: fileFilter
+// });
 module.exports = {
   createProduct: async (req,res)=>{
     try {
       let newproduct = new productModel(req.body)
       // let newproduct = new productModel({
       //   productName:req.body.productName,
-      //   productImage: req.file.path,
+      //   productImage:req.body.productImage,
+      //   // image: req.file.path,
       //   discountPrice:req.body.discountPrice,
       //   actualPrice:req.body.actualPrice,
       //   description:req.body.description,
@@ -26,8 +52,11 @@ module.exports = {
       //   noOfViews:req.body.noOfViews,
       //   noOfSales:req.body.noOfSales,
       //   productAge:req.body.productAge,
-      // referenceId:req.body.referenceId
+      //   referenceId:req.body.referenceId
       // })
+      // if(req.file){
+      //   newproduct.image = req.file.path
+      // }
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
       console.log("createProduct", createProduct);

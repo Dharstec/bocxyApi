@@ -141,87 +141,87 @@ module.exports = {
       });
     }
   },
-  updateOrderStatus: async (req, res) => {
-    //     try {
-    //       let updatestatus=await orderModel.findOneAndUpdate({_id:req.body._id},
-    //         {$set:{modeOfPayment:'1'}},{ new: true });
-    //         if(!updatestatus){
-    //           return res.send({
-    //             message:"order status pending",
-    //             status:0
-    //           })
-    //         }
-    //         else if(updatestatus.modeOfPayment=='1'){
-    // return res.status(200).send({
-    //   message: "order status success",
-    //   status:1
-    // })
+  // updateOrderStatus: async (req, res) => {
+  //   //     try {
+  //   //       let updatestatus=await orderModel.findOneAndUpdate({_id:req.body._id},
+  //   //         {$set:{modeOfPayment:'1'}},{ new: true });
+  //   //         if(!updatestatus){
+  //   //           return res.send({
+  //   //             message:"order status pending",
+  //   //             status:0
+  //   //           })
+  //   //         }
+  //   //         else if(updatestatus.modeOfPayment=='1'){
+  //   // return res.status(200).send({
+  //   //   message: "order status success",
+  //   //   status:1
+  //   // })
 
-    //         }
-    //     } catch (error) {
-    //       return res.status(400).send({
-    //         message: "Something update status orders Wrong",
-    //         status: false,
-    //         error: error,
-    //       });
-    //     }
-    //   }
-    try {
-      if (!req.body._id || !req.body.orderStatus) {
-        return res.send({
-          message: "Please enter a valid Order And Product details",
-          status: 0
-        });
-      }
-      let getOrder = await orderModel.findOne({
-        _id: req.body._id
-      })
-      if (!getOrder) {
-        return res.send({
-          message: "Please enter a valid Order details",
-          status: 0
-        });
-      }
-      let status = {
-        status: req.body.orderStatus,
-        comment: req.body.comment,
-        updateDate: new Date()
-      };
-      getOrder = await orderModel
-      .findOneAndUpdate({
-          _id: req.body._id,
-          "orderStatus.status": {
-              $nin: [req.body.orderStatus]
-          }
-      }, {
-          $push: {
-              orderStatus: status
-          }
-      }, {
-          new: true
-      })
-      .exec();
-      if (!getOrder) {
-        return res.send({
-          message: "order status update already ",
-          status: 0
-        })
-      }
-      return res.send({
-        message: "Order Status Update  and Order Details",
-        status: 1,
-        data: {
-          order: getOrder
-        }
-      })
+  //   //         }
+  //   //     } catch (error) {
+  //   //       return res.status(400).send({
+  //   //         message: "Something update status orders Wrong",
+  //   //         status: false,
+  //   //         error: error,
+  //   //       });
+  //   //     }
+  //   //   }
+  //   try {
+  //     if (!req.body._id || !req.body.orderStatus) {
+  //       return res.send({
+  //         message: "Please enter a valid Order And Product details",
+  //         status: 0
+  //       });
+  //     }
+  //     let getOrder = await orderModel.findOne({
+  //       _id: req.body._id
+  //     })
+  //     if (!getOrder) {
+  //       return res.send({
+  //         message: "Please enter a valid Order details",
+  //         status: 0
+  //       });
+  //     }
+  //     let status = {
+  //       status: req.body.orderStatus,
+  //       comment: req.body.comment,
+  //       updateDate: new Date()
+  //     };
+  //     getOrder = await orderModel
+  //     .findOneAndUpdate({
+  //         _id: req.body._id,
+  //         "orderStatus.status": {
+  //             $nin: [req.body.orderStatus]
+  //         }
+  //     }, {
+  //         $push: {
+  //             orderStatus: status
+  //         }
+  //     }, {
+  //         new: true
+  //     })
+  //     .exec();
+  //     if (!getOrder) {
+  //       return res.send({
+  //         message: "order status update already ",
+  //         status: 0
+  //       })
+  //     }
+  //     return res.send({
+  //       message: "Order Status Update  and Order Details",
+  //       status: 1,
+  //       data: {
+  //         order: getOrder
+  //       }
+  //     })
 
-    } catch (error) {
-      console.log("ERROR", error);
-      return res.send({
-        message: "Please enter a valid details",
-        status: 0
-      });
-    }
-  }
+  //   } catch (error) {
+  //     console.log("ERROR", error);
+  //     return res.send({
+  //       message: "Please enter a valid details",
+  //       status: 0
+  //     });
+  //   }
+  // }
 
 }

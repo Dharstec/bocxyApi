@@ -15,8 +15,12 @@ const productSchema = new mongoose.Schema(
         },
         productImage: {
             type: String,
-            // required: true,
+            required: true,
         },
+        // image: {
+        //     type: String,
+        //     required: true,
+        // },
         discountPrice: {
             type: Number,
             required: true
