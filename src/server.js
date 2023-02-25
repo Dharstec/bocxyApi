@@ -7,6 +7,8 @@ const db = require("./config/db");
 app.use(cors());
 app.use(bodyParser.json({ limit: "500mb" }));
 
+// app.use(express.static(__dirname + '/public'));
+
 require("./baseRouter")(app);
 
 module.exports = app;

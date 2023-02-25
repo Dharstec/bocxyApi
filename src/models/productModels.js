@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema(
         }],
         productVideos: [{
             type: String,
-            required: true,
+            // required: true,
         }],
         discountPrice: {
             type: Number,

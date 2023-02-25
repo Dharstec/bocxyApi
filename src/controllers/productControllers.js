@@ -1,59 +1,40 @@
 const productModel = require("../models/productModels");
-// const multer = require ('multer')
-// const upload = multer({dest:'/uploads/'})
-// const multer = require('../multer/multer')
-// const path = require("path");
-// const storage = multer.diskStorage({
-//   destination:function(req,file,cb){
-//     cb(null,'./uploads');
-//   },
-//   filename:function(req,file,cb){
-//     cb(null,new Date().toISOString() + file.originalname)
-//   }
-// })
-// // const upload = multer ({storage:storage})
-// const fileFilter = (req, file, cb) => {
-//   // reject a file
-//   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-//     cb(null, true);
-//   } else {
-//     cb(null, false);
-//   }
-// };
-
-// const upload = multer({
-//   storage: storage,
-//   limits: {
-//     fileSize: 1024 * 1024 * 5
-//   },
-//   fileFilter: fileFilter
-// });
 module.exports = {
   createProduct: async (req,res)=>{
+    // console.log(req.file)
+    // const fileName = req.file.filename;
+    // console.log("fileName controller",fileName);
+    //     const filePath = req.file.destination.split('./public')[1];
+    //     // .split("./public")[1];
+    //     let  userProfilePic = filePath + "/" + fileName;
+    //     console.log("userProfilePic",userProfilePic);
+    // return
     try {
-      // let newproduct = new productModel(req.body)
-      let newproduct = new productModel({
-        productName:req.body.productName,
-        productImages:req.body.path,
-        productVideos:req.body.path,
-        discountPrice:req.body.discountPrice,
-        actualPrice:req.body.actualPrice,
-        description:req.body.description,
-        stock:req.body.stock,
-        category:req.body.category,
-        colour:req.body.colour,
-        style:req.body.style,
-        for:req.body.for,
-        gift:req.body.gift,
-        personalised:req.body.personalised,
-        latest:req.body.latest,
-        collections:req.body.collections,
-        viewedBy:req.body.viewedBy,
-        noOfViews:req.body.noOfViews,
-        noOfSales:req.body.noOfSales,
-        productAge:req.body.productAge,
-        referenceId:req.body.referenceId
-      })
+      let newproduct = new productModel(req.body)
+      // let newproduct   = new productModel({
+      //   productName:req.body.productName,
+      //   productImages:userProfilePic, 
+      //   // productVideos:userProfilePic,
+      //   discountPrice:req.body.discountPrice,
+      //   actualPrice:req.body.actualPrice,
+      //   description:req.body.description,
+      //   stock:req.body.stock,
+      //   category:req.body.category,
+      //   stone:req.body.stone,
+      //   colour:req.body.colour,
+      //   style:req.body.style,
+      //   for:req.body.for,
+      //   gift:req.body.gift,
+      //   personalised:req.body.personalised,
+      //   latest:req.body.latest,
+      //   collections:req.body.collections,
+      //   viewedBy:req.body.viewedBy,
+      //   noOfViews:req.body.noOfViews,
+      //   noOfSales:req.body.noOfSales,
+      //   productAge:req.body.productAge,
+      //   referenceId:req.body.referenceId,
+
+      // })
       // if(req.file){
       //   newproduct.image = req.file.path
       // }

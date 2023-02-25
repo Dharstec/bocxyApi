@@ -1,4 +1,5 @@
 const multer = require("multer");
+const path = require("path");
 // var async = require('async');
 // // const path = require("path");
 // // // const uploadimg= require('../files')
@@ -70,6 +71,8 @@ const multer = require("multer");
 // //       cb(null, false);
 // //     }
 // //   };
+
+// url/filepath
   
 // //   const upload = multer({
 // //     storage: storage,
@@ -130,11 +133,26 @@ exports.uploadSingleImage = (destination) => {
         destination,
         filename: (req, file, cb) => {
           const fileName = "filename" + path.extname(file.originalname);
+          console.log("filename",fileName);
           return cb(null, fileName);
         },
       }),
     });
-  
+    console.log("upload",upload);
     return upload;
   };
+
+//   url/filepath
+// http://localhost:8000/filename.jpg
+// http://localhost:8000/filename.mp4
+// {
+//     fieldname: 'image',
+//     originalname: 'video-1.mp4',
+//     encoding: '7bit',
+//     mimetype: 'video/mp4',
+//     destination: './public',
+//     filename: 'filename.mp4',
+//     path: 'public\\filename.mp4',
+//     size: 2920548
+//   }
   

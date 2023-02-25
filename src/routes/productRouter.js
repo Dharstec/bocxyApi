@@ -26,7 +26,12 @@ return res.status(200).json({
 
 router.post(
     "/createProduct",
-    uploadSingleImage("./public").single("image"),
+
+// uploadSingleImage("./public").single('image'),
+// .fields([{name:"image",maxCount:1},{name:"videos",maxCount:1}])
+// ({name:"image"},{name:"videos"}),
+    // .single('image'),
+    // fields([{name:"image",maxCount:1},{name:"videos",maxCount:1}])
     Product.createProduct
   );
 
