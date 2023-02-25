@@ -24,13 +24,13 @@ module.exports = {
   getAllOrder: (req, res) => {
     orderModel.find({})
       .populate('orderedBy')
-      .populate({
-        path: 'orders',
-        populate: {
-          path: 'productId'
-        }
-      })
-      // .populate('orders.productId')
+      // .populate({
+      //   path: 'orders',
+      //   populate: {
+      //     path: 'productId'
+      //   }
+      // })
+      .populate('orders.productId')
       .exec((err, result) => {
         if (err) {
           console.log("err", err);
@@ -83,11 +83,11 @@ module.exports = {
     try {
       let updateOrder = await orderModel.findOneAndUpdate(
         {
-          orderId: req.body._id,
+          _id: req.body._id,
         },
         {
           $set: req.body,
-
+// orderStatus:req.body.orderStatus
         },
         { new: true }
       );
@@ -117,7 +117,7 @@ module.exports = {
     try {
       let deleteOrder = await orderModel.findOneAndDelete(
         {
-          orderId: req.body._id,
+        _id: req.body._id,
         },
       );
 
@@ -141,7 +141,7 @@ module.exports = {
       });
     }
   },
-  // updateOrderStatus: async (req, res) => {
+  updateOrderStatus: async (req, res) => {
   //   //     try {
   //   //       let updatestatus=await orderModel.findOneAndUpdate({_id:req.body._id},
   //   //         {$set:{modeOfPayment:'1'}},{ new: true });
@@ -166,62 +166,62 @@ module.exports = {
   //   //       });
   //   //     }
   //   //   }
-  //   try {
-  //     if (!req.body._id || !req.body.orderStatus) {
-  //       return res.send({
-  //         message: "Please enter a valid Order And Product details",
-  //         status: 0
-  //       });
-  //     }
-  //     let getOrder = await orderModel.findOne({
-  //       _id: req.body._id
-  //     })
-  //     if (!getOrder) {
-  //       return res.send({
-  //         message: "Please enter a valid Order details",
-  //         status: 0
-  //       });
-  //     }
-  //     let status = {
-  //       status: req.body.orderStatus,
-  //       comment: req.body.comment,
-  //       updateDate: new Date()
-  //     };
-  //     getOrder = await orderModel
-  //     .findOneAndUpdate({
-  //         _id: req.body._id,
-  //         "orderStatus.status": {
-  //             $nin: [req.body.orderStatus]
-  //         }
-  //     }, {
-  //         $push: {
-  //             orderStatus: status
-  //         }
-  //     }, {
-  //         new: true
-  //     })
-  //     .exec();
-  //     if (!getOrder) {
-  //       return res.send({
-  //         message: "order status update already ",
-  //         status: 0
-  //       })
-  //     }
-  //     return res.send({
-  //       message: "Order Status Update  and Order Details",
-  //       status: 1,
-  //       data: {
-  //         order: getOrder
-  //       }
-  //     })
+    try {
+      if (!req.body._id || !req.body.modeOfPayment) {
+        return res.send({
+          message: "Please enter a valid Order And Product details",
+          status: 0
+        });
+      }
+      let getOrder = await orderModel.findOne({
+        _id: req.body._id
+      })
+      if (!getOrder) {
+        return res.send({
+          message: "Please enter a valid Order details",
+          status: 0
+        });
+      }
+      let status = {
+        status: req.body.modeOfPayment,
+        comment: req.body.comment,
+        updateDate: new Date()
+      };
+      getOrder = await orderModel
+      .findOneAndUpdate({
+          _id: req.body._id,
+          "modeOfPayment.status": {
+              $nin: [req.body.modeOfPayment]
+          }
+      }, {
+          $push: {
+            modeOfPayment: status
+          }
+      }, {
+          new: true
+      })
+      .exec();
+      if (!getOrder) {
+        return res.send({
+          message: "modeOfPayment update already ",
+          status: 0
+        })
+      }
+      return res.send({
+        message: "modeOfPayment Update  and Order Details",
+        status: 1,
+        data: {
+          order: getOrder
+        }
+      })
 
-  //   } catch (error) {
-  //     console.log("ERROR", error);
-  //     return res.send({
-  //       message: "Please enter a valid details",
-  //       status: 0
-  //     });
-  //   }
-  // }
+    } catch (error) {
+      console.log("ERROR", error);
+      return res.send({
+        message: "Please enter a valid details",
+        status: 0
+      });
+    }
+  }
 
 }

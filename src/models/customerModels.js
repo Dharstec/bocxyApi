@@ -24,8 +24,14 @@ const customerSchema = new mongoose.Schema(
             required: true
         },
         customerAddress: {
-            type: String,
+            // type: String,
             // required: true
+            doorNoAndStreet: String,
+            city: String,
+            state: String,
+            pincode: Number,
+            landmark: String,
+            country: String
         },
         password: {
             type: String,
@@ -73,50 +79,14 @@ const customerSchema = new mongoose.Schema(
                 ref: 'Product',
             }],
         },
-        Address: {
-            type: Array,
-            currentAddress: {
-                doorNo: String,
-                street: String,
-                city: String,
-                state: String,
-                pincode: Number,
-                landmark: String,
-                country: String
-            },
-            permanentAddress: {
-                doorNo: String,
-                street: String,
-                city: String,
-                state: String,
-                pincode: Number,
-                landmark: String,
-                country: String
-
-            },
-            otherAddress: {
-                doorNo: String,
-                street: String,
-                city: String,
-                state: String,
-                pincode: Number,
-                landmark: String,
-                country: String
-            }
-
-        }
-        // wishlistProductDetails:{
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: 'Product',
-        // },
-        // cartProductDetails:{
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: 'Product',
-        // },
-        // orderHistory: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: 'Order',
-        // },
+        address: [{
+            doorNoAndStreet:String,
+            city: String,
+            state: String,
+            pincode: Number,
+            landmark: String,
+            country: String
+        }]
 
     },
     { timestamps: true }

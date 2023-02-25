@@ -1,7 +1,13 @@
 const router = require("express").Router();
 
 const Product = require("../controllers/productControllers");
-const upload = require('../middleware/multer');
+// const { uploadPhoto, resizeUserPhoto } = require("../middleware/multer");
+const {
+    uploadPhoto,
+    resizeUserPhoto,
+    uploadSingleImage,
+  } = require("../middleware/multer");
+// require('../middleware/multer');
 router.get('/', async (req,res,next)=>{
 return res.status(200).json({
     title:"Express Testing",
@@ -15,9 +21,14 @@ return res.status(200).json({
  * **/
 
 // multerInstance.upload.single('image'),
-// router.post("/createProduct",upload.single('image'),Product.createProduct);
+// upload.resizeUserPhoto("productImage"),upload.uploadPhoto('productImage'),
+// router.post("/createProduct",  uploadPhoto,resizeUserPhoto, Product.createProduct);
 
-
+router.post(
+    "/createProduct",
+    uploadSingleImage("./public").single("image"),
+    Product.createProduct
+  );
 
 
 

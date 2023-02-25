@@ -7,13 +7,14 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "node src/bin/www.js",
+    "start": "nodemon src/bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
+    "async": "^3.2.4",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
@@ -33,6 +34,7 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "sharp": "^0.31.3",
     "sib-api-v3-sdk": "^8.5.0",
     "smtp": "^0.1.4",
     "uuid": "^9.0.0"

@@ -23,8 +23,14 @@ const orderSchema = new mongoose.Schema(
             required: true
         },
         customerAddress: {
-            type: String,
-            required: true
+            // type: String,
+            // required: true
+            doorNoAndStreet: { type: String, required: true },
+            city: { type: String, required: true },
+            state: { type: String, required: true },
+            pincode: { type:Number, required: true },
+            landmark: { type: String, required: true },
+            country: { type: String, required: true },
         },
         orders:
             [{
@@ -36,33 +42,36 @@ const orderSchema = new mongoose.Schema(
                     type: Number,
                 },
             }],
-            orderStatus: [{
-                type: String,
-                required: true
-            }],
-            // orderStatus: {
-            //     type: Array,
-            //     default: [{
-            //         status: {
-            //             type: String,
-            //             default: 0
-            //         },
-            //         comment: {
-            //             type: String,
-            //         },
-            //         updateDate: {
-            //             type: Date,
-            //             default: Date.now
-            //         }
-            //     }]
-            // },
-          
-    // modeOfPayment:{
-    //     type: String,
-    //     default: '0' 
-    // }
-    // cod==>(status)=>succes
-    // raz==>(status)=>pending===>succes
+        orderStatus: {
+            type: String,
+            required: true
+        },
+//  modeOfPayment:{
+//             type: String,
+//             default: '0' 
+//         }
+    //     Mode of payment:{
+    //         Status: "pending or success "
+    //         Method: "razorpay or cashondelivery
+    //   }
+        modeOfPayment: {
+            type: Array,
+            default: [{
+                status: {
+                    type: String,
+                    default: 0
+                },
+                comment: {
+                    type: String,
+                },
+                updateDate: {
+                    type: Date,
+                    default: Date.now
+                }
+            }]
+        },
+        // cod==>(status)=>succes
+        // raz==>(status)=>pending===>succes
         // {
         //     type:Array,
         //     productId: {

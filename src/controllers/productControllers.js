@@ -31,29 +31,29 @@ const productModel = require("../models/productModels");
 module.exports = {
   createProduct: async (req,res)=>{
     try {
-      let newproduct = new productModel(req.body)
-      // let newproduct = new productModel({
-      //   productName:req.body.productName,
-      //   productImage:req.body.productImage,
-      //   // image: req.file.path,
-      //   discountPrice:req.body.discountPrice,
-      //   actualPrice:req.body.actualPrice,
-      //   description:req.body.description,
-      //   stock:req.body.stock,
-      //   category:req.body.category,
-      //   colour:req.body.colour,
-      //   style:req.body.style,
-      //   for:req.body.for,
-      //   gift:req.body.gift,
-      //   personalised:req.body.personalised,
-      //   latest:req.body.latest,
-      //   collections:req.body.collections,
-      //   viewedBy:req.body.viewedBy,
-      //   noOfViews:req.body.noOfViews,
-      //   noOfSales:req.body.noOfSales,
-      //   productAge:req.body.productAge,
-      //   referenceId:req.body.referenceId
-      // })
+      // let newproduct = new productModel(req.body)
+      let newproduct = new productModel({
+        productName:req.body.productName,
+        productImages:req.body.path,
+        productVideos:req.body.path,
+        discountPrice:req.body.discountPrice,
+        actualPrice:req.body.actualPrice,
+        description:req.body.description,
+        stock:req.body.stock,
+        category:req.body.category,
+        colour:req.body.colour,
+        style:req.body.style,
+        for:req.body.for,
+        gift:req.body.gift,
+        personalised:req.body.personalised,
+        latest:req.body.latest,
+        collections:req.body.collections,
+        viewedBy:req.body.viewedBy,
+        noOfViews:req.body.noOfViews,
+        noOfSales:req.body.noOfSales,
+        productAge:req.body.productAge,
+        referenceId:req.body.referenceId
+      })
       // if(req.file){
       //   newproduct.image = req.file.path
       // }
@@ -66,8 +66,8 @@ module.exports = {
         data: createProduct,
       });
 
-    } catch (error) {
-      console.log("error", error);
+    } catch (err) {
+      console.log("error", err);
       return res.status(400).send({
         message: "Please Enter All Details",
         status: false,
