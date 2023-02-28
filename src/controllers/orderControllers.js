@@ -182,6 +182,7 @@ module.exports = {
           status: 0
         });
       }
+      // modeOfPayment.mode
       let status = {
         status: req.body.modeOfPayment,
         comment: req.body.comment,

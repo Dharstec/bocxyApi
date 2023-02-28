@@ -5,6 +5,7 @@ const orderSchema = new mongoose.Schema(
         orderedBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Customer',
+            required: true
         },
         giftWrap: {
             type: Boolean,
@@ -28,7 +29,7 @@ const orderSchema = new mongoose.Schema(
             doorNoAndStreet: { type: String, required: true },
             city: { type: String, required: true },
             state: { type: String, required: true },
-            pincode: { type:Number, required: true },
+            pincode: { type: Number, required: true },
             landmark: { type: String, required: true },
             country: { type: String, required: true },
         },
@@ -37,32 +38,41 @@ const orderSchema = new mongoose.Schema(
                 productId: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'Product',
+                    required: true
+
                 },
                 quantity: {
                     type: Number,
+                    required: true
+
                 },
             }],
         orderStatus: {
             type: String,
             required: true
         },
-//  modeOfPayment:{
-//             type: String,
-//             default: '0' 
-//         }
-    //     Mode of payment:{
-    //         Status: "pending or success "
-    //         Method: "razorpay or cashondelivery
-    //   }
+        //  modeOfPayment:{
+        //             type: String,
+        //             default: '0' 
+        //         }
+        //     Mode of payment:{
+        //         Status: "pending or success "
+        //         Method: "razorpay or cashondelivery
+        //   }
         modeOfPayment: {
             type: Array,
             default: [{
+                mode: {
+                    type: String,
+                    required: true
+                },
                 status: {
                     type: String,
                     default: 0
                 },
                 comment: {
                     type: String,
+                    required: true
                 },
                 updateDate: {
                     type: Date,

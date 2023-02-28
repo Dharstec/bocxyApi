@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-var moment = require('moment');  
+var moment = require('moment');
 const couponSchema = new mongoose.Schema(
     {
 
@@ -15,13 +15,22 @@ const couponSchema = new mongoose.Schema(
             type: Number,
             // required: true,
         },
-        createdBy: {
+        createdFor: {
             type: String,
             // required: true
         },
-       createdDate:{
-        type:String
-       },
+        totalOrders: {
+            type: Number
+        },
+        totalSales: {
+            type: Number
+        },
+        totalCommissions: {
+            type: Number
+        },
+        createdDate: {
+            type: String
+        },
         validDateTill: {
             type: String,
             // default:moment(new Date(Date.now())).format('MMMM Do YYYY, h:mm:ss a')

@@ -4,8 +4,8 @@ module.exports = {
     // console.log(req.file)
     // const fileName = req.file.filename;
     // console.log("fileName controller",fileName);
-    //     const filePath = req.file.destination.split('./public')[1];
-    //     // .split("./public")[1];
+    //     const filePath = req.file.destination.split('./upload')[1];
+    // //     // .split("./public")[1];
     //     let  userProfilePic = filePath + "/" + fileName;
     //     console.log("userProfilePic",userProfilePic);
     // return
@@ -14,7 +14,7 @@ module.exports = {
       // let newproduct   = new productModel({
       //   productName:req.body.productName,
       //   productImages:userProfilePic, 
-      //   // productVideos:userProfilePic,
+      //   productVideos:userProfilePic,
       //   discountPrice:req.body.discountPrice,
       //   actualPrice:req.body.actualPrice,
       //   description:req.body.description,

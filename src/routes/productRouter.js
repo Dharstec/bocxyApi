@@ -1,6 +1,8 @@
 const router = require("express").Router();
 
 const Product = require("../controllers/productControllers");
+const upload = require("../middleware/multer");
+const uploads = require("../middleware/multer");
 // const { uploadPhoto, resizeUserPhoto } = require("../middleware/multer");
 const {
     uploadPhoto,
@@ -25,13 +27,11 @@ return res.status(200).json({
 // router.post("/createProduct",  uploadPhoto,resizeUserPhoto, Product.createProduct);
 
 router.post(
-    "/createProduct",
-
-// uploadSingleImage("./public").single('image'),
+    "/createProduct", 
+    // upload.single('image'),
+// uploadSingleImage("./public").array('image'),
+// single('image'),
 // .fields([{name:"image",maxCount:1},{name:"videos",maxCount:1}])
-// ({name:"image"},{name:"videos"}),
-    // .single('image'),
-    // fields([{name:"image",maxCount:1},{name:"videos",maxCount:1}])
     Product.createProduct
   );
 
