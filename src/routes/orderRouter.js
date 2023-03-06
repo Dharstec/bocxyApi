@@ -26,7 +26,7 @@ router.get("/getAllOrder", Order.getAllOrder);
  * @desc  Get One Order API
  * @access public
  * **/
-router.get("/getOneOrder", Order.getOneOrder);
+router.post("/getOneOrder", Order.getOneOrder);
 
 /**
  * @api {UPDATE} /Order/updateOrder
