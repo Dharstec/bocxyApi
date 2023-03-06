@@ -127,34 +127,34 @@ const path = require("path");
 // })
 
 
-// exports.uploadSingleImage = (destination) => {
-//     const upload = multer({
-//       storage: multer.diskStorage({
-//         destination,
-//         filename: (req, file, cb) => {
-//           const fileName = "filename" + path.extname(file.originalname);
-//           console.log("filename",fileName);
-//           console.log("cb",cb);
-//           return cb(null, fileName);
-//         },
-//       }),
-//     });
-//     console.log("upload",upload);
-//     return upload;
-//   };
-// const storage = multer.diskStorage({
-//   destination:'upload',
-//   filename:(req,file,cb)=>{
-//     console.log(file);
-//     return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-//   }
-// })
+exports.uploadSingleImage = (destination) => {
+    const upload = multer({
+      storage: multer.diskStorage({
+        destination,
+        filename: (req, file, cb) => {
+          const fileName = "filename" + path.extname(file.originalname);
+          console.log("filename",fileName);
+          console.log("cb",cb);
+          return cb(null, fileName);
+        },
+      }),
+    });
+    console.log("upload",upload);
+    return upload;
+  };
+const storage = multer.diskStorage({
+  destination:'upload',
+  filename:(req,file,cb)=>{
+    console.log(file);
+    return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+  }
+})
 
-// const upload = multer({
-//   storage:storage
-// })
+const upload = multer({
+  storage:storage
+})
 
-// module.exports = upload
+module.exports = upload
 
 //   url/filepath
 // http://localhost:8000/filename.jpg
