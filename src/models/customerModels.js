@@ -65,6 +65,19 @@ const customerSchema = new mongoose.Schema(
                 type: Number,
             },
         }],
+        isCartProductDetails: {
+            type: String,
+            default: '0'
+        },
+        sendEmailtoCustomer:{
+            type:Boolean,
+            default:false
+        },
+        // updated:{
+
+        //     default: Date.now()
+        // },
+        // updatedAt: Date.now(),
         orderHistory: [
             {
                 type: String,
@@ -86,7 +99,14 @@ const customerSchema = new mongoose.Schema(
             pincode: Number,
             landmark: String,
             country: String
-        }]
+        }],
+        couponDetails:{
+            // couponDetailsId:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Coupon',
+            // }
+        }
+
 
     },
     { timestamps: true }

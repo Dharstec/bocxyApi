@@ -10,11 +10,15 @@ module.exports = {
                 couponName:req.body.couponName,
                 totalQuantity:req.body.totalQuantity,
                 availedQuantity: req.body.availedQuantity,
-                createdBy:req.body.createdBy,
+                createdFor:req.body.createdFor,
+                totalOrders:req.body.totalOrders,
+                totalSales:req.body.totalSales,
+                totalCommissions:req.body.totalCommissions,
                 createdDate:createdDate,
                 validDateTill:validDateTill,
-                discountPercentage:req.body.discountPercentage
-            
+                discountPercentage:req.body.discountPercentage,
+                type:req.body.type,
+                description:req.body.description
             });
             console.log("newcoupon", newcoupon);
             let createCoupon = await newcoupon.save();

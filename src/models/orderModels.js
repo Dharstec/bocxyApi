@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const orderSchema = new mongoose.Schema(
     {
+
         orderedBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Customer',
@@ -132,6 +133,7 @@ const orderSchema = new mongoose.Schema(
         //         }
 
         //     ],
+        
     },
     { timestamps: true }
 );

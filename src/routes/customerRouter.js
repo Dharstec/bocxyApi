@@ -77,4 +77,10 @@ router.delete("/deleteCustomer", Customer.deleteCustomer);
  * **/
 router.post("/resendOtp", Customer.resendOtp);
 
+
+router.put('/addCardUpdateCustomer', Customer.addCardUpdateCustomer)
+// router.post('/whatapp',Customer.whatApp);
+router.post('/removecart',Customer.removeCart)
+// router.get('/sendEmailtoCustomer',Customer.sendEmailtoCustomer)
+
 module.exports = router;

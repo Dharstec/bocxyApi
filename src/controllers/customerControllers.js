@@ -9,7 +9,11 @@ const jwt = require("jsonwebtoken");
 const salt = bcrypt.genSaltSync(10);
 // var SibApiV3Sdk = require('sib-api-v3-sdk');
 // var defaultClient = SibApiV3Sdk.ApiClient.instance;
-
+const ultramsg = require('ultramsg-whatsapp-api');
+const instance_id = process.env.instance_id // Ultramsg.com instance id
+const ultramsg_token = process.env.ultramsg_token  // Ultramsg.com token
+const api = new ultramsg(instance_id, ultramsg_token);
+var moment = require('moment');
 require("dotenv").config();
 
 
@@ -86,22 +90,22 @@ module.exports = {
                 otp: req.params.otp
             },
                 { $set: { isOtpVerified: "1" } }, { new: true })
-                
+
             if (!findUser) {
                 console.log("please enter valid OTP");
                 return res.send({
-                    message:"please enter a valid OTP",
-                    status:false
-                }) 
+                    message: "please enter a valid OTP",
+                    status: false
+                })
             }
-            else{
+            else {
                 return res.send({
                     message: "OTP verifed successfully",
                     status: 1,
                     // data: findUser
-                }) 
+                })
             }
-            
+
         } catch (error) {
             console.log("please enter all the mandatory fields otpverify errors", error);
             return error
@@ -134,11 +138,11 @@ module.exports = {
                             message: "Wrong password!",
                         });
                     else
-                    // return res.send({
-                    //     message:"Login Successfully",
-                    //     status: 1,
-                    //     data: user.wishlistProductIdDetails
-                    // })
+                        // return res.send({
+                        //     message:"Login Successfully",
+                        //     status: 1,
+                        //     data: user.wishlistProductIdDetails
+                        // })
                         return res.status(200).send({
                             status: true,
                             token: jwt.sign(
@@ -148,7 +152,7 @@ module.exports = {
                             ),
                             data: user,
                         });
-                        
+
                 });
             });
         } catch (error) {
@@ -210,7 +214,7 @@ module.exports = {
     getAllCustomer: async (req, res) => {
         try {
             let getCustomer = await customerModel.find({})
-            .populate('wishlistProductIdDetails').populate('orderHistory').populate('cartProductDetails.productId');
+                .populate('wishlistProductIdDetails').populate('orderHistory').populate('cartProductDetails.productId');
 
             if (!getCustomer) {
                 return res.status(400).send({
@@ -235,7 +239,7 @@ module.exports = {
     getOneCustomer: async (req, res) => {
         try {
             let getOneCustomer = await customerModel.findOne({ email: req.body.email })
-                .populate('wishlistProductIdDetails').populate('orderHistory')
+                .populate('wishlistProductIdDetails').populate('orderHistory').populate('couponDetails')
                 // .populate({
                 //     path:'cartProductDetails',
                 //     populate:{
@@ -267,7 +271,7 @@ module.exports = {
         try {
             let updateCustomer = await customerModel.findOneAndUpdate(
                 {
-                    email: req.body.email
+                    email: req.body.email,
                     // _id: req.body._id,
                 },
                 {
@@ -350,8 +354,182 @@ module.exports = {
             })
         }
     },
-}
+    whatApp: async (req, res) => {
+        try {
+            customerModel.findOne({ email: req.body.email }, async (err, user) => {
+                if (user.isCartProductDetails == "0") {
+                    return res.status(400).send({
+                        status: false,
+                        message: "Please Update Your Cart!",
+                    });
 
+                } else {
+                    whatApp(req.body.email)
+                    return res.status(200).send({
+                        message: "Whatapp Msg Send and email",
+                        status: true,
+                        // data: response
+                    })
+                }
+            })
+
+        } catch (error) {
+            console.log("errrrrr", error);
+
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error
+            })
+        }
+    },
+    addCardUpdateCustomer: async (req, res) => {
+        try {
+            let addCardUpdateCustomer = await customerModel.findOneAndUpdate(
+                {
+                    email: req.body.email,
+                },
+                {
+                    $set: {
+                        isCartProductDetails: "1",
+                        wishlistProductIdDetails: req.body.wishlistProductIdDetails,
+                        cartProductDetails: req.body.cartProductDetails,
+
+                    },
+
+                },
+                { new: true }
+            );
+
+            if (!addCardUpdateCustomer) {
+                return res.status(400).send({
+                    message: "No Record Found",
+                    status: false,
+                });
+            } else {
+                return res.status(200).send({
+                    message: "addCardUpdate Successfully",
+                    status: true,
+                    data: addCardUpdateCustomer,
+                });
+            }
+        } catch (error) {
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error,
+            });
+        }
+    },
+
+    sendEmailtoCustomer: async (req, result) => {
+        try {
+            let emailsending = await customerModel.find({ isCartProductDetails: '1', sendEmailtoCustomer: false })
+            // console.log("emailsending", emailsending);
+
+            let res = emailsending.length > 0 ? emailsending : []
+            // console.log("res", res);
+            console.log("res.length", res.length);
+
+            if (res.length > 0) {
+                for (let i of res) {
+                    // console.log(i, "update timer");
+
+                    let updateMin = moment(Date.now()).subtract(1, 'days');
+                    // console.log(updateMin, 'updateMin');
+                    var a = moment(i.updatedAt);
+                    var b = moment(updateMin);
+                    let resultAB = a.diff(b, 'hours')
+                    console.log(resultAB)
+                    if (resultAB >= 24) {
+                        whatApp(i.email)
+                        let addCardUpdateCustomer = await customerModel.findOneAndUpdate(
+                            {
+                                email: i.email,
+                            },
+                            {
+                                $set: {
+                                    sendEmailtoCustomer: true
+
+                                },
+
+                            },
+                            { new: true }
+                        );
+                    }
+
+                }
+
+            }
+            if (res.length == 0) {
+                return result.status(400).send({
+                    message: "No Record Found ",
+                    status: false,
+                });
+            }
+            else {
+                return result.status(200).send({
+
+                    message: "email send success ",
+                    status: true,
+
+                    data: res,
+                });
+            }
+        } catch (error) {
+            console.log("error", error);
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error,
+            });
+        }
+
+    },
+
+
+    removeCart: async (req, res) => {
+        try {
+            let removeCart = await customerModel.findOneAndUpdate({
+                email: req.body.email,
+            },
+                {
+                    $unset: {
+
+                        cartProductDetails: req.body.cartProductDetails
+
+                    },
+                    $set: {
+                        isCartProductDetails: "0",
+
+                    },
+                },
+                { new: true }
+            )
+
+            if (!removeCart) {
+                return res.status(400).send({
+                    message: "No Record Found ",
+                    status: false,
+                });
+            } else {
+                return res.status(200).send({
+                    message: "Product Remove from your Cart",
+                    status: true,
+                    data: removeCart,
+                });
+            }
+
+        } catch (error) {
+            console.log("error", error);
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error,
+            });
+        }
+    }
+}
 
 
 try {
@@ -387,7 +565,6 @@ try {
             var replacements = {
                 otp: `${num}`,
                 firstName: `${firstName}`
-
             };
             var htmlToSend = template(replacements);
             var mailOptions = {
@@ -417,6 +594,46 @@ try {
 }
 
 
+async function whatApp(email) {
+    // var to = phoneNumber
+    // var body = "buying your product in your cart list"
+    // const response = await api.sendChatMessage(to, body);
+    // console.log(response)
+    let transporter = nodemailer.createTransport({
+        host: process.env.host,
+        secure: false,
+        port: 587,
+        // port: 465,
+        auth: {
+            user: process.env.USEREMAIL,
+            pass: process.env.USERPASS
+        },
+        tls: {
+            rejectUnauthorized: false
+        },
+    });
+    var mailOptions = {
+        from: process.env.USEREMAIL,
+        to: email,
+        subject: "Product in your cart !!!!!!!",
+        text: "your Product add into cart go to purachase the product"
+        // html: htmlToSend
+    };
+    transporter.verify((error, _success) => {
+        if (error) {
+            console.log({ error });
+        } else {
+            console.log("Server is ready to take our messages");
+        }
+    });
+    transporter.sendMail(mailOptions, function (error, response) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Email sent", response);
+        }
+    });
+}
 
 
 // var SibApiV3Sdk = require('sib-api-v3-sdk');

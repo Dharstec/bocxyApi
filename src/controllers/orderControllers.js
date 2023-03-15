@@ -1,4 +1,6 @@
 const orderModel = require("../models/orderModels");
+const { template } = require('handlebars');
+const orderpdf = require("./documentPDFFiles")
 
 module.exports = {
   createOrder: async (req, res) => {
@@ -87,7 +89,7 @@ module.exports = {
         },
         {
           $set: req.body,
-// orderStatus:req.body.orderStatus
+          // orderStatus:req.body.orderStatus
         },
         { new: true }
       );
@@ -117,7 +119,7 @@ module.exports = {
     try {
       let deleteOrder = await orderModel.findOneAndDelete(
         {
-        _id: req.body._id,
+          _id: req.body._id,
         },
       );
 
@@ -142,30 +144,6 @@ module.exports = {
     }
   },
   updateOrderStatus: async (req, res) => {
-  //   //     try {
-  //   //       let updatestatus=await orderModel.findOneAndUpdate({_id:req.body._id},
-  //   //         {$set:{modeOfPayment:'1'}},{ new: true });
-  //   //         if(!updatestatus){
-  //   //           return res.send({
-  //   //             message:"order status pending",
-  //   //             status:0
-  //   //           })
-  //   //         }
-  //   //         else if(updatestatus.modeOfPayment=='1'){
-  //   // return res.status(200).send({
-  //   //   message: "order status success",
-  //   //   status:1
-  //   // })
-
-  //   //         }
-  //   //     } catch (error) {
-  //   //       return res.status(400).send({
-  //   //         message: "Something update status orders Wrong",
-  //   //         status: false,
-  //   //         error: error,
-  //   //       });
-  //   //     }
-  //   //   }
     try {
       if (!req.body._id || !req.body.modeOfPayment) {
         return res.send({
@@ -189,19 +167,19 @@ module.exports = {
         updateDate: new Date()
       };
       getOrder = await orderModel
-      .findOneAndUpdate({
+        .findOneAndUpdate({
           _id: req.body._id,
           "modeOfPayment.status": {
-              $nin: [req.body.modeOfPayment]
+            $nin: [req.body.modeOfPayment]
           }
-      }, {
+        }, {
           $push: {
             modeOfPayment: status
           }
-      }, {
+        }, {
           new: true
-      })
-      .exec();
+        })
+        .exec();
       if (!getOrder) {
         return res.send({
           message: "modeOfPayment update already ",
@@ -223,6 +201,42 @@ module.exports = {
         status: 0
       });
     }
+  },
+  sendOrderConfirmationEmail: async (req, res) => {
+    try {
+      let orderemail = await orderModel.findOne({ customerEmailId: req.body.customerEmailId })
+      if (!orderemail) {
+        return res.status(400).send({
+          message: "No Record Found",
+          status: false,
+        });
+      }
+      else {
+        reqBody = {
+          customerName: req.body.customerName,
+          customerPhoneNumber: req.body.customerPhoneNumber,
+          customerEmailId: req.body.customerEmailId,
+          customerAddress: req.body.customerAddress,
+          orders: req.body.orders
+        }
+        let order = await orderpdf.orderPdf(reqBody)
+        console.log("email order", order)
+        return res.status(200).send({
+          message: "Order Confirmation Email Send Successfully",
+          status: true,
+          data: order
+        })
+      }
+    }
+    catch (error) {
+      console.log("sendOrderConfirmationEmail", error);
+      return res.status(400).send({
+        message: "Something Went Wrong",
+        status: false,
+        error: error
+      })
+    }
   }
 
 }
+

@@ -38,7 +38,14 @@ const couponSchema = new mongoose.Schema(
         discountPercentage: {
             type: String,
             // required: true
+        },
+        type:{
+         type:String,
+        },
+        description:{
+            type:String
         }
+
 
     },
     { timestamps: true }

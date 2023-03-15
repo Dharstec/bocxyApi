@@ -50,4 +50,6 @@ router.delete("/deleteOrder", Order.deleteOrder);
  * **/
 router.post("/updatePaymentStatus", Order.updateOrderStatus);
 
+router.post('/sendOrderConfirmationEmail',Order.sendOrderConfirmationEmail)
+
 module.exports = router;
