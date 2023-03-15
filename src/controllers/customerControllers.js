@@ -441,7 +441,7 @@ module.exports = {
                     var b = moment(updateMin);
                     let resultAB = a.diff(b, 'hours')
                     console.log(resultAB)
-                    if (resultAB >= 24) {
+                    if (resultAB >= 20) {
                         whatApp(i.email)
                         let addCardUpdateCustomer = await customerModel.findOneAndUpdate(
                             {
