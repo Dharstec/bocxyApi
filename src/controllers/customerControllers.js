@@ -214,7 +214,8 @@ module.exports = {
     getAllCustomer: async (req, res) => {
         try {
             let getCustomer = await customerModel.find({})
-                .populate('wishlistProductIdDetails').populate('orderHistory').populate('cartProductDetails.productId');
+                // .populate('wishlistProductIdDetails').populate('orderHistory')
+                // .populate('cartProductDetails.productId');
 
             if (!getCustomer) {
                 return res.status(400).send({
@@ -229,6 +230,7 @@ module.exports = {
                 });
             }
         } catch (error) {
+            console.log("errrror********",error);
             return res.status(400).send({
                 message: "Something Went Wrong",
                 status: false,
@@ -239,14 +241,16 @@ module.exports = {
     getOneCustomer: async (req, res) => {
         try {
             let getOneCustomer = await customerModel.findOne({ email: req.body.email })
-                .populate('wishlistProductIdDetails').populate('orderHistory').populate('couponDetails')
+                .populate('wishlistProductIdDetails')
                 // .populate({
                 //     path:'cartProductDetails',
                 //     populate:{
                 //        path: 'productId'
                 //     }
                 // })
-                .populate('cartProductDetails.productId')
+                .populate('orderHistory')
+                // .populate('cartProductDetails.productId')
+                .populate('couponDetails')
             if (!getOneCustomer) {
                 return res.status(400).send({
                     message: "No Record Found",
@@ -260,6 +264,7 @@ module.exports = {
                 });
             }
         } catch (error) {
+            console.log("err**********",error)
             return res.status(400).send({
                 message: "Something Went Wrong",
                 status: false,
