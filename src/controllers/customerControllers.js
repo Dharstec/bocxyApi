@@ -249,7 +249,7 @@ module.exports = {
                 //     }
                 // })
                 .populate('orderHistory')
-                // .populate('cartProductDetails.productId')
+                .populate('cartProductDetails.productId')
                 .populate('couponDetails')
             if (!getOneCustomer) {
                 return res.status(400).send({
