@@ -1,5 +1,5 @@
-const multer = require("multer");
-const path = require("path");
+// const multer = require("multer");
+// const path = require("path");
 // var async = require('async');
 // // const path = require("path");
 // // // const uploadimg= require('../files')
@@ -127,34 +127,60 @@ const path = require("path");
 // })
 
 
-exports.uploadSingleImage = (destination) => {
-    const upload = multer({
-      storage: multer.diskStorage({
-        destination,
-        filename: (req, file, cb) => {
-          const fileName = "filename" + path.extname(file.originalname);
-          console.log("filename",fileName);
-          console.log("cb",cb);
-          return cb(null, fileName);
-        },
-      }),
-    });
-    console.log("upload",upload);
-    return upload;
-  };
-const storage = multer.diskStorage({
-  destination:'upload',
-  filename:(req,file,cb)=>{
-    console.log(file);
-    return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
-  }
-})
+// exports.uploadSingleImage = (destination) => {
+//   console.log("multer");
+//     const upload = multer({
+//       storage: multer.diskStorage({
+//         destination,
+//         filename: (req, file, cb) => {
+//           console.log("file",file);
+//           const fileName = "filename" + path.extname(file.originalname);
+//           console.log("filename",fileName);
+//           console.log("cb",cb);
+//           return cb(null, fileName);
+//         },
+//       }),
+//     });
+//     console.log("upload",upload);
+//     return upload;
+//   };
+// const storage = multer.diskStorage({
+//   destination:'upload',
+//   filename:(req,file,cb)=>{
+//     console.log("file",file);
+//     // return cb(null, new Date().toISOString()+ "-" + file.originalname)
+//     return cb(null, `${file.filename}_${Date.now()}${path.extname(file.originalname)}`)
+//   }
+// })
 
-const upload = multer({
-  storage:storage
-})
+// const Fileupload = multer({
+//   storage:storage
+// })
 
-module.exports = upload
+// module.exports = Fileupload
+
+
+
+// const fileStorage = multer.diskStorage({
+//   destination:(req,file,cb)=>{
+//     console.log("cb",cb);
+//     cb(null, './img');
+//   },
+//   filename:(req,file,cb)=>{
+//     console.log("file ****" ,file);
+// cb(null,file.filename + '-' + file.originalname)
+//   }
+// })
+
+
+// const Fileupload = multer({
+//   storage:fileStorage
+// })
+
+// module.exports = Fileupload
+
+
+
 
 //   url/filepath
 // http://localhost:8000/filename.jpg
@@ -172,3 +198,38 @@ module.exports = upload
   
 // photos :1mb
 // videos: 5mb less than  30sec
+
+
+
+
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `files/admin-${file.fieldname}-${Date.now()}.${ext}`);
+  },
+});
+const multerFilter = (req, file, cb) => {
+  // if (file.mimetype) {
+  //   cb(null, true);
+  // } else {
+  //   cb(new Error("Not a PDF File!!"), false);
+  // }
+
+  const fileSize = parseInt(req.headers["content-length"])
+
+  if ((file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "application/octet-stream") && fileSize <= 1000000) {
+      cb(null, true)
+  } else if (file.mimetype === "video/mp4" && fileSize <= 5e+6) {
+      cb(null, true)
+  } else {
+    cb(new Error("file size img 1mb & vi 5mb only!!"), false);
+      // cb(null, false)
+  }
+};
+const uploadData = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
