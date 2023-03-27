@@ -10,7 +10,7 @@ const marketingSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        targetCustomer: {
+        targetCustomer: [{
             allCustomers: {
                 type: String,
                 required: true,
@@ -26,8 +26,8 @@ const marketingSchema = new mongoose.Schema(
                 required: true,
 
             }
-        },
-        sendVia: {
+        }],
+        sendVia: [{
             email: {
                 type: String,
                 required: true,
@@ -44,7 +44,7 @@ const marketingSchema = new mongoose.Schema(
                 required: true,
 
             }
-        },
+        }],
         addMedia: {
             type: String,
             required: true,

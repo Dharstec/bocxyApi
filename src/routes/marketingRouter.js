@@ -20,7 +20,7 @@ router.post("/createMarketing", Marketing.createMarketing);
  * @desc  Get Marketing API
  * @access public
  * **/
-router.post("/getMarketing", Marketing.getMarketing);
+router.get("/getAllMarketing", Marketing.getMarketing);
 
 /**
  * @api {GET} /Marketing/getMarketing
