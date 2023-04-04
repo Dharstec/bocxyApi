@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, '../public/files')));
 // app.use(express.static(`${__dirname} /public/files`));
 
 
+// app.use(express.static(path.join(__dirname + '../images/files')));
 
 require("./baseRouter")(app);
 
