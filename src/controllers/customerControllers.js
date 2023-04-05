@@ -241,16 +241,16 @@ module.exports = {
     getOneCustomer: async (req, res) => {
         try {
             let getOneCustomer = await customerModel.findOne({ email: req.body.email })
-                .populate('wishlistProductIdDetails')
+                // .populate('wishlistProductIdDetails')
                 // .populate({
                 //     path:'cartProductDetails',
                 //     populate:{
                 //        path: 'productId'
                 //     }
                 // })
-                .populate('orderHistory')
-                .populate('cartProductDetails.productId')
-                .populate('couponDetails')
+                // .populate('orderHistory')
+                // .populate('cartProductDetails.productId')
+                // .populate('couponDetails')
             if (!getOneCustomer) {
                 return res.status(400).send({
                     message: "No Record Found",
