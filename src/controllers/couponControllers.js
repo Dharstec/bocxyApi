@@ -5,6 +5,13 @@ var validDateTill= moment().add(10, 'days').calendar();
 var createdDate= moment().format()
 module.exports = {
     createCoupon: async (req, res) => {
+      let getCoupon = await couponModels.find({});
+      // let remaining=0;
+      // for(let item of getCoupon){
+      //    amount += item.totalQuantity - item.availedQuantity;
+      //   let res = amount+remaining 
+      //   // return res
+      // }
         try {
             let newcoupon = new couponModels({
                 couponName:req.body.couponName,
@@ -18,7 +25,8 @@ module.exports = {
                 validDateTill:validDateTill,
                 discountPercentage:req.body.discountPercentage,
                 type:req.body.type,
-                description:req.body.description
+                description:req.body.description,
+                // remaining:res
             });
             console.log("newcoupon", newcoupon);
             let createCoupon = await newcoupon.save();
@@ -59,5 +67,5 @@ module.exports = {
           });
         }
       },
-
+      
 }

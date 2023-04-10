@@ -1,12 +1,29 @@
 const marketingModel = require('../models/marketingModels');
 const fs = require ('fs')
 const path = require("path");
+const base64 = require('base-64');
 module.exports = {
     createMarketing: async (req, res) => {
-// const imageData = fs.readFileSync(req.file.path)
-// var base64Image = imageData.toString('base64');
 console.log("reqest",req.file);
-const fileName = req.file.path
+// imageArray = []
+// const fileName = req.files.map((img => {
+
+
+
+    // if (!img.originalname.match(/\.(jpg|jpeg|png)$/)) {
+    //     console.log('Please upload a valid image file');
+    //         // return cb(new Error('Please upload a valid image file'))
+    //     }
+
+
+//     console.log("img.originalname",img.originalname);
+//     if(img.originalname.includes('.jpg','.png','.jpeg')){ // cap JPG
+//       imageArray.push(img.filename)
+//     }
+//   }
+//     ));
+const fileName = req.file.filename
+console.log("fileName",fileName);
         try {
             // let newMarketing = new marketingModel(req.body)
             let newMarketing = new marketingModel({
@@ -14,7 +31,7 @@ const fileName = req.file.path
                 yourContent:req.body.yourContent,
                 targetCustomer:req.body.targetCustomer,
                 sendVia:req.body.sendVia,
-                addMedia:fileName
+                addMedia:fileName,
             })
             console.log("newMarketing", newMarketing);
 
@@ -119,6 +136,7 @@ const fileName = req.file.path
                     _id: req.body._id,
                 },
             );
+            console.log("deleteMarketing",deleteMarketing._id)
 
             if (!deleteMarketing) {
                 return res.status(400).send({
@@ -126,6 +144,8 @@ const fileName = req.file.path
                     status: false,
                 });
             } else {
+                console.log("deleteMarketing",deleteMarketing);
+        console.log("data",deleteMarketing);
                 return res.status(200).send({
                     message: "Delete Marketing Successfully",
                     status: true,

@@ -5,16 +5,22 @@ const couponSchema = new mongoose.Schema(
 
         couponName: {
             type: String,
-            // required: true,
+            required: true,
         },
         totalQuantity: {
             type: Number,
-            // required: true,
+            required: true,
         },
         availedQuantity: {
             type: Number,
-            // required: true,
+            required: true,
         },
+        // remaining: {
+        //     default:0
+        //     // type: Number,
+        //     // required: true,
+        // },
+        // remainer qunatity in front end
         createdFor: {
             type: String,
             // required: true
@@ -41,6 +47,7 @@ const couponSchema = new mongoose.Schema(
         },
         type:{
          type:String,
+         required:true
         },
         description:{
             type:String

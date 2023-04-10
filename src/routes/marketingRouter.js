@@ -28,11 +28,15 @@ const multerStorage = multer.diskStorage({
     },
   });
   const multerFilter = (req, file, cb) => {
-    if (file.mimetype) {
-      cb(null, true);
-    } else {
-      cb(new Error("Not a img File!!"), false);
-    }
+    // if (file.mimetype) {
+    //   cb(null, true);
+    // } else {
+    //   cb(new Error("Not a img File!!"), false);
+    // }
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error('Please upload a valid image file'))
+  }
+  cb("errror",undefined, true)
 
 }
 
