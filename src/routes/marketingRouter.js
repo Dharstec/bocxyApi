@@ -28,15 +28,15 @@ const multerStorage = multer.diskStorage({
     },
   });
   const multerFilter = (req, file, cb) => {
-    // if (file.mimetype) {
-    //   cb(null, true);
-    // } else {
-    //   cb(new Error("Not a img File!!"), false);
-    // }
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      return cb(new Error('Please upload a valid image file'))
-  }
-  cb("errror",undefined, true)
+    if (file.mimetype) {
+      cb(null, true);
+    } else {
+      cb(new Error("Not a img File!!"), false);
+    }
+  //   if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+  //     return cb(new Error('Please upload a valid image file'))
+  // }
+  // cb("errror",undefined, true)
 
 }
 
@@ -78,7 +78,7 @@ router.put("/updateMarketing", Marketing.updateMarketing);
  * @desc  Delete Marketing API
  * @access public
  * **/
-router.delete("/deleteMarketing", Marketing.deleteMarketing);
+router.delete("/deleteMarketing/:_id", Marketing.deleteMarketing);
 
 
 module.exports = router;

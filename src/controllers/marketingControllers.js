@@ -133,7 +133,7 @@ console.log("fileName",fileName);
         try {
             let deleteMarketing = await marketingModel.findOneAndDelete(
                 {
-                    _id: req.body._id,
+                    _id: req.params._id,
                 },
             );
             console.log("deleteMarketing",deleteMarketing._id)

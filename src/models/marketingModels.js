@@ -10,41 +10,32 @@ const marketingSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        targetCustomer: {
-            allCustomers: {
+        targetCustomer:
+            [{
                 type: String,
                 required: true,
+            }],
+        // {
+        //     allCustomers: {
+        //         type: String,
+        //         required: true,
 
-            },
-            maleOnly: {
-                type: String,
-                required: true,
+        //     },
+        //     maleOnly: {
+        //         type: String,
+        //         required: true,
 
-            },
-            femaleOnly: {
-                type: String,
-                required: true,
+        //     },
+        //     femaleOnly: {
+        //         type: String,
+        //         required: true,
 
-            }
-        },
-        sendVia: {
-            email: {
-                type: String,
-                required: true,
-
-            },
-            sms: {
-                type: String,
-                required: true,
-
-
-            },
-            whatsApp: {
-                type: String,
-                required: true,
-
-            }
-        },
+        //     }
+        // },
+        sendVia: [{
+            type: String,
+            required: true,
+        }],
         addMedia: {
             type: String,
             required: true,
