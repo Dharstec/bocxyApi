@@ -162,6 +162,31 @@ module.exports = {
             });
         }
     },
+    findCustomer: async (req, res) => {
+        try {
+          let findId = await customerModel.findOne({ _id: req.params._id  })
+    
+            if (!findId) {
+                return res.status(400).send({
+                    message: "No Record Found",
+                    status: false,
+                });
+            } else {
+                return res.status(200).send({
+                    message: "Success",
+                    status: true,
+                    data: findId,
+                });
+            }
+        } catch (error) {
+            console.log("errrrrr", error);
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error,
+            });
+        }
+    },
     forgetPassword: async (req, res) => {
         console.log("forget user password", req.body);
         try {

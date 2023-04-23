@@ -70,6 +70,9 @@ router.put("/updateCustomer", Customer.updateCustomer);
  * **/
 router.delete("/deleteCustomer/:_id", Customer.deleteCustomer);
 
+router.get("/findCustomer/:_id", Customer.findCustomer);
+
+
 /**
  * @api {POST} /Customer/resendOtp
  * @desc  Resend OTP API To Customer

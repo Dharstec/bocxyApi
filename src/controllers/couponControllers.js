@@ -135,8 +135,9 @@ module.exports = {
   },
 
   findCoupon: async (req, res) => {
+    console.log(req.params)
     try {
-      let findId = await couponModels.findOne({ _id: req.body._id  })
+      let findId = await couponModels.findOne({ _id: req.params._id  })
 
         if (!findId) {
             return res.status(400).send({
