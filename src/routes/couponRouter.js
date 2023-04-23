@@ -24,4 +24,8 @@ router.post("/createCoupon", Coupon.createCoupon);
 router.get("/getCoupon", Coupon.getCoupon);
 
 
+router.delete("/deleteCoupon/:_id", Coupon.deleteCoupon);
+
+
+
 module.exports = router;

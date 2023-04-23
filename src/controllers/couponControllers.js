@@ -26,7 +26,7 @@ module.exports = {
                 discountPercentage:req.body.discountPercentage,
                 type:req.body.type,
                 description:req.body.description,
-                // remaining:res
+                remaining:req.body.remaining
             });
             console.log("newcoupon", newcoupon);
             let createCoupon = await newcoupon.save();
@@ -67,5 +67,37 @@ module.exports = {
           });
         }
       },
-      
+      deleteCoupon: async (req, res) => {
+        console.log(req.params._id)
+        try {
+            let deleteCoupon = await couponModels.findByIdAndRemove(
+                {
+                    _id: req.params._id,
+                },
+            );
+            console.log("deleteCoupon", deleteCoupon)
+
+            if (!deleteCoupon) {
+                return res.status(400).send({
+                    message: "No Record Found",
+                    status: false,
+                });
+            } else {
+                console.log("deleteCoupon", deleteCoupon);
+                console.log("data", deleteCoupon);
+                return res.status(200).send({
+                    message: "Delete Coupon Successfully",
+                    status: true,
+                    data: deleteCoupon,
+                });
+            }
+        } catch (error) {
+            console.log("errrrrr", error);
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error,
+            });
+        }
+    }
 }

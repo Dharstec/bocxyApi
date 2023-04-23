@@ -15,11 +15,11 @@ const couponSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        // remaining: {
-        //     default:0
-        //     // type: Number,
-        //     // required: true,
-        // },
+        remaining: {
+            default:0,
+            type: Number,
+            required: true,
+        },
         // remainer qunatity in front end
         createdFor: {
             type: String,
@@ -46,7 +46,7 @@ const couponSchema = new mongoose.Schema(
             // required: true
         },
         type:{
-         type:String,
+         type:Array,
          required:true
         },
         description:{

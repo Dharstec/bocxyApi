@@ -131,13 +131,11 @@ module.exports = {
     },
     deleteMarketing: async (req, res) => {
         try {
-            let deleteMarketing = await marketingModel.findOneAndDelete(
+            let deleteMarketing = await marketingModel.findByIdAndRemove(
                 {
                     _id: req.params._id,
                 },
             );
-            console.log("deleteMarketing", deleteMarketing._id)
-
             if (!deleteMarketing) {
                 return res.status(400).send({
                     message: "No Record Found",
