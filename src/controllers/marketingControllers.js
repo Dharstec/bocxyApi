@@ -1,10 +1,7 @@
 const marketingModel = require('../models/marketingModels');
-const fs = require('fs')
-const path = require("path");
-const base64 = require('base-64');
 module.exports = {
     createMarketing: async (req, res) => {
-        console.log("reqest", req.file);
+        console.log("reqest", req.body);
         // imageArray = []
         // const fileName = req.files.map((img => {
 
@@ -22,8 +19,8 @@ module.exports = {
         //     }
         //   }
         //     ));
-        const fileName = req?.file?.filename
-        console.log("fileName", fileName);
+        // const fileName = req?.file?.filename
+        // console.log("fileName", fileName);
         try {
             // let newMarketing = new marketingModel(req.body)
             let newMarketing = new marketingModel({
@@ -31,7 +28,7 @@ module.exports = {
                 yourContent: req.body.yourContent,
                 targetCustomer: req.body.targetCustomer,
                 sendVia: req.body.sendVia,
-                addMedia: fileName,
+                addMedia: req.body.addMedia,
             })
             console.log("newMarketing", newMarketing);
 

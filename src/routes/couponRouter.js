@@ -23,6 +23,11 @@ router.post("/createCoupon", Coupon.createCoupon);
  * **/
 router.get("/getCoupon", Coupon.getCoupon);
 
+/**
+ * @api {DELETE} /Coupon/deleteCoupon/1234
+ * @desc  Delete Coupon API
+ * @access public
+ * **/
 
 router.delete("/deleteCoupon/:_id", Coupon.deleteCoupon);
 

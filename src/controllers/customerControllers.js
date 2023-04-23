@@ -308,10 +308,9 @@ module.exports = {
     },
     deleteCustomer: async (req, res) => {
         try {
-            let deleteCustomer = await customerModel.findOneAndDelete(
+            let deleteCustomer = await customerModel.findByIdAndRemove(
                 {
-                    email: req.body.email
-                    // _id: req.body._id
+                    _id: req.params._id,
                 },
             );
 
