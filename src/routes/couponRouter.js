@@ -32,5 +32,20 @@ router.get("/getCoupon", Coupon.getCoupon);
 router.delete("/deleteCoupon/:_id", Coupon.deleteCoupon);
 
 
+/**
+ * @api {PUT} /Coupon/updateCoupon
+ * @desc  PUT Coupon API
+ * @access public
+ * **/
+
+
+router.put("/updateCoupon", Coupon.updateCoupon);
+
+/**
+ * @api {POST} /Coupon/createCoupon
+ * @desc  Add Coupon API
+ * @access public
+ * **/
+router.post("/findCoupon", Coupon.findCoupon);
 
 module.exports = router;

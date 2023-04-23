@@ -99,5 +99,65 @@ module.exports = {
                 error: error,
             });
         }
+    },
+    updateCoupon: async (req, res) => {
+      try {
+          let updateCoupon = await couponModels.findOneAndUpdate(
+              {
+                  _id: req.body._id,
+              },
+              {
+                  $set: req.body,
+              },
+              { new: true }
+          );
+
+          if (!updateCoupon) {
+              return res.status(400).send({
+                  message: "No Record Found",
+                  status: false,
+              });
+          } else {
+              return res.status(200).send({
+                  message: "Updated Marketing Successfully",
+                  status: true,
+                  data: updateCoupon,
+              });
+          }
+      } catch (error) {
+          console.log("errrrrr", error);
+          return res.status(400).send({
+              message: "Something Went Wrong",
+              status: false,
+              error: error,
+          });
+      }
+  },
+
+  findCoupon: async (req, res) => {
+    try {
+      let findId = await couponModels.findOne({ _id: req.body._id  })
+
+        if (!findId) {
+            return res.status(400).send({
+                message: "No Record Found",
+                status: false,
+            });
+        } else {
+            return res.status(200).send({
+                message: "Success",
+                status: true,
+                data: findId,
+            });
+        }
+    } catch (error) {
+        console.log("errrrrr", error);
+        return res.status(400).send({
+            message: "Something Went Wrong",
+            status: false,
+            error: error,
+        });
     }
+},
+
 }
