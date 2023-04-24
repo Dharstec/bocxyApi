@@ -26,7 +26,7 @@ module.exports = {
                 discountPercentage:req.body.discountPercentage,
                 type:req.body.type,
                 description:req.body.description,
-                // remaining:res
+                remaining:req.body.remaining
             });
             console.log("newcoupon", newcoupon);
             let createCoupon = await newcoupon.save();
@@ -67,5 +67,98 @@ module.exports = {
           });
         }
       },
-      
+      deleteCoupon: async (req, res) => {
+        console.log(req.params._id)
+        try {
+            let deleteCoupon = await couponModels.findByIdAndRemove(
+                {
+                    _id: req.params._id,
+                },
+            );
+            console.log("deleteCoupon", deleteCoupon)
+
+            if (!deleteCoupon) {
+                return res.status(400).send({
+                    message: "No Record Found",
+                    status: false,
+                });
+            } else {
+                console.log("deleteCoupon", deleteCoupon);
+                console.log("data", deleteCoupon);
+                return res.status(200).send({
+                    message: "Delete Coupon Successfully",
+                    status: true,
+                    data: deleteCoupon,
+                });
+            }
+        } catch (error) {
+            console.log("errrrrr", error);
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error,
+            });
+        }
+    },
+    updateCoupon: async (req, res) => {
+      try {
+          let updateCoupon = await couponModels.findOneAndUpdate(
+              {
+                  _id: req.body._id,
+              },
+              {
+                  $set: req.body,
+              },
+              { new: true }
+          );
+
+          if (!updateCoupon) {
+              return res.status(400).send({
+                  message: "No Record Found",
+                  status: false,
+              });
+          } else {
+              return res.status(200).send({
+                  message: "Updated Marketing Successfully",
+                  status: true,
+                  data: updateCoupon,
+              });
+          }
+      } catch (error) {
+          console.log("errrrrr", error);
+          return res.status(400).send({
+              message: "Something Went Wrong",
+              status: false,
+              error: error,
+          });
+      }
+  },
+
+  findCoupon: async (req, res) => {
+    console.log(req.params)
+    try {
+      let findId = await couponModels.findOne({ _id: req.params._id  })
+
+        if (!findId) {
+            return res.status(400).send({
+                message: "No Record Found",
+                status: false,
+            });
+        } else {
+            return res.status(200).send({
+                message: "Success",
+                status: true,
+                data: findId,
+            });
+        }
+    } catch (error) {
+        console.log("errrrrr", error);
+        return res.status(400).send({
+            message: "Something Went Wrong",
+            status: false,
+            error: error,
+        });
+    }
+},
+
 }

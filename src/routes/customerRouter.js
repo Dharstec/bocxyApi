@@ -68,7 +68,10 @@ router.put("/updateCustomer", Customer.updateCustomer);
  * @desc  Delete Customer API
  * @access public
  * **/
-router.delete("/deleteCustomer", Customer.deleteCustomer);
+router.delete("/deleteCustomer/:_id", Customer.deleteCustomer);
+
+router.get("/findCustomer/:_id", Customer.findCustomer);
+
 
 /**
  * @api {POST} /Customer/resendOtp
