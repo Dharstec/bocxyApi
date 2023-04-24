@@ -5,7 +5,7 @@ var validDateTill= moment().add(10, 'days').calendar();
 var createdDate= moment().format()
 module.exports = {
     createCoupon: async (req, res) => {
-      let getCoupon = await couponModels.find({});
+      // let getCoupon = await couponModels.find({});
       // let remaining=0;
       // for(let item of getCoupon){
       //    amount += item.totalQuantity - item.availedQuantity;
