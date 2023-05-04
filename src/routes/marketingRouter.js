@@ -45,11 +45,6 @@ const uploadData = multer({
     fileFilter: multerFilter,
   });
 
-
-
-
-
-
 router.post("/createMarketing", uploadData.single('myFile'), Marketing.createMarketing);
 /**
  * @api {GET} /Marketing/getMarketing

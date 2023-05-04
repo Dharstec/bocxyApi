@@ -1,48 +1,44 @@
 const productModel = require("../models/productModels");
 module.exports = {
-  createProduct: async (req,res)=>{
-    console.log("req",req.files);
-    // console.log("req.file",req.files)
+  createProduct: async (req, res) => {
+    // console.log("req", req.files);
     imageArray = []
     videoArray = []
-    const fileName = req.files.map((img => {
-      console.log("img.originalname",img.originalname);
-      if(img.originalname.includes('.jpg','.png','.jpeg')){ // cap JPG
+    req?.files && req.files.map((img => {
+      console.log("img.originalname", img.originalname);
+      if (img.originalname.includes('.jpg', '.png', '.jpeg')) { // cap JPG
         imageArray.push(img.filename)
-      }else if(img.originalname.includes('.mp4')){
+      } else if (img.originalname.includes('.mp4')) {
         videoArray.push(img.filename)
-
       }
     }
-      ));
-    console.log("img controller",imageArray);
+    ));
+    console.log("img controller", imageArray);
 
-    console.log("fileName controller",videoArray);
-        try {
-      // let newproduct = new productModel(req.body)
-      let newproduct   = new productModel({
-        productName:req.body.productName,
-        productImages:imageArray, 
-        productVideos:videoArray,
-        discountPrice:req.body.discountPrice,
-        actualPrice:req.body.actualPrice,
-        description:req.body.description,
-        stock:req.body.stock,
-        category:req.body.category,
-        stone:req.body.stone,
-        colour:req.body.colour,
-        style:req.body.style,
-        for:req.body.for,
-        gift:req.body.gift,
-        personalised:req.body.personalised,
-        latest:req.body.latest,
-        collections:req.body.collections,
-        viewedBy:req.body.viewedBy,
-        noOfViews:req.body.noOfViews,
-        noOfSales:req.body.noOfSales,
-        productAge:req.body.productAge,
-        referenceId:req.body.referenceId,
-
+    console.log("fileName controller", videoArray);
+    try {
+      let newproduct = new productModel({
+        productImages: imageArray,
+        productVideos: videoArray,
+        productName: req.body.productName,
+        discountPrice: req.body.discountPrice,
+        actualPrice: req.body.actualPrice,
+        description: req.body.description,
+        stock: req.body.stock,
+        category: req.body.category,
+        stone: req.body.stone,
+        colour: req.body.colour,
+        style: req.body.style,
+        for: req.body.for,
+        gift: req.body.gift,
+        personalised: req.body.personalised,
+        latest: req.body.latest,
+        collections: req.body.collections,
+        viewedBy: req.body.viewedBy,
+        noOfViews: req.body.noOfViews,
+        noOfSales: req.body.noOfSales,
+        productAge: req.body.productAge,
+        referenceId: req.body.referenceId
       })
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
@@ -148,7 +144,7 @@ module.exports = {
           _id: req.params._id  // _id:req.body._id is not working in frontend
         },
       );
-      console.log("deleteProduct-1",deleteProduct._id)
+      console.log("deleteProduct-1", deleteProduct._id)
 
       if (!deleteProduct) {
         return res.status(400).send({
@@ -156,8 +152,8 @@ module.exports = {
           status: false,
         });
       } else {
-        console.log("deleteProduct",deleteProduct);
-        console.log("data",deleteProduct);
+        console.log("deleteProduct", deleteProduct);
+        console.log("data", deleteProduct);
         return res.status(200).send({
           message: "Delete Product Successfully",
           status: true,
