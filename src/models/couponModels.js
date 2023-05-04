@@ -11,12 +11,11 @@ const couponSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        availedQuantity: {
-            type: Number,
-            required: true,
-        },
+        // availedQuantity: {
+        //     type: Number,
+        //     required: true,
+        // },
         remaining: {
-            default:0,
             type: Number,
             required: true,
         },
@@ -51,7 +50,14 @@ const couponSchema = new mongoose.Schema(
         },
         description:{
             type:String
+        },
+        limit:{
+            type:Number
+        },
+        couponStatus:{
+            type:Boolean
         }
+
 
 
     },
