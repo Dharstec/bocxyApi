@@ -4,17 +4,14 @@ module.exports = {
     imageArray = []
     videoArray = []
     req?.files && req.files.map((img => {
-      console.log("img.originalname", img.originalname);
+      // console.log("img.originalname", img.originalname);
       if (img.originalname.includes('.jpg', '.png', '.jpeg')) { // cap JPG
-        imageArray.push(img.filename)
+        imageArray.push(`${process.env.URLLIVE}/${img.filename}`)
       } else if (img.originalname.includes('.mp4')) {
-        videoArray.push(img.filename)
+        videoArray.push(`${process.env.URLLIVE}/${img.filename}`)
       }
     }
     ));
-    console.log("img controller", imageArray);
-
-    console.log("fileName controller", videoArray);
     try {
       let newproduct = new productModel({
         productImages: imageArray,
@@ -40,7 +37,7 @@ module.exports = {
         referenceId: req.body.referenceId,
         barcode:req.body.barcode,
       })
-      console.log("newproduct", newproduct);
+      // console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
       console.log("createProduct", createProduct);
       return res.status(200).send({

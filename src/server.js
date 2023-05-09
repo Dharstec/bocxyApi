@@ -7,7 +7,7 @@ const path = require('path')
 app.use(cors());
 app.use(bodyParser.json({ limit: "500mb" }));
 
-app.use(express.static(path.join(__dirname, '../public/files')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 require("./baseRouter")(app);
 

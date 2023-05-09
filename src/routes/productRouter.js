@@ -1,9 +1,6 @@
 const router = require("express").Router();
 const multer = require("multer");
-const upload = multer({ dest: "public/files" });
-
 const Product = require("../controllers/productControllers");
-// const Fileupload = require("../middleware/multer");
 
 router.get('/', async (req,res,next)=>{
 return res.status(200).json({
@@ -34,20 +31,6 @@ const multerFilter = (req, file, cb) => {
   } else {
     cb(new Error("Not a img File!!"), false);
   }
-//file size code 
-
-//   const fileSize = parseInt(req.headers["content-length"])
-// console.log("fileSize",fileSize);
-//   if ((file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "application/octet-stream") && fileSize <= 1000000) {
-//     console.log("file.mimetype",file.mimetype,"fileSize",fileSize);
-//       cb(null, true)
-//   } else if (file.mimetype === "video/mp4" ) {
-//     // && fileSize <= 5e+6
-//       cb(null, true)
-//   } else {
-//     cb(new Error("file size img 1mb & vi 5mb only!!"), false);
-//       cb(null, false)
-//   }
 };
 const uploadData = multer({
   storage: multerStorage,
@@ -56,9 +39,7 @@ const uploadData = multer({
 
 router.post(
     "/createProduct", 
-    // uploadSingleImage.array('files'),
-    // upload.array('files'),
-    uploadData.array('myFile'),
+    uploadData.array('files'),
     Product.createProduct
   );
 
