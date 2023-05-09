@@ -95,6 +95,7 @@ const productSchema = new mongoose.Schema(
         noOfViews: Number,
         noOfSales: Number,
         productAge: String,
+        barcode: String
     },
     { timestamps: true }
 );

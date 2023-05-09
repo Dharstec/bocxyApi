@@ -1,7 +1,6 @@
 const productModel = require("../models/productModels");
 module.exports = {
   createProduct: async (req, res) => {
-    // console.log("req", req.files);
     imageArray = []
     videoArray = []
     req?.files && req.files.map((img => {
@@ -34,11 +33,12 @@ module.exports = {
         personalised: req.body.personalised,
         latest: req.body.latest,
         collections: req.body.collections,
-        viewedBy: req.body.viewedBy,
-        noOfViews: req.body.noOfViews,
-        noOfSales: req.body.noOfSales,
-        productAge: req.body.productAge,
-        referenceId: req.body.referenceId
+        viewedBy: req?.body?.viewedBy,
+        noOfViews: req?.body?.noOfViews,
+        noOfSales: req?.body?.noOfSales,
+        productAge: req?.body?.productAge,
+        referenceId: req.body.referenceId,
+        barcode:req.body.barcode,
       })
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
@@ -83,7 +83,7 @@ module.exports = {
   },
   getOneProduct: async (req, res) => {
     try {
-      let getOneProduct = await productModel.findOne({ _id: req.body._id });
+      let getOneProduct = await productModel.findOne({ _id: req.params._id });
       if (!getOneProduct) {
         return res.status(400).send({
           message: "No Record Found",

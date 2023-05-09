@@ -74,7 +74,7 @@ router.get("/getProduct", Product.getProduct);
  * @desc  Get One Product API
  * @access public
  * **/
-router.get("/getOneProduct", Product.getOneProduct);
+router.get("/getOneProduct/:_id", Product.getOneProduct);
 
 /**
  * @api {UPDATE} /Product/updateProduct
