@@ -37,7 +37,7 @@ module.exports = {
         referenceId: req.body.referenceId,
         barcode:req.body.barcode,
       })
-      // console.log("newproduct", newproduct);
+      console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
       console.log("createProduct", createProduct);
       return res.status(200).send({
