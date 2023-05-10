@@ -4,10 +4,11 @@ module.exports = {
     imageArray = []
     videoArray = []
     req?.files && req.files.map((img => {
-      // console.log("img.originalname", img.originalname);
-      if (img.originalname.includes('.jpg', '.png', '.jpeg')) { // cap JPG
+      console.log("img.originalname", img.originalname);
+      if (`'${img.originalname}'`.includes('.jpg', '.png', '.jpeg','.webp')) { // cap JPG
+        console.log("img.originalname", img.originalname);
         imageArray.push(`${process.env.URLLIVE}/${img.filename}`)
-      } else if (img.originalname.includes('.mp4')) {
+      } else if (`'${img.originalname}'`.includes('.mp4')) {
         videoArray.push(`${process.env.URLLIVE}/${img.filename}`)
       }
     }
@@ -109,7 +110,6 @@ module.exports = {
         },
         {
           $set: req.body,
-
         },
         { new: true }
       );
