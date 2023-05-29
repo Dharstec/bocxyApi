@@ -2,11 +2,11 @@ const router = require("express").Router();
 const multer = require("multer");
 const Product = require("../controllers/productControllers");
 
-router.get('/', async (req,res,next)=>{
-return res.status(200).json({
-    title:"Express Testing",
-    message:"the app is working properl!!"
-})
+router.get('/', async (req, res, next) => {
+  return res.status(200).json({
+    title: "Express Testing",
+    message: "the app is working properl!!"
+  })
 })
 /**
  * @api {POST} /Product/createProduct
@@ -38,10 +38,16 @@ const uploadData = multer({
 });
 
 router.post(
-    "/createProduct", 
-    uploadData.array('files'),
-    Product.createProduct
-  );
+  "/createProductImages",
+  uploadData.array('files'),
+  Product.createProductImage
+);
+
+
+router.post(
+  "/createProduct",
+  Product.createProduct
+);
 
 /**
  * @api {GET} /Product/getProduct
@@ -49,6 +55,8 @@ router.post(
  * @access public
  * **/
 router.get("/getProduct", Product.getProduct);
+router.get("/getDashboard", Product.getDashboard);
+
 
 /**
  * @api {GET ONE Product} /Product/getOneProduct

@@ -1,22 +1,25 @@
 const productModel = require("../models/productModels");
+const orderModel = require("../models/orderModels");
+const customerModel = require("../models/customerModels");
+
 module.exports = {
   createProduct: async (req, res) => {
-    imageArray = []
-    videoArray = []
-    req?.files && req.files.map((img => {
-      console.log("img.originalname", img.originalname);
-      if (`'${img.originalname}'`.includes('.jpg', '.png', '.jpeg','.webp')) { // cap JPG
-        console.log("img.originalname", img.originalname);
-        imageArray.push(`${process.env.URLLIVE}/${img.filename}`)
-      } else if (`'${img.originalname}'`.includes('.mp4')) {
-        videoArray.push(`${process.env.URLLIVE}/${img.filename}`)
-      }
-    }
-    ));
+    // imageArray = []
+    // videoArray = []
+    // req?.files && req.files.map((img => {
+    //   console.log("img.originalname", img.originalname);
+    //   if (`'${img.originalname}'`.includes('.jpg', '.png', '.jpeg')) { // cap JPG
+    //     console.log("img.originalname", img.originalname, `'${img.originalname}'`.includes('.jpg', '.png', '.jpeg', '.webp'));
+    //     imageArray.push(`${process.env.URLLIVE}/${img.filename}`)
+    //   } else if (`'${img.originalname}'`.includes('.mp4')) {
+    //     videoArray.push(`${process.env.URLLIVE}/${img.filename}`)
+    //   }
+    // }
+    // ));
     try {
       let newproduct = new productModel({
-        productImages: imageArray,
-        productVideos: videoArray,
+        productImages: req.body.imageArray,
+        productVideos: req.body.videoArray,
         productName: req.body.productName,
         discountPrice: req.body.discountPrice,
         actualPrice: req.body.actualPrice,
@@ -36,7 +39,7 @@ module.exports = {
         noOfSales: req?.body?.noOfSales,
         productAge: req?.body?.productAge,
         referenceId: req.body.referenceId,
-        barcode:req.body.barcode,
+        barcode: req.body.barcode,
       })
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
@@ -51,6 +54,39 @@ module.exports = {
       console.log("error", err);
       return res.status(400).send({
         message: "Please Enter All Details",
+        status: false,
+      });
+    }
+  },
+  createProductImage: async (req, res) => {
+    imageArray = []
+    videoArray = []
+    req.files.map((img => {
+      console.log("img.originalname", img.originalname);
+      if (`'${img.originalname}'`.includes('.mp4')) {
+        console.log("Video", `${process.env.URLLIVE}/${img.filename}`)
+        videoArray.push(`${process.env.URLLIVE}/${img.filename}`)
+      }
+      else {
+        console.log("img.originalname", img.originalname, `'${img.originalname}'`.includes('.jpg', '.png', '.jpeg', '.webp'));
+        imageArray.push(`${process.env.URLLIVE}/${img.filename}`)
+      }
+    }
+    ));
+    try {
+      return res.status(200).send({
+        message: "Image Added Successfully",
+        status: true,
+        data: {
+          imageArray: imageArray,
+          videoArray: videoArray
+        },
+      });
+
+    } catch (err) {
+      console.log("error", err);
+      return res.status(400).send({
+        message: "Please Check Admin",
         status: false,
       });
     }
@@ -72,6 +108,38 @@ module.exports = {
         });
       }
     } catch (error) {
+      return res.status(400).send({
+        message: "Something Went Wrong",
+        status: false,
+        error: error,
+      });
+    }
+  },
+  getDashboard: async (req, res) => {
+    try {
+
+      let customer = await customerModel.find({});
+      let order = await orderModel.find({});
+      let datas = await Promise.all([customer, order]).then((values) => {
+        return values
+      });
+      if (!datas) {
+        return res.status(400).send({
+          message: "No Record Found",
+          status: false,
+        });
+      } else {
+        return res.status(200).send({
+          message: "Get All product",
+          status: true,
+          data: [{ totalRecords: 0, title: 'Sales', icon: 'point_of_sale', rate: 0, ratio: 0 },
+          { totalRecords: datas[1].length, title: 'Orders', icon: 'local_mall', rate: 0, ratio: 0 },
+          { totalRecords: 0, title: 'Visitor', icon: 'person', rate: 0, ratio: 0 },
+          { totalRecords: datas[0].length, title: 'Customers', icon: 'groups', rate: 0, ratio: 0 }]
+        });
+      }
+    } catch (error) {
+      console.log(error)
       return res.status(400).send({
         message: "Something Went Wrong",
         status: false,
