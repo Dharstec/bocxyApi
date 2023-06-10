@@ -1,13 +1,17 @@
 const orderModel = require("../models/orderModels");
+const cusModel = require("../models/customerModels")
 const { template } = require('handlebars');
 const orderpdf = require("./documentPDFFiles")
 
 module.exports = {
   createOrder: async (req, res) => {
     try {
+
       let neworder = new orderModel(req.body)
       console.log("neworder", neworder);
       let createOrder = await neworder.save();
+      let cusMo = new cusModel({ cartProductDetails: [] })
+      await cusMo.save();
       console.log("createOrder", createOrder);
       return res.status(200).send({
         message: "Order Created Successfully",
