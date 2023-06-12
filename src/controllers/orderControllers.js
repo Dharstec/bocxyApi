@@ -6,16 +6,20 @@ const orderpdf = require("./documentPDFFiles")
 module.exports = {
   createOrder: async (req, res) => {
     try {
-
       let neworder = new orderModel(req.body)
       console.log("neworder", neworder);
       let createOrder = await neworder.save();
       let updateCusCart = await cusModel.findOneAndUpdate(
         {
-          phoneNumber: req.body.customerPhoneNumber,
+          email: req.body.customerEmailId,
         },
         {
-          $set: { cartProductDetails: [] },
+          $unset: {
+            cartProductDetails: []
+          },
+          $set: {
+            isCartProductDetails: "0"
+          },
         },
         { new: true }
       );

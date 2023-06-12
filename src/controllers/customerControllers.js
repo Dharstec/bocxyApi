@@ -164,8 +164,8 @@ module.exports = {
     },
     findCustomer: async (req, res) => {
         try {
-          let findId = await customerModel.findOne({ _id: req.params._id  })
-    
+            let findId = await customerModel.findOne({ _id: req.params._id })
+
             if (!findId) {
                 return res.status(400).send({
                     message: "No Record Found",
@@ -519,9 +519,10 @@ module.exports = {
 
     removeCart: async (req, res) => {
         try {
-            let removeCart = await customerModel.findOneAndUpdate({
-                email: req.body.email,
-            },
+            let removeCart = await customerModel.findOneAndUpdate(
+                {
+                    email: req.body.email,
+                },
                 {
                     $unset: {
 
