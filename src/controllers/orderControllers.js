@@ -10,8 +10,16 @@ module.exports = {
       let neworder = new orderModel(req.body)
       console.log("neworder", neworder);
       let createOrder = await neworder.save();
-      let cusMo = new cusModel({ cartProductDetails: [] })
-      await cusMo.save();
+      let updateCusCart = await cusModel.findOneAndUpdate(
+        {
+          phoneNumber: req.body.customerPhoneNumber,
+        },
+        {
+          $set: { cartProductDetails: [] },
+        },
+        { new: true }
+      );
+      console.log(updateCusCart, "updateCusCart")
       console.log("createOrder", createOrder);
       return res.status(200).send({
         message: "Order Created Successfully",
