@@ -61,18 +61,19 @@ module.exports = {
   createProductImage: async (req, res) => {
     imageArray = []
     videoArray = []
-    req.files.map((img => {
+    req.files.map((img) => {
       console.log("img.originalname", img.originalname);
-      if (`'${img.originalname}'`.includes('.mp4')) {
-        console.log("Video", `${process.env.URLLIVE}/${img.filename}`)
-        videoArray.push(`${process.env.URLLIVE}/${img.filename}`)
+      const fileExtension = img.originalname.split('.').pop().toLowerCase();
+      if (['jpg', 'png', 'jpeg', 'webp'].includes(fileExtension)) {
+        console.log("Image", `${process.env.URLLIVE}/${img.filename}`);
+        imageArray.push(`${process.env.URLLIVE}/${img.filename}`);
+      } else if (fileExtension === 'mp4') {
+        console.log("Video", `${process.env.URLLIVE}/${img.filename}`);
+        videoArray.push(`${process.env.URLLIVE}/${img.filename}`);
+      } else {
+        console.log("Unsupported file type:", img.originalname);
       }
-      else {
-        console.log("img.originalname", img.originalname, `'${img.originalname}'`.includes('.jpg', '.png', '.jpeg', '.webp'));
-        imageArray.push(`${process.env.URLLIVE}/${img.filename}`)
-      }
-    }
-    ));
+    });
     try {
       return res.status(200).send({
         message: "Image Added Successfully",
