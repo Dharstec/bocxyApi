@@ -9,8 +9,8 @@ router.get('/', async (req, res, next) => {
     })
 })
 /**
- * @api {POST} /Customer/createCustomer
- * @desc  Add Customer API
+ * @api {POST} /admin/createStoreAdmin
+ * @desc  Add store admin API
  * @access public
  * **/
 router.post("/createStoreAdmin", Admin.createStoreAdmin);
@@ -42,8 +42,8 @@ router.post('/forgetPassword',Admin.forgetPassword);
  * **/
 router.post('/resetPassword',Admin.resetPassword);
 /**
- * @api {GET} /Customer/getCustomer
- * @desc  Get Customer API
+ * @api {GET} /admin/getAllStores
+ * @desc  Get all Store API
  * @access public
  * **/
 router.get("/getAllStores", Admin.getAllStoreAdmin);
@@ -56,19 +56,19 @@ router.get("/getAllStores", Admin.getAllStoreAdmin);
 router.post("/getOneCustomer", Admin.getOneCustomer);
 
 /**
- * @api {UPDATE} /Customer/updateCustomer
- * @desc  Update Customer API
+ * @api {UPDATE} /admin/updateStoreAdmin
+ * @desc  Update Store Admin API
  * @access public
  * **/
 
-router.put("/updateCustomer", Admin.updateCustomer);
+router.put("/updateStoreAdmin", Admin.updateStoreAdmin);
 
 /**
- * @api {DELETE} /Customer/deleteCustomer
- * @desc  Delete Customer API
+ * @api {DELETE} /admin/deleteStoreAdmin
+ * @desc  Delete Store Admin API
  * @access public
  * **/
-router.delete("/deleteCustomer/:_id", Admin.deleteCustomer);
+router.delete("/deleteStoreAdmin/:_id", Admin.deleteStoreAdmin);
 
 router.get("/findCustomer/:_id", Admin.findCustomer);
 

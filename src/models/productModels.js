@@ -44,23 +44,19 @@ const productSchema = new mongoose.Schema(
                 required: true
             }
         ],
-        stone: [
+        brand: [
             {
                 type: String,
                 required: true
             }
         ],
-        colour: [
+        formulation: [
             {
                 type: String,
                 required: true
             }
         ],
-        style: [{
-            type: String,
-            required: true
-        }],
-        for: [{
+        avgCustomerRating: [{
             type: String,
             required: true
         }],

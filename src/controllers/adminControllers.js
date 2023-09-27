@@ -20,7 +20,7 @@ require("dotenv").config();
 
 module.exports = {
     createStoreAdmin(req, res) {
-        adminModel.find({ email: req.body.email},{role_flag:'STORE_ADMIN' })
+        adminModel.find({ email: req.body.email})
             .exec(function (err, reuslt) {
                 if (err) {
                     console.log("Error in getting data in admin model", err);
@@ -298,9 +298,10 @@ module.exports = {
             });
         }
     },
-    updateCustomer: async (req, res) => {
+    updateStoreAdmin: async (req, res) => {
         try {
-            let updateCustomer = await customerModel.findOneAndUpdate(
+        //    let email_exist = adminModel.find({ email: req.body.email})
+            let updateStoreAdmin = await adminModel.findOneAndUpdate(
                 {
                     email: req.body.email,
                     // _id: req.body._id,
@@ -312,16 +313,16 @@ module.exports = {
                 { new: true }
             );
 
-            if (!updateCustomer) {
+            if (!updateStoreAdmin) {
                 return res.status(400).send({
                     message: "No Record Found",
                     status: false,
                 });
             } else {
                 return res.status(200).send({
-                    message: "Update Customer Successfully",
+                    message: "Update Store Admin Successfully",
                     status: true,
-                    data: updateCustomer,
+                    data: updateStoreAdmin,
                 });
             }
         } catch (error) {
@@ -332,24 +333,24 @@ module.exports = {
             });
         }
     },
-    deleteCustomer: async (req, res) => {
+    deleteStoreAdmin: async (req, res) => {
         try {
-            let deleteCustomer = await customerModel.findByIdAndRemove(
+            let deleteStoreAdmin = await customerModel.findByIdAndRemove(
                 {
                     _id: req.params._id,
                 },
             );
 
-            if (!deleteCustomer) {
+            if (!deleteStoreAdmin) {
                 return res.status(400).send({
                     message: "No Record Found",
                     status: false,
                 });
             } else {
                 return res.status(200).send({
-                    message: "Delete Customer Successfully",
+                    message: "Delete Store Admin Successfully",
                     status: true,
-                    data: deleteCustomer,
+                    data: deleteStoreAdmin,
                 });
             }
         } catch (error) {
