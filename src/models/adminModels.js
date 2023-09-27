@@ -28,6 +28,14 @@ const adminSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        super_admin_id: {
+            type: String,
+            required: false
+        },
+        role_flag: {
+            type: String,
+            required: false
+        },
 
     },
     { timestamps: true }

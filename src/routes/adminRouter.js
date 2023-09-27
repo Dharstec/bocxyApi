@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
  * @desc  Add Customer API
  * @access public
  * **/
-router.post("/signup", Admin.createStoreAdmin);
+router.post("/createStoreAdmin", Admin.createStoreAdmin);
 
 /**
  * @api {POST} /Customer/loginCustomer
@@ -46,7 +46,7 @@ router.post('/resetPassword',Admin.resetPassword);
  * @desc  Get Customer API
  * @access public
  * **/
-router.get("/getAllCustomer", Admin.getAllCustomer);
+router.get("/getAllStores", Admin.getAllStoreAdmin);
 
 /**
  * @api {GET ONE Customer} /Customer/getOneCustomer

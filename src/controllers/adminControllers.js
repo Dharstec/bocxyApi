@@ -120,7 +120,7 @@ module.exports = {
     adminLogin: async (req, res) => {
         console.log("body",req.body)
         try {
-            customerModel.findOne({ email: req.body.email }, { status: 0 }, (err, adminData) => {
+            adminModel.findOne({ email: req.body.email }, { status: 0 }, (err, adminData) => {
                 console.log("adminData",adminData)
                 if (err){
                     return res.status(400).send({
@@ -142,6 +142,16 @@ module.exports = {
                                 });
                             }   
                             else{
+                                let response={
+                                    "_id": adminData._id,
+                                    "store_name": adminData.store_name,
+                                    "address": adminData.address,
+                                    "phone_no": adminData.phone_no,
+                                    "co_ordinates": adminData.co_ordinates,
+                                    "role_flag": adminData.role_flag,
+                                    "email": adminData.email
+                                   
+                                }
                                 return res.status(200).send({
                                     status: true,
                                     token: jwt.sign(
@@ -192,14 +202,14 @@ module.exports = {
     forgetPassword: async (req, res) => {
         console.log("forget user password", req.body);
         try {
-            let findUser = await customerModel.findOne({ email: req.body.email });
+            let findUser = await adminModel.findOne({ email: req.body.email });
             if (!findUser) {
                 return message = "please enter the valid email";
             }
             var num
             num = Math.floor((Math.random() * 1000000));
 
-            findUser = await customerModel.findOneAndUpdate({ email: req.body.email },
+            findUser = await adminModel.findOneAndUpdate({ email: req.body.email },
                 { $set: { otp: num, isOtpVerified: '0' } }, { new: true });
             sendEmail(num, req.body.email, findUser.firstName)
             return res.send({
@@ -221,10 +231,10 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(req.body.password, salt)
             req.body.password = hashedPassword
 
-            let resetpassword = await customerModel.findOneAndUpdate({ email: req.body.email },
+            let resetpassword = await adminModel.findOneAndUpdate({ email: req.body.email },
                 { $set: { password: req.body.password } }, { new: true })
             if (!resetpassword) {
-                return message = "please enter a customer details"
+                return message = "please enter a admin details"
             }
             console.log("password changed", resetpassword);
             return res.send({
@@ -238,11 +248,9 @@ module.exports = {
 
         }
     },
-    getAllCustomer: async (req, res) => {
+    getAllStoreAdmin: async (req, res) => {
         try {
-            let getCustomer = await customerModel.find({})
-            // .populate('wishlistProductIdDetails').populate('orderHistory')
-            // .populate('cartProductDetails.productId');
+            let getCustomer = await adminModel.find({ role_flag: "STORE_ADMIN" })
 
             if (!getCustomer) {
                 return res.status(400).send({
@@ -251,7 +259,7 @@ module.exports = {
                 });
             } else {
                 return res.status(200).send({
-                    message: "Get All Customer",
+                    message: "Get All Stores",
                     status: true,
                     data: getCustomer,
                 });
@@ -268,16 +276,7 @@ module.exports = {
     getOneCustomer: async (req, res) => {
         try {
             let getOneCustomer = await customerModel.findOne({ email: req.body.email })
-            // .populate('wishlistProductIdDetails')
-            // .populate({
-            //     path:'cartProductDetails',
-            //     populate:{
-            //        path: 'productId'
-            //     }
-            // })
-            // .populate('orderHistory')
-            // .populate('cartProductDetails.productId')
-            // .populate('couponDetails')
+          
             if (!getOneCustomer) {
                 return res.status(400).send({
                     message: "No Record Found",
