@@ -1,32 +1,21 @@
 const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
-const productSchema = new mongoose.Schema(
+const inventorySchema = new mongoose.Schema(
     {
-        // productId:{ 
-        //     type:String,
-        //     required: true,
-        //     default: uuidv4,
-        // },
-        //   type: Number,
-        //   required:true
         productName: {
             type: String,
             required: true,
         },
-        productImages: [{
+        productId: {
             type: String,
-            required: true,
-        }],
-        productVideos: [{
-            type: String,
-            required: true,
-        }],
-        discountPrice: {
-            type: Number,
-            required: true
+            required: false,
         },
-        actualPrice: {
+        quantity: {
             type: Number,
+            required: true,
+        },
+        userId: {
+            type: String,
             required: true
         },
         description: {
@@ -91,5 +80,5 @@ const productSchema = new mongoose.Schema(
     { timestamps: true }
 );
 //refe id for product for our referece 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("inventory", inventorySchema);
 

@@ -1,4 +1,5 @@
 const productModel = require("../models/productModels");
+const inventoryModel = require("../models/inventoryModels");
 const orderModel = require("../models/orderModels");
 const customerModel = require("../models/customerModels");
 
@@ -24,7 +25,6 @@ module.exports = {
         discountPrice: req.body.discountPrice,
         actualPrice: req.body.actualPrice,
         description: req.body.description,
-        stock: req.body.stock,
         category: req.body.category,
         brand: req.body.brand,
         formulation: req.body.formulation,
@@ -43,6 +43,30 @@ module.exports = {
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
       console.log("createProduct", createProduct);
+      // let inventory = new inventoryModel({
+      //   productImages: req.body.imageArray,
+      //   productVideos: req.body.videoArray,
+      //   productName: req.body.productName,
+      //   productId: createProduct._id,
+      //   discountPrice: req.body.discountPrice,
+      //   actualPrice: req.body.actualPrice,
+      //   description: req.body.description,
+      //   category: req.body.category,
+      //   quantity: 0,
+      //   brand: req.body.brand,
+      //   formulation: req.body.formulation,
+      //   avgCustomerRating: req.body.avgCustomerRating,
+      //   collections: req.body.collections,
+      //   gift: req.body.gift,
+      //   personalised: req.body.personalised,
+      //   latest: req.body.latest,
+      //   viewedBy: req?.body?.viewedBy,
+      //   noOfViews: req?.body?.noOfViews,
+      //   noOfSales: req?.body?.noOfSales,
+      //   productAge: req?.body?.productAge,
+      //   referenceId: req.body.referenceId,
+      //   barcode: req.body.barcode,
+      // })
       return res.status(200).send({
         message: "Product Created Successfully",
         status: true,

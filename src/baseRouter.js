@@ -5,10 +5,11 @@ const Coupon = require('./routes/couponRouter');
 const Marketing =require('./routes/marketingRouter')
 const Admin =require('./routes/adminRouter')
 module.exports = function (app) {
-    app.use("/Product", Product);
-    app.use('/Customer', Customer);
+    app.use("/product", Product);
+    app.use("/inventory", Product);
+    app.use('/customer', Customer);
     app.use('/admin', Admin);
-    app.use('/Order', Order);
-    app.use('/Coupon', Coupon);
-    app.use('/Marketing',Marketing)
+    app.use('/order', Order);
+    app.use('/coupon', Coupon);
+    app.use('/marketing',Marketing)
 };
