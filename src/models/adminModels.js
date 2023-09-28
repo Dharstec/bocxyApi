@@ -20,6 +20,13 @@ const adminSchema = new mongoose.Schema(
             type: String,
             required: false
         },
+        otp: {
+            type: Number
+        },
+        isOtpVerified: {
+            type: Number,
+            default: 0
+        },
         email: {
             type: String,
             required: true

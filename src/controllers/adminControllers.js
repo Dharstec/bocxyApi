@@ -300,31 +300,72 @@ module.exports = {
     },
     updateStoreAdmin: async (req, res) => {
         try {
-        //    let email_exist = adminModel.find({ email: req.body.email})
-            let updateStoreAdmin = await adminModel.findOneAndUpdate(
-                {
-                    email: req.body.email,
-                    // _id: req.body._id,
-                },
-                {
-                    $set: req.body,
-
-                },
-                { new: true }
-            );
-
-            if (!updateStoreAdmin) {
-                return res.status(400).send({
-                    message: "No Record Found",
-                    status: false,
-                });
-            } else {
-                return res.status(200).send({
-                    message: "Update Store Admin Successfully",
-                    status: true,
-                    data: updateStoreAdmin,
-                });
-            }
+            
+            adminModel.find({ email: req.body.email,_id:{$ne:req.body._id}})
+            .exec(async function (err, reuslt) {
+                if (err) {
+                    console.log("Error in getting data in admin model", err);
+                }
+                else {
+                    console.log(reuslt)
+                    if (reuslt.length > 0) {
+                        res.send({
+                            message: "Email id is already exist",
+                            status: false,
+                        })
+                    }
+                    else{
+                        bcrypt.genSalt(10, (err, salt) => {
+                            if (err) {
+                                console.log("genSalt Error", err);
+                            }
+                            else {
+                                bcrypt.hash( req.body.password, salt, (err, hash) => {
+                                    if (err) {
+                                        console.log("bcrypt Error", err);
+                                    }
+                                    else {
+                                        req.body.password = hash
+                                    }
+                                })
+                            }
+                        })
+                        let updateStoreAdmin = adminModel.findOneAndUpdate(
+                            {
+                                _id:req.body._id,
+                            },
+                            {
+                                $set: req.body,
+            
+                            },
+                            { new: true }
+                        ).exec(async function (err, updateResult) {
+                            if (err) {
+                                console.log("Error in updating data in admin model", err);
+                            }else{
+                                console.log(updateResult)
+                                if (!updateResult) {
+                                    return res.status(400).send({
+                                        message: "No Record Found",
+                                        status: false,
+                                    });
+                                } else {
+                                    
+                                    return res.status(200).send({
+                                        message: "Update Store Admin Successfully",
+                                        status: true,
+                                        data: updateResult,
+                                    });
+                                }
+                            }
+                         
+                        })
+                       
+                    }
+                }
+            })
+        
+           
         } catch (error) {
             return res.status(400).send({
                 message: "Something Went Wrong",
@@ -335,7 +376,7 @@ module.exports = {
     },
     deleteStoreAdmin: async (req, res) => {
         try {
-            let deleteStoreAdmin = await customerModel.findByIdAndRemove(
+            let deleteStoreAdmin = await adminModel.findByIdAndRemove(
                 {
                     _id: req.params._id,
                 },
@@ -348,9 +389,9 @@ module.exports = {
                 });
             } else {
                 return res.status(200).send({
-                    message: "Delete Store Admin Successfully",
+                    message: "Store Admin deleted Successfully",
                     status: true,
-                    data: deleteStoreAdmin,
+                    // data: deleteStoreAdmin,
                 });
             }
         } catch (error) {
