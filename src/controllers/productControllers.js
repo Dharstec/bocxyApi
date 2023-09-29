@@ -19,6 +19,7 @@ module.exports = {
     // ));
     try {
       let newproduct = new productModel({
+        superAdminId:req.body.superAdminId,
         productImages: req.body.imageArray,
         productVideos: req.body.videoArray,
         productName: req.body.productName,
@@ -43,30 +44,6 @@ module.exports = {
       console.log("newproduct", newproduct);
       let createProduct = await newproduct.save();
       console.log("createProduct", createProduct);
-      // let inventory = new inventoryModel({
-      //   productImages: req.body.imageArray,
-      //   productVideos: req.body.videoArray,
-      //   productName: req.body.productName,
-      //   productId: createProduct._id,
-      //   discountPrice: req.body.discountPrice,
-      //   actualPrice: req.body.actualPrice,
-      //   description: req.body.description,
-      //   category: req.body.category,
-      //   quantity: 0,
-      //   brand: req.body.brand,
-      //   formulation: req.body.formulation,
-      //   avgCustomerRating: req.body.avgCustomerRating,
-      //   collections: req.body.collections,
-      //   gift: req.body.gift,
-      //   personalised: req.body.personalised,
-      //   latest: req.body.latest,
-      //   viewedBy: req?.body?.viewedBy,
-      //   noOfViews: req?.body?.noOfViews,
-      //   noOfSales: req?.body?.noOfSales,
-      //   productAge: req?.body?.productAge,
-      //   referenceId: req.body.referenceId,
-      //   barcode: req.body.barcode,
-      // })
       return res.status(200).send({
         message: "Product Created Successfully",
         status: true,
@@ -117,7 +94,7 @@ module.exports = {
   },
   getProduct: async (req, res) => {
     try {
-      let getProduct = await productModel.find({});
+      let getProduct = await productModel.find({ superAdminId: req.params.superAdminId});
 
       if (!getProduct) {
         return res.status(400).send({
@@ -243,11 +220,23 @@ module.exports = {
       } else {
         console.log("deleteProduct", deleteProduct);
         console.log("data", deleteProduct);
-        return res.status(200).send({
-          message: "Delete Product Successfully",
-          status: true,
-          data: deleteProduct,
-        });
+        let deleteInventoryProduct = await inventoryModel.remove(
+          {
+            productId: req.params._id  // _id:req.body._id is not working in frontend
+          },
+        );
+        if(!deleteInventoryProduct){
+          return res.status(200).send({
+            message: "Deleted in product Successfully. No Record Found in inventory.",
+            status: true,
+          });
+        }else{
+          return res.status(200).send({
+            message: "Deleted in Product and inventory Successfully",
+            status: true,
+          });
+        }
+        
 
       }
     } catch (error) {

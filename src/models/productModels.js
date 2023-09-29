@@ -9,6 +9,10 @@ const productSchema = new mongoose.Schema(
         // },
         //   type: Number,
         //   required:true
+        superAdminId: {
+            type: String,
+            required: true,
+        },
         productName: {
             type: String,
             required: true,

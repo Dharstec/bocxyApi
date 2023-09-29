@@ -54,7 +54,7 @@ router.post(
  * @desc  Get Product API
  * @access public
  * **/
-router.get("/getProduct", Product.getProduct);
+router.get("/getProduct/:superAdminId", Product.getProduct);
 router.get("/getDashboard", Product.getDashboard);
 
 

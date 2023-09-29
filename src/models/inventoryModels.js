@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const { v4: uuidv4 } = require("uuid");
 const inventorySchema = new mongoose.Schema(
     {
+        superAdminId: {
+            type: String,
+            required: true,
+        },
         productName: {
             type: String,
             required: true,
@@ -14,7 +18,7 @@ const inventorySchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        userId: {
+        storeId: {
             type: String,
             required: true
         },
@@ -80,5 +84,5 @@ const inventorySchema = new mongoose.Schema(
     { timestamps: true }
 );
 //refe id for product for our referece 
-module.exports = mongoose.model("inventory", inventorySchema);
+module.exports = mongoose.model("inventories", inventorySchema);
 
