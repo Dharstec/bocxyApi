@@ -55,6 +55,7 @@ router.post(
  * @access public
  * **/
 router.get("/getProduct/:superAdminId", Product.getProduct);
+router.get("/getAllProduct/", Product.getCustomersProduct);
 router.get("/getDashboard", Product.getDashboard);
 
 

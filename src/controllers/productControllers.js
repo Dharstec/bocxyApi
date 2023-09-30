@@ -2,6 +2,7 @@ const productModel = require("../models/productModels");
 const inventoryModel = require("../models/inventoryModels");
 const orderModel = require("../models/orderModels");
 const customerModel = require("../models/customerModels");
+const _ = require("lodash"); 
 
 module.exports = {
   createProduct: async (req, res) => {
@@ -106,6 +107,39 @@ module.exports = {
           message: "Get All product",
           status: true,
           data: getProduct,
+        });
+      }
+    } catch (error) {
+      return res.status(400).send({
+        message: "Something Went Wrong",
+        status: false,
+        error: error,
+      });
+    }
+  },
+  getCustomersProduct: async (req, res) => {
+    try {
+      let getProduct = await productModel.find({});
+      let getInventoryProduct = await inventoryModel.find({});
+      let availableProduct=[]
+      getProduct.forEach(e=>{
+        getInventoryProduct.forEach(x=>{
+          if(e._id==x.productId && x.quantity >0){
+            availableProduct.push(e)
+          }
+        })
+      })
+      if (!availableProduct.length) {
+        return res.status(400).send({
+          message: "No Record Found",
+          status: false,
+        });
+      } else {
+        let finalRes = _.uniqBy(availableProduct, '_id');
+        return res.status(200).send({
+          message: "Get All product",
+          status: true,
+          data: finalRes,
         });
       }
     } catch (error) {
