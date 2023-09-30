@@ -273,9 +273,9 @@ module.exports = {
             });
         }
     },
-    getOneCustomer: async (req, res) => {
+    getOneStore: async (req, res) => {
         try {
-            let getOneCustomer = await customerModel.findOne({ email: req.body.email })
+            let getOneCustomer = await adminModel.findOne({ _id: req.params.id })
           
             if (!getOneCustomer) {
                 return res.status(400).send({
@@ -284,7 +284,7 @@ module.exports = {
                 });
             } else {
                 return res.status(200).send({
-                    message: "Get One Customer",
+                    message: "Get One store data",
                     status: true,
                     data: getOneCustomer,
                 });

@@ -28,7 +28,7 @@ router.get("/getInventoryProduct/:storeId", inventory.getinventoryProduct);
  * @desc  Get One Product API
  * @access public
  * **/
-router.get("/getOneProduct/:_id", inventory.getOneProduct);
+router.get("/getOneInventoryProduct/:_id", inventory.getOneInventoryProduct);
 
 /**
  * @api {UPDATE} /inventory/updateProduct

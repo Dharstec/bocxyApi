@@ -99,7 +99,7 @@ module.exports = {
       });
     }
   },
-  getOneProduct: async (req, res) => {
+  getOneInventoryProduct: async (req, res) => {
     try {
       let getOneProduct = await inventoryModel.findOne({ _id: req.params._id });
       if (!getOneProduct) {
@@ -109,7 +109,7 @@ module.exports = {
         });
       } else {
         return res.status(200).send({
-          message: "Get One product",
+          message: "Get One inventory product",
           status: true,
           data: getOneProduct,
         });

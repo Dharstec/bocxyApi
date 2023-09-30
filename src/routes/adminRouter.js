@@ -49,11 +49,11 @@ router.post('/resetPassword',Admin.resetPassword);
 router.get("/getAllStores", Admin.getAllStoreAdmin);
 
 /**
- * @api {GET ONE Customer} /Customer/getOneCustomer
- * @desc  Get One Customer API
+ * @api {GET ONE Store} /Customer/getOneStore/
+ * @desc  Get One store API
  * @access public
  * **/
-router.post("/getOneCustomer", Admin.getOneCustomer);
+router.post("/getOneStore/:id", Admin.getOneStore);
 
 /**
  * @api {UPDATE} /admin/updateStoreAdmin
