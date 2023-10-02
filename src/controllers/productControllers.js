@@ -2,6 +2,7 @@ const productModel = require("../models/productModels");
 const inventoryModel = require("../models/inventoryModels");
 const orderModel = require("../models/orderModels");
 const customerModel = require("../models/customerModels");
+const adminModel = require("../models/adminModels");
 const _ = require("lodash"); 
 
 module.exports = {
@@ -121,14 +122,49 @@ module.exports = {
     try {
       let getProduct = await productModel.find({});
       let getInventoryProduct = await inventoryModel.find({});
+      let getAllStore = await adminModel.find({ role_flag: "STORE_ADMIN" })
       let availableProduct=[]
-      getProduct.forEach(e=>{
-        getInventoryProduct.forEach(x=>{
-          if(e._id==x.productId && x.quantity >0){
-            availableProduct.push(e)
+     
+      getProduct.map(e=>{
+        let storeData=[]
+        getInventoryProduct.map(x=>{
+          if(e._id==x.productId ){
+           let store =getAllStore.filter(exp=>exp._id == x.storeId)
+            storeData.push({
+              quantity:x.quantity,
+              storeId:x.storeId,
+              co_ordinates:store.length >0 ? store[0].co_ordinates : ''
+            })
+            let obj={
+              viewedBy: e.viewedBy,
+              _id:  e._id,
+              superAdminId:  e.superAdminId,
+              productName: e.productName,
+              productImages:  e.productImages,
+              productVideos:  e.productVideos,
+              discountPrice:  e.discountPrice,
+              actualPrice:  e.actualPrice,
+              description:  e.description,
+              category:  e.category,
+              brand:  e.brand,
+              formulation:  e.formulation,
+              avgCustomerRating:  e.avgCustomerRating,
+              referenceId:  e.referenceId,
+              gift: e.gift,
+              personalised:  e.personalised,
+              latest:  e.latest,
+              collections:  e.collections,
+              noOfViews:  e.noOfViews,
+              noOfSales:  e.noOfSales,
+              productAge:  e.productAge,
+              barcode:  e.barcode,
+              storeData:storeData
+            }
+            availableProduct.push(obj)
           }
         })
       })
+      console.log("availableProduct",availableProduct)
       if (!availableProduct.length) {
         return res.status(400).send({
           message: "No Record Found",
@@ -136,11 +172,36 @@ module.exports = {
         });
       } else {
         let finalRes = _.uniqBy(availableProduct, '_id');
-        return res.status(200).send({
-          message: "Get All product",
-          status: true,
-          data: finalRes,
-        });
+        let getAllStore = await adminModel.find({ role_flag: "STORE_ADMIN" })
+        console.log('ssss')
+        if(getAllStore.length){
+          finalRes.map((e,i)=>{
+            e['storeData'].map(y=>{
+              getAllStore.forEach(x=>{
+                if(y.storeId==x._id){
+                  finalRes[i]['storeData']["co_ordinates"]=x.co_ordinates
+                  console.log('ssssssssssssss')
+                }
+            })
+           
+            })
+            if(finalRes.length-1 == i){
+              return res.status(200).send({
+                message: "Get All product",
+                status: true,
+                data: finalRes,
+              });
+            }
+          })
+          
+        }else{
+          return res.status(200).send({
+            message: "Get All product",
+            status: true,
+            data: [],
+          });
+        }
+        
       }
     } catch (error) {
       return res.status(400).send({
