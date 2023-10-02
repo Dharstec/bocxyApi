@@ -1,11 +1,18 @@
 const orderModel = require("../models/orderModels");
 const cusModel = require("../models/customerModels")
+const inventoryModel = require("../models/inventoryModels")
+const adminModel = require("../models/adminModels")
 const { template } = require('handlebars');
 const orderpdf = require("./documentPDFFiles")
 
 module.exports = {
   createOrder: async (req, res) => {
     try {
+      // let reqbody =req.body
+      // let ordersList = req.body.orders
+      // console.log("ordersList",ordersList)
+      // let getValue = await this.getOrderStoreId(ordersList)
+      // console.log("getValue",getValue)
       let neworder = new orderModel(req.body)
       console.log("neworder", neworder);
       let createOrder = await neworder.save();
@@ -28,9 +35,8 @@ module.exports = {
       return res.status(200).send({
         message: "Order Created Successfully",
         status: true,
-        data: createOrder,
+        data:createOrder,
       });
-
     } catch (error) {
       console.log("error", error);
       return res.status(400).send({
@@ -39,6 +45,39 @@ module.exports = {
       });
     }
   },
+
+   getOrderStoreId: async function (ordersList){
+    return new Promise(async (resolve, reject) => {
+      let orderStoreId=[]
+      let getAllStoreAdmin = await adminModel.find({ role_flag: "STORE_ADMIN" })
+      console.log("getAllStoreAdmin",getAllStoreAdmin)
+      if(getAllStoreAdmin.length){
+        getAllStoreAdmin.forEach(async (e,i)=>{
+          let getOneStoreData = await inventoryModel.find({ storeId: e._id })
+          console.log("getOneStoreData",getOneStoreData)
+          getOneStoreData.forEach(y=>{
+            ordersList.forEach(async x=>{
+              if( x.productId == y.productId && y.quantity >= x.quantity){
+                orderStoreId.push(y)
+                // console.log("storeId",orderStoreId)
+              }else{
+                orderStoreId.push('-'+y)
+               
+              }
+            })
+          })
+          if(getAllStoreAdmin.length-1==i){
+            resolve(orderStoreId);
+            // console.log("storeId",orderStoreId)
+          }
+         
+        })
+      }
+      
+      // resolve(outputData);
+  });
+  },
+
   getAllOrder: (req, res) => {
     orderModel.find({})
       .populate('orderedBy')
