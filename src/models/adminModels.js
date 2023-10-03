@@ -16,10 +16,10 @@ const adminSchema = new mongoose.Schema(
             type: Number,
             required: false
         },
-        co_ordinates: {
+        co_ordinates: [{
             type: String,
             required: false
-        },
+        }],
         otp: {
             type: Number
         },

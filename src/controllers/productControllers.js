@@ -29,6 +29,7 @@ module.exports = {
         actualPrice: req.body.actualPrice,
         description: req.body.description,
         category: req.body.category,
+        gender: req.body.gender,
         brand: req.body.brand,
         formulation: req.body.formulation,
         avgCustomerRating: req.body.avgCustomerRating,
