@@ -164,7 +164,7 @@ module.exports = {
           }
         })
       })
-      console.log("availableProduct",availableProduct)
+
       if (!availableProduct.length) {
         return res.status(400).send({
           message: "No Record Found",

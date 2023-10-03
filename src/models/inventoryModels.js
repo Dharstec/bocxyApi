@@ -22,6 +22,22 @@ const inventorySchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        productImages: [{
+            type: String,
+            required: true,
+        }],
+        productVideos: [{
+            type: String,
+            required: true,
+        }],
+        discountPrice: {
+            type: Number,
+            required: true
+        },
+        actualPrice: {
+            type: Number,
+            required: true
+        },
         description: {
             type: String,
             required: true
