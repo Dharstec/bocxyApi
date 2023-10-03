@@ -134,6 +134,7 @@ module.exports = {
                             message: "You are not registered!",
                         });
                     }else{
+                        
                         bcrypt.compare(req.body.password, adminData.password, (err, data) => {
                             if (!data){
                                 return res.status(200).send({

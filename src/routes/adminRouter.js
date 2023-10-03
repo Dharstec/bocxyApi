@@ -53,7 +53,7 @@ router.get("/getAllStores", Admin.getAllStoreAdmin);
  * @desc  Get One store API
  * @access public
  * **/
-router.post("/getOneStore/:id", Admin.getOneStore);
+router.get("/getOneStore/:id", Admin.getOneStore);
 
 /**
  * @api {UPDATE} /admin/updateStoreAdmin
