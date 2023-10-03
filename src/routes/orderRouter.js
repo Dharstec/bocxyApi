@@ -19,7 +19,7 @@ router.post("/createOrder", Order.createOrder);
  * @desc  Get Order API
  * @access public
  * **/
-router.get("/getAllOrder", Order.getAllOrder);
+router.get("/getAllOrder/:storeId", Order.getAllOrder);
 
 /**
  * @api {GET ONE Order} /Order/getOneOrder

@@ -8,11 +8,6 @@ const orderpdf = require("./documentPDFFiles")
 module.exports = {
   createOrder: async (req, res) => {
     try {
-      // let reqbody =req.body
-      // let ordersList = req.body.orders
-      // console.log("ordersList",ordersList)
-      // let getValue = await this.getOrderStoreId(ordersList)
-      // console.log("getValue",getValue)
       let neworder = new orderModel(req.body)
       console.log("neworder", neworder);
       let createOrder = await neworder.save();
@@ -46,47 +41,41 @@ module.exports = {
     }
   },
 
-   getOrderStoreId: async function (ordersList){
-    return new Promise(async (resolve, reject) => {
-      let orderStoreId=[]
-      let getAllStoreAdmin = await adminModel.find({ role_flag: "STORE_ADMIN" })
-      console.log("getAllStoreAdmin",getAllStoreAdmin)
-      if(getAllStoreAdmin.length){
-        getAllStoreAdmin.forEach(async (e,i)=>{
-          let getOneStoreData = await inventoryModel.find({ storeId: e._id })
-          console.log("getOneStoreData",getOneStoreData)
-          getOneStoreData.forEach(y=>{
-            ordersList.forEach(async x=>{
-              if( x.productId == y.productId && y.quantity >= x.quantity){
-                orderStoreId.push(y)
-                // console.log("storeId",orderStoreId)
-              }else{
-                orderStoreId.push('-'+y)
+  //  getOrderStoreId: async function (ordersList){
+  //   return new Promise(async (resolve, reject) => {
+  //     let orderStoreId=[]
+  //     let getAllStoreAdmin = await adminModel.find({ role_flag: "STORE_ADMIN" })
+  //     console.log("getAllStoreAdmin",getAllStoreAdmin)
+  //     if(getAllStoreAdmin.length){
+  //       getAllStoreAdmin.forEach(async (e,i)=>{
+  //         let getOneStoreData = await inventoryModel.find({ storeId: e._id })
+  //         console.log("getOneStoreData",getOneStoreData)
+  //         getOneStoreData.forEach(y=>{
+  //           ordersList.forEach(async x=>{
+  //             if( x.productId == y.productId && y.quantity >= x.quantity){
+  //               orderStoreId.push(y)
+  //               // console.log("storeId",orderStoreId)
+  //             }else{
+  //               orderStoreId.push('-'+y)
                
-              }
-            })
-          })
-          if(getAllStoreAdmin.length-1==i){
-            resolve(orderStoreId);
-            // console.log("storeId",orderStoreId)
-          }
+  //             }
+  //           })
+  //         })
+  //         if(getAllStoreAdmin.length-1==i){
+  //           resolve(orderStoreId);
+  //           // console.log("storeId",orderStoreId)
+  //         }
          
-        })
-      }
+  //       })
+  //     }
       
-      // resolve(outputData);
-  });
-  },
+  //     // resolve(outputData);
+  // });
+  // },
 
   getAllOrder: (req, res) => {
-    orderModel.find({})
+    orderModel.find({storeId: req.params.storeId})
       .populate('orderedBy')
-      // .populate({
-      //   path: 'orders',
-      //   populate: {
-      //     path: 'productId'
-      //   }
-      // })
       .populate('orders.productId')
       .exec((err, result) => {
         if (err) {
