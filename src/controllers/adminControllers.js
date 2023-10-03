@@ -46,7 +46,9 @@ module.exports = {
                                     }
                                     else {
                                         user.password = hash
-
+                                        let array = user.co_ordinates.split(',')
+                                        let join=array.join(',')
+                                        user.co_ordinates = join
                                         user.save((err, result) => {
                                             if (err) {
                                                 console.log("Error in creating new admin", err);
@@ -134,7 +136,6 @@ module.exports = {
                             message: "You are not registered!",
                         });
                     }else{
-                        
                         bcrypt.compare(req.body.password, adminData.password, (err, data) => {
                             if (!data){
                                 return res.status(200).send({
@@ -284,6 +285,35 @@ module.exports = {
                     status: false,
                 });
             } else {
+                bcrypt.compare(req.body.password, getOneCustomer.password, (err, data) => {
+                    if (!data){
+                        return res.status(200).send({
+                            status: true,
+                            message: "Wrong password!",
+                        });
+                    }   
+                    else{
+                        let response={
+                            "_id": adminData._id,
+                            "store_name": adminData.store_name,
+                            "address": adminData.address,
+                            "phone_no": adminData.phone_no,
+                            "co_ordinates": adminData.co_ordinates,
+                            "role_flag": adminData.role_flag,
+                            "email": adminData.email
+                           
+                        }
+                        return res.status(200).send({
+                            status: true,
+                            token: jwt.sign(
+                                { email: adminData.email, _id: adminData._id },
+                                "secret",
+                                // { expiresIn: '1h' }
+                            ),
+                            data: adminData,
+                        });
+                    }
+                });
                 return res.status(200).send({
                     message: "Get One store data",
                     status: true,
@@ -327,6 +357,9 @@ module.exports = {
                                     }
                                     else {
                                         req.body.password = hash
+                                        let array = req.body.split(',')
+                                        let join=array.join(',')
+                                        req.body.co_ordinates = join
                                     }
                                 })
                             }
