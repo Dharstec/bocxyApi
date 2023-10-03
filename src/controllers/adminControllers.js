@@ -129,15 +129,15 @@ module.exports = {
                     });
                 }else{
                     if (!adminData){
-                        return res.status(400).send({
-                            status: false,
+                        return res.status(200).send({
+                            status: true,
                             message: "You are not registered!",
                         });
                     }else{
                         bcrypt.compare(req.body.password, adminData.password, (err, data) => {
                             if (!data){
-                                return res.status(400).send({
-                                    status: false,
+                                return res.status(200).send({
+                                    status: true,
                                     message: "Wrong password!",
                                 });
                             }   
