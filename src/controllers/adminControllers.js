@@ -46,9 +46,9 @@ module.exports = {
                                     }
                                     else {
                                         user.password = hash
-                                        let array = user.co_ordinates.split(',')
-                                        let join=array.join(',')
-                                        user.co_ordinates = join
+                                        // let array = user.co_ordinates.split(',')
+                                        // /let join=array.join(',')
+                                        // user.co_ordinates = join
                                         user.save((err, result) => {
                                             if (err) {
                                                 console.log("Error in creating new admin", err);
@@ -357,9 +357,9 @@ module.exports = {
                                     }
                                     else {
                                         req.body.password = hash
-                                        let array = req.body.split(',')
-                                        let join=array.join(',')
-                                        req.body.co_ordinates = join
+                                        // let array = req.body.split(',')
+                                        // let join=array.join(',')
+                                        // req.body.co_ordinates = join
                                     }
                                 })
                             }
