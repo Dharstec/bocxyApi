@@ -4,34 +4,78 @@ const inventoryModel = require("../models/inventoryModels")
 const adminModel = require("../models/adminModels")
 const { template } = require('handlebars');
 const orderpdf = require("./documentPDFFiles")
+const validation = require("./validation")
 
 module.exports = {
   createOrder: async (req, res) => {
     try {
       let neworder = new orderModel(req.body)
       console.log("neworder", neworder);
-      let createOrder = await neworder.save();
-      let updateCusCart = await cusModel.findOneAndUpdate(
-        {
-          email: req.body.customerEmailId,
-        },
-        {
-          $unset: {
-            cartProductDetails: []
+
+      let validationError = await validation.orderQuantityValidation(neworder)
+      console.log(validationError,"validationError")
+      if(validationError.length > 0){
+        return res.status(200).send({
+          message: "Failed to create order. Selected Quantity is not available in this store.",
+          status: true,
+        });
+      }else{
+        // return res.status(200).send({
+        //   message: "Order Created Successfully",
+        //   status: true,
+        //   data:[],
+        // });
+        console.log("ORDER CREATION STARTED")
+        neworder.orders.forEach(async e=>{
+          let getData= await inventoryModel.findOne({productId: e.productId, storeId:neworder.storeId})  
+          .exec(async function (err, result) {
+            if (err) {
+                console.log("Error in getting data in admin model", err);
+            }else{
+              // console.log("getData",result)
+              let minusQuantity =  result.quantity - e.quantity
+             
+                let updateQuantity = await inventoryModel.findOneAndUpdate(
+                  {
+                    productId: e.productId,
+                    storeId:neworder.storeId
+                  },
+                  {
+                    $set: {
+                      quantity: minusQuantity
+                    },
+                  },
+                  { new: true }
+                );
+                // console.log("updateQuantity",updateQuantity)
+          }
+            })
+          })
+          let createOrder = await neworder.save();
+        // console.log("getData",getData)
+      
+        let updateCusCart = await cusModel.findOneAndUpdate(
+          {
+            email: req.body.customerEmailId,
           },
-          $set: {
-            isCartProductDetails: "0"
+          {
+            $unset: {
+              cartProductDetails: []
+            },
+            $set: {
+              isCartProductDetails: "0"
+            },
           },
-        },
-        { new: true }
-      );
-      console.log(updateCusCart, "updateCusCart")
-      console.log("createOrder", createOrder);
-      return res.status(200).send({
-        message: "Order Created Successfully",
-        status: true,
-        data:createOrder,
-      });
+          { new: true }
+        );
+        // console.log(updateCusCart, "updateCusCart")
+        // console.log("createOrder", createOrder);
+        return res.status(200).send({
+          message: "Order Created Successfully",
+          status: true,
+          data:createOrder,
+        });
+      }
     } catch (error) {
       console.log("error", error);
       return res.status(400).send({
@@ -93,7 +137,7 @@ module.exports = {
         }
       });
   },
-
+  
   getOneOrder: async (req, res) => {
     try {
       let getOneOrder = await orderModel.findOne({ _id: req.body._id })
