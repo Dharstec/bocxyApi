@@ -252,7 +252,8 @@ module.exports = {
     },
     getAllStoreAdmin: async (req, res) => {
         try {
-            let getCustomer = await adminModel.find({ role_flag: "STORE_ADMIN" })
+            let id =req.params.superAdminId
+            let getCustomer = await adminModel.find({ role_flag: "STORE_ADMIN",superAdminId:id})
 
             if (!getCustomer) {
                 return res.status(400).send({
@@ -264,6 +265,31 @@ module.exports = {
                     message: "Get All Stores",
                     status: true,
                     data: getCustomer,
+                });
+            }
+        } catch (error) {
+            console.log("errrror********", error);
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error,
+            });
+        }
+    },
+    getAllMainStore: async (req, res) => {
+        try {
+            let getAllMainStore = await adminModel.find({$or: [{ role_flag: "SUPER_ADMIN"},{ role_flag: "MULTI_ADMIN"}]})
+
+            if (!getAllMainStore) {
+                return res.status(400).send({
+                    message: "No Record Found",
+                    status: false,
+                });
+            } else {
+                return res.status(200).send({
+                    message: "Get All Main Stores",
+                    status: true,
+                    data: getAllMainStore,
                 });
             }
         } catch (error) {

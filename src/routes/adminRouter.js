@@ -46,7 +46,14 @@ router.post('/resetPassword',Admin.resetPassword);
  * @desc  Get all Store API
  * @access public
  * **/
-router.get("/getAllStores", Admin.getAllStoreAdmin);
+router.get("/getAllStores/:superAdminId", Admin.getAllStoreAdmin);
+
+/**
+ * @api {GET} /admin/getAllMainStore
+ * @desc  Get all main Store API
+ * @access public
+ * **/
+router.get("/getAllMainStore", Admin.getAllMainStore);
 
 /**
  * @api {GET ONE Store} /Customer/getOneStore/
