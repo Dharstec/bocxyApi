@@ -14,7 +14,13 @@ module.exports = {
 
       let validationError = await validation.orderQuantityValidation(neworder)
       console.log(validationError,"validationError")
-      if(validationError.length > 0){
+      if(validationError=='Product_is_not_found'){
+        return res.status(200).send({
+          message: "Failed to create order. Selected Product is not available in this store.",
+          status: true,
+        });
+      }
+      else if(validationError.length > 0){
         return res.status(200).send({
           message: "Failed to create order. Selected Quantity is not available in this store.",
           status: true,
