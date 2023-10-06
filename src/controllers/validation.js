@@ -15,15 +15,20 @@ module.exports = {
                     console.log("Error in getting data in inventory model", err);
                 }else{
                     // console.log("result",result)
-                  if(result.quantity<e.quantity){
-                    temp.push(result)
-                  }
-                  i++
-                //   console.log(i,"length",data.orders.length)
-                  if(data.orders.length==i){
-                    // console.log("result",temp)
-                    resolve(temp)
-                  }
+                    if(result){
+                      if(result.quantity<e.quantity){
+                        temp.push(result)
+                      }
+                      i++
+                    //   console.log(i,"length",data.orders.length)
+                      if(data.orders.length==i){
+                        // console.log("result",temp)
+                        resolve(temp)
+                      }
+                    }else{
+                      resolve('Product_is_not_found')
+                    }
+                
                 }})
                })
               
