@@ -6,21 +6,37 @@ var createdDate = moment().format()
 module.exports = {
     createReview: async (req, res) => {
         try {
-            let newReview = new reviewModels({
-                reviewTitle: req.body.reviewTitle,
-                reviewDescription: req.body.reviewDescription,
-                storeId: req.body.storeId,
-                orderId: req.body.orderId,
-                productId: req.body.productId,
-                customerId: req.body.customerId,
-                ratings: req.body.ratings,
-            });
-            let createReview = await newReview.save();
-            return res.status(200).send({
-                message: "Review Created Successfully",
-                status: true,
-                data: createReview
+            reviewModels.find({ orderId: req.body.orderId,productId: req.body.productId})
+            .exec(async function (err, result) {
+                if (err) {
+                    console.log("Error in getting data in review model", err);
+                }
+                else{
+                    if (result.length > 0) {
+                        res.send({
+                            message: "You posted the review already.",
+                            status: true,
+                        })
+                    }else{
+                        let newReview = new reviewModels({
+                            reviewTitle: req.body.reviewTitle,
+                            reviewDescription: req.body.reviewDescription,
+                            storeId: req.body.storeId,
+                            orderId: req.body.orderId,
+                            productId: req.body.productId,
+                            customerId: req.body.customerId,
+                            ratings: req.body.ratings,
+                        });
+                        let createReview = await newReview.save();
+                        return res.status(200).send({
+                            message: "Review Created Successfully",
+                            status: true,
+                            data: createReview
+                        })
+                    }
+                }
             })
+          
         } catch (error) {
             console.log("errror", error)
             return res.status(400).send({
@@ -87,98 +103,6 @@ module.exports = {
             });
         }
     },
-    deleteReview: async (req, res) => {
-        console.log(req.params._id)
-        try {
-            let deleteReview = await ReviewModels.findByIdAndRemove(
-                {
-                    _id: req.params._id,
-                },
-            );
-            console.log("deleteReview", deleteReview)
 
-            if (!deleteReview) {
-                return res.status(400).send({
-                    message: "No Record Found",
-                    status: false,
-                });
-            } else {
-                console.log("deleteReview", deleteReview);
-                console.log("data", deleteReview);
-                return res.status(200).send({
-                    message: "Delete Review Successfully",
-                    status: true,
-                    data: deleteReview,
-                });
-            }
-        } catch (error) {
-            console.log("errrrrr", error);
-            return res.status(400).send({
-                message: "Something Went Wrong",
-                status: false,
-                error: error,
-            });
-        }
-    },
-    updateReview: async (req, res) => {
-        try {
-            let updateReview = await ReviewModels.findOneAndUpdate(
-                {
-                    _id: req.body._id,
-                },
-                {
-                    $set: req.body,
-                },
-                { new: true }
-            );
-
-            if (!updateReview) {
-                return res.status(400).send({
-                    message: "No Record Found",
-                    status: false,
-                });
-            } else {
-                return res.status(200).send({
-                    message: "Updated Marketing Successfully",
-                    status: true,
-                    data: updateReview,
-                });
-            }
-        } catch (error) {
-            console.log("errrrrr", error);
-            return res.status(400).send({
-                message: "Something Went Wrong",
-                status: false,
-                error: error,
-            });
-        }
-    },
-
-    findReview: async (req, res) => {
-        console.log(req.params)
-        try {
-            let findId = await ReviewModels.findOne({ _id: req.params._id })
-
-            if (!findId) {
-                return res.status(400).send({
-                    message: "No Record Found",
-                    status: false,
-                });
-            } else {
-                return res.status(200).send({
-                    message: "Success",
-                    status: true,
-                    data: findId,
-                });
-            }
-        } catch (error) {
-            console.log("errrrrr", error);
-            return res.status(400).send({
-                message: "Something Went Wrong",
-                status: false,
-                error: error,
-            });
-        }
-    },
 
 }
