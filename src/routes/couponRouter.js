@@ -21,7 +21,7 @@ router.post("/createCoupon", Coupon.createCoupon);
  * @desc  Get Coupon API
  * @access public
  * **/
-router.get("/getCoupon", Coupon.getCoupon);
+router.get("/getCoupon/:id", Coupon.getCoupon);
 
 /**
  * @api {DELETE} /Coupon/deleteCoupon/1234

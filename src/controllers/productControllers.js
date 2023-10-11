@@ -277,20 +277,65 @@ module.exports = {
           $set: req.body,
         },
         { new: true }
-      );
+      ).exec(function (err, reuslt) {
+        if (err) {
+            console.log("Error in updating data in product model", err);
+        }
+        else {
+            if (reuslt) {
+              let updateInventory = inventoryModel.updateMany(
+                {
+                  productId: req.body._id,
+                },
+                {
+                  $set: {
+                          "productImages":  req.body.productImages,
+                          "productVideos":  req.body.productVideos,
+                          "productName":  req.body.productName,
+                          "discountPrice":  req.body.discountPrice,
+                          "actualPrice":  req.body.actualPrice,
+                          "description":   req.body.description,
+                          "category":   req.body.category,
+                          "brand":  req.body.brand,
+                          "formulation":  req.body.formulation,
+                          "avgCustomerRating":  req.body.avgCustomerRating ,
+                          "collections":  req.body.collections,
+                          "gift":  req.body.gift,
+                          "personalised":   req.body.personalised,
+                          "latest":   req.body.latest,
+                          "viewedBy":   req.body.viewedBy,
+                          "noOfViews":   req.body.noOfViews,
+                          "noOfSales":   req.body.noOfSales,
+                          "productAge":   req.body.productAge,
+                          "referenceId":  req.body.referenceId,
+                          "barcode":   req.body.barcode
+                  },
+                },
+                { new: true }
+              )
+              if(!updateInventory){
+                return res.status(400).send({
+                  message: "No Record Found in inventory",
+                  status: false,
+                });
+              }else{
+                return res.status(200).send({
+                  message: "Update Product Successfully",
+                  status: true,
+                  data: updateProduct,
+                });
+              }
+             
+            }else{
+              return res.status(400).send({
+                message: "No Record Found",
+                status: false,
+              });
+            }
+          }
+        })
 
-      if (!updateProduct) {
-        return res.status(400).send({
-          message: "No Record Found",
-          status: false,
-        });
-      } else {
-        return res.status(200).send({
-          message: "Update  Product Successfully",
-          status: true,
-          data: updateProduct,
-        });
-      }
+    
     } catch (error) {
       return res.status(400).send({
         message: "Something Went Wrong",
@@ -314,16 +359,17 @@ module.exports = {
           status: false,
         });
       } else {
-        console.log("deleteProduct", deleteProduct);
-        console.log("data", deleteProduct);
-        let deleteInventoryProduct = await inventoryModel.remove(
-          {
-            productId: req.params._id  // _id:req.body._id is not working in frontend
-          },
-        );
+        // console.log("deleteProduct", deleteProduct);
+        // console.log("data", deleteProduct);
+        let deleteInventoryProduct =  false
+        // await inventoryModel.remove(
+        //   {
+        //     productId: req.params._id  // _id:req.body._id is not working in frontend
+        //   },
+        // );
         if(!deleteInventoryProduct){
           return res.status(200).send({
-            message: "Deleted in product Successfully. No Record Found in inventory.",
+            message: "Deleted in product Successfully.",
             status: true,
           });
         }else{
