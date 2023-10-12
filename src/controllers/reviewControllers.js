@@ -48,7 +48,8 @@ module.exports = {
     getReviewsByProduct: async (req, res) => {
         try {
             let productId=req.params.productId
-            let getReview = await reviewModels.find({ productId:productId });
+            let getReview = await reviewModels.find({ productId:productId })
+            .populate('customerId');
             if (!getReview) {
                 return res.status(400).send({
                     message: "No Record Found",
@@ -82,7 +83,8 @@ module.exports = {
     getReviewsByOrder: async (req, res) => {
         try {
             let orderId=req.params.orderId
-            let getReview = await reviewModels.find({ orderId:orderId  });
+            let getReview = await reviewModels.find({ orderId:orderId  })
+            .populate('customerId');;
             if (!getReview) {
                 return res.status(400).send({
                     message: "No Record Found",

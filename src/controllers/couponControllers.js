@@ -60,6 +60,36 @@ module.exports = {
             });
         }
     },
+    getCouponByStoreId: async (req, res) => {
+        try {
+            let params =req.body
+            let getCoupon=[];
+            if(params.superAdminId){
+                getCoupon = await couponModels.find({ remaining: { $gte: 0 },$or: [{ createdBy:req.body.createdBy},{createdBy:req.body.superAdminId}]});
+            }else{
+                getCoupon = await couponModels.find({ remaining: { $gte: 0 }, createdBy:req.body.createdBy});
+            }
+        
+            if (!getCoupon) {
+                return res.status(400).send({
+                    message: "No Record Found",
+                    status: false,
+                });
+            } else {
+                return res.status(200).send({
+                    message: "Get All Coupon",
+                    status: true,
+                    data: getCoupon,
+                });
+            }
+        } catch (error) {
+            return res.status(400).send({
+                message: "Something Went Wrong",
+                status: false,
+                error: error,
+            });
+        }
+    },
     deleteCoupon: async (req, res) => {
         console.log(req.params._id)
         try {
