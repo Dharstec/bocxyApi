@@ -253,7 +253,7 @@ module.exports = {
     getAllStoreAdmin: async (req, res) => {
         try {
             let id =req.params.superAdminId
-            let getCustomer = await adminModel.find({ role_flag: "STORE_ADMIN",superAdminId:id})
+            let getCustomer = await adminModel.find({ role_flag: "STORE_ADMIN",super_admin_id:id})
 
             if (!getCustomer) {
                 return res.status(400).send({
