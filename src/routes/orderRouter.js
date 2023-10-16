@@ -15,12 +15,17 @@ router.get('/', async (req, res, next) => {
  * **/
 router.post("/createOrder", Order.createOrder);
 /**
- * @api {GET} /Order/getOrder
- * @desc  Get Order API
+ * @api {GET} /Order/getAllOrder/:id
+ * @desc  Get all Order for stores API
  * @access public
  * **/
 router.get("/getAllOrder/:storeId", Order.getAllOrder);
-
+/**
+ * @api {GET} /Order/getAllOrderByCustomer
+ * @desc  Get getAllOrderByCustomer API
+ * @access public
+ * **/
+router.get("/getAllOrderByCustomer/:customerId", Order.getAllOrderByCustomer);
 /**
  * @api {GET ONE Order} /Order/getOneOrder
  * @desc  Get One Order API

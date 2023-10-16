@@ -143,6 +143,26 @@ module.exports = {
         }
       });
   },
+
+  getAllOrderByCustomer: (req, res) => {
+    orderModel.find({orderedBy: req.params.customerId})
+      .populate('orderedBy')
+      .populate('orders.productId')
+      .exec((err, result) => {
+        if (err) {
+          console.log("err", err);
+          return res.status(400).json({ err });
+        }
+        else {
+          return res.status(200).json(
+            {
+              message: " Get All Orders by Customer",
+              data: result
+            }
+          );
+        }
+      });
+  },
   
   getOneOrder: async (req, res) => {
     try {
