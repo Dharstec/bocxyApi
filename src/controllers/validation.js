@@ -1,6 +1,18 @@
 
 const orderModel = require("../models/orderModels");
 const inventoryModel = require("../models/inventoryModels");
+const Razorpay = require('razorpay');  
+  
+// This razorpayInstance will be used to 
+// access any resource from razorpay 
+const razorpayInstance = new Razorpay({ 
+  
+    // Replace with your key_id 
+    key_id: "rzp_test_glYMxgnZfEKPlU", 
+  
+    // Replace with your key_secret 
+    key_secret: "RJPbpjj7V3iJlweuvlVWl5BM" 
+}); 
 
 module.exports = {
     orderQuantityValidation(data) {
@@ -38,5 +50,46 @@ module.exports = {
         });
     
     },
+
+    paymentIntegration(data,receiptId) {
+      return new Promise(async (resolve, reject) => {
+          try {
+             // STEP 1: 
+             let totalAmount = 0
+             let amount = data.amount
+             let currency = data.currency
+             let receipt = receiptId
+            //  let notes = data.notes
+            //  data.orders.map(e=>{
+
+            //  })     
+   
+            // STEP 2:  
+            // console.log("razorpayInstance",razorpayInstance)   
+            razorpayInstance.orders.create({amount, currency, receipt},  
+                (err, order)=>{ 
+                  
+                  //STEP 3 & 4:  
+                  if(!err) {
+                    console.log("order",order)
+                    resolve(order)
+                  }
+                
+                    // res.json(order) 
+                  else{
+                    console.log("errror   order",err)
+                    resolve('PAYMENT_FAILED')
+                  }
+                 
+                    // res.send(err); 
+                } 
+            ) 
+            
+          } catch (error) {
+              reject(error.message || error);
+          }
+      });
+  
+  },
    
 }

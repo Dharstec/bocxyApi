@@ -91,6 +91,100 @@ module.exports = {
     }
   },
 
+  paymentIntegration: async (req, res) => {
+    try {
+      let neworder = new orderModel(req.body)
+      console.log("neworder", neworder);
+
+      let validationError = await validation.orderQuantityValidation(neworder)
+      console.log(validationError,"validationError")
+      if(validationError=='Product_is_not_found'){
+        return res.status(200).send({
+          message: "Failed to create order. Selected Product is not available in this store.",
+          status: true,
+        });
+      }
+      else if(validationError.length > 0){
+        return res.status(200).send({
+          message: "Failed to create order. Selected Quantity is not available in this store.",
+          status: true,
+        });
+      }else{
+        // return res.status(200).send({
+        //   message: "Order Created Successfully",
+        //   status: true,
+        //   data:[],
+        // });
+        console.log("ORDER CREATION STARTED")
+        neworder.orders.forEach(async e=>{
+          let getData= await inventoryModel.findOne({productId: e.productId, storeId:neworder.storeId})  
+          .exec(async function (err, result) {
+            if (err) {
+                console.log("Error in getting data in admin model", err);
+            }else{
+              // console.log("getData",result)
+              let minusQuantity =  result.quantity - e.quantity
+             
+                let updateQuantity = await inventoryModel.findOneAndUpdate(
+                  {
+                    productId: e.productId,
+                    storeId:neworder.storeId
+                  },
+                  {
+                    $set: {
+                      quantity: minusQuantity
+                    },
+                  },
+                  { new: true }
+                );
+                // console.log("updateQuantity",updateQuantity)
+          }
+            })
+          })
+          let createOrder = await neworder.save();
+        // console.log("getData",getData)
+      
+        let updateCusCart = await cusModel.findOneAndUpdate(
+          {
+            email: req.body.customerEmailId,
+          },
+          {
+            $unset: {
+              cartProductDetails: []
+            },
+            $set: {
+              isCartProductDetails: "0"
+            },
+          },
+          { new: true }
+        );
+        // console.log(updateCusCart, "updateCusCart")
+        // console.log("createOrder", createOrder);
+        let paymentStatus = await validation.paymentIntegration(req.body,createOrder._id)
+        if(paymentStatus=='PAYMENT_FAILED'){
+          return res.status(400).send({
+            message: "Razor pay payment failed",
+            status: false,
+          })
+        }else{
+          return res.status(200).send({
+            message: "Order Created Successfully",
+            status: true,
+            paymentStatus:paymentStatus,
+            data:createOrder,
+          });
+        } 
+      }
+     
+    } catch (error) {
+      console.log("error", error);
+      return res.status(400).send({
+        message: "Please Enter  All Order Details",
+        status: false,
+      });
+    }
+  },
+
   //  getOrderStoreId: async function (ordersList){
   //   return new Promise(async (resolve, reject) => {
   //     let orderStoreId=[]
