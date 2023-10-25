@@ -220,6 +220,9 @@ const multerFilter = (req, file, cb) => {
 
   const fileSize = parseInt(req.headers["content-length"])
 
+//   console.log("fileSize",file)
+//   console.log("fileSize",fileSize)
+
   if ((file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "application/octet-stream") && fileSize <= 1000000) {
       cb(null, true)
   } else if (file.mimetype === "video/mp4" && fileSize <= 5e+6) {
