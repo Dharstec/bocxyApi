@@ -51,45 +51,45 @@ module.exports = {
     
     },
 
-  //   paymentIntegration(data,receiptId) {
-  //     return new Promise(async (resolve, reject) => {
-  //         try {
-  //            // STEP 1: 
-  //            let totalAmount = 0
-  //            let amount = data.amount
-  //            let currency = data.currency
-  //            let receipt = receiptId
-  //           //  let notes = data.notes
-  //           //  data.orders.map(e=>{
+    paymentIntegration(data,receiptId) {
+      return new Promise(async (resolve, reject) => {
+          try {
+             // STEP 1: 
+             let totalAmount = 0
+             let amount = data.amount
+             let currency = data.currency
+             let receipt = receiptId
+            //  let notes = data.notes
+            //  data.orders.map(e=>{
 
-  //           //  })     
+            //  })     
    
-  //           // STEP 2:  
-  //           // console.log("razorpayInstance",razorpayInstance)   
-  //           razorpayInstance.orders.create({amount, currency, receipt},  
-  //               (err, order)=>{ 
+            // STEP 2:  
+            // console.log("razorpayInstance",razorpayInstance)   
+            razorpayInstance.orders.create({amount, currency, receipt},  
+                (err, order)=>{ 
                   
-  //                 //STEP 3 & 4:  
-  //                 if(!err) {
-  //                   console.log("order",order)
-  //                   resolve(order)
-  //                 }
+                  //STEP 3 & 4:  
+                  if(!err) {
+                    console.log("order",order)
+                    resolve(order)
+                  }
                 
-  //                   // res.json(order) 
-  //                 else{
-  //                   console.log("errror   order",err)
-  //                   resolve('PAYMENT_FAILED')
-  //                 }
+                    // res.json(order) 
+                  else{
+                    console.log("errror   order",err)
+                    resolve('PAYMENT_FAILED')
+                  }
                  
-  //                   // res.send(err); 
-  //               } 
-  //           ) 
+                    // res.send(err); 
+                } 
+            ) 
             
-  //         } catch (error) {
-  //             reject(error.message || error);
-  //         }
-  //     });
+          } catch (error) {
+              reject(error.message || error);
+          }
+      });
   
-  // },
+  },
    
 }

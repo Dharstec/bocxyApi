@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
  * @access public
  * **/
 router.post("/createOrder", Order.createOrder);
-// router.post("/paymentIntegration", Order.paymentIntegration);
+router.post("/paymentIntegration", Order.paymentIntegration);
 /**
  * @api {GET} /Order/getAllOrder/:id
  * @desc  Get all Order for stores API
