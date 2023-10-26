@@ -1,18 +1,18 @@
 
 const orderModel = require("../models/orderModels");
 const inventoryModel = require("../models/inventoryModels");
-// const Razorpay = require('razorpay');  
+const Razorpay = require('razorpay');  
   
 // This razorpayInstance will be used to 
 // access any resource from razorpay 
-// const razorpayInstance = new Razorpay({ 
+const razorpayInstance = new Razorpay({ 
   
-//     // Replace with your key_id 
-//     key_id: "rzp_test_glYMxgnZfEKPlU", 
+    // Replace with your key_id 
+    key_id: "rzp_test_glYMxgnZfEKPlU", 
   
-//     // Replace with your key_secret 
-//     key_secret: "RJPbpjj7V3iJlweuvlVWl5BM" 
-// }); 
+    // Replace with your key_secret 
+    key_secret: "RJPbpjj7V3iJlweuvlVWl5BM" 
+}); 
 
 module.exports = {
     orderQuantityValidation(data) {
