@@ -28,6 +28,10 @@ const orderSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
+        deliveryType: {
+            type: String,
+            required: true
+        },
         customerAddress: {
             // type: String,
             // required: true
