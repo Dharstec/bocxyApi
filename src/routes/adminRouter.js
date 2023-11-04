@@ -48,6 +48,8 @@ router.post('/resetPassword',Admin.resetPassword);
  * **/
 router.get("/getAllStores/:superAdminId", Admin.getAllStoreAdmin);
 
+
+
 /**
  * @api {GET} /admin/getAllMainStore
  * @desc  Get all main Store API
