@@ -23,6 +23,7 @@ router.get("/getInventoryProduct/:storeId", inventory.getinventoryProduct);
 
 
 
+
 /**
  * @api {GET ONE Product} /Product/getOneProduct
  * @desc  Get One Product API
@@ -37,6 +38,8 @@ router.get("/getOneInventoryProduct/:_id", inventory.getOneInventoryProduct);
  * **/
 
 router.put("/updateInventoryProduct", inventory.updateProduct);
+
+router.get("/gettypeProduct", inventory.gettypeProduct);
 
 /**
  * @api {DELETE} /inventory/deleteProduct

@@ -160,6 +160,42 @@ module.exports = {
       });
     }
   },
+  gettypeProduct: async (req, res) => {
+    try {
+      // let getOneProduct = await inventoryModel.findOne({
+      //   type: req.body.type,
+      //   storeId:req.body.storeId
+      // });
+      let getOneProduct = await inventoryModel.find({
+        $and: [{
+            type: req.body.type
+          },
+          {
+            storeId: req.body.storeId
+          }
+        ]
+      })
+      if (!getOneProduct) {
+        return res.status(400).send({
+          message: "No Record Found",
+          status: false,
+        });
+      } else {
+        return res.status(200).send({
+          length: getOneProduct.length,
+          message: "Get type product",
+          status: true,
+          data: getOneProduct,
+        });
+      }
+    } catch (error) {
+      return res.status(400).send({
+        message: "Something Went Wrong",
+        status: false,
+        error: error,
+      });
+    }
+  },
   deleteProduct: async (req, res) => {
     try {
       let deleteProduct = await inventoryModel.findOneAndDelete(
