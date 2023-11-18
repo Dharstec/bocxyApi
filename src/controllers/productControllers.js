@@ -3,7 +3,8 @@ const inventoryModel = require("../models/inventoryModels");
 const orderModel = require("../models/orderModels");
 const customerModel = require("../models/customerModels");
 const adminModel = require("../models/adminModels");
-const _ = require("lodash"); 
+const _ = require("lodash");
+const geolib = require('geolib');
 
 module.exports = {
   createProduct: async (req, res) => {
@@ -22,6 +23,7 @@ module.exports = {
     try {
       let newproduct = new productModel({
         superAdminId:req.body.superAdminId,
+        storeId:req.body.storeId,
         productImages: req.body.imageArray,
         productVideos: req.body.videoArray,
         productName: req.body.productName,
@@ -34,6 +36,10 @@ module.exports = {
         formulation: req.body.formulation,
         avgCustomerRating: req.body.avgCustomerRating,
         collections: req.body.collections,
+        subCategory:req.body.subCategory,
+        type:req.body.type,
+        comparedPrice:req.body.comparedPrice,
+        productDetails:req.body.productDetails,
         gift: req.body.gift,
         personalised: req.body.personalised,
         latest: req.body.latest,
@@ -98,7 +104,7 @@ module.exports = {
   getProduct: async (req, res) => {
     try {
       let getProduct = await productModel.find({ superAdminId: req.params.superAdminId});
-
+       console.log(getProduct)
       if (!getProduct) {
         return res.status(400).send({
           message: "No Record Found",
@@ -119,13 +125,105 @@ module.exports = {
       });
     }
   },
+  getProductsByCoordinates: async (req, res) => {
+    try {
+      const { latitude, longitude } = req.params;
+
+      const co_ordinates  = [parseFloat(longitude), parseFloat(latitude)];
+      console.log(co_ordinates)
+     const admins= await adminModel.find({
+           co_ordinates: {
+             $near: {
+               $geometry: {
+                 type: "Point",
+                 coordinates: co_ordinates
+               },
+               $maxDistance: 1000 // Optional: Adjust the max distance in meters
+             }
+        }
+         })
+
+      console.log(admins)
+
+      // const test = await adminModel.find({
+      //      co_ordinates: {
+      //        $near: {
+      //          $geometry: {
+      //            type: "Point",
+      //            coordinates: [88.569, 55.6525]
+      //          // coordinates: [80.2452305, 13.0582997]
+      //          },
+      //          $maxDistance: 1000
+      //        }
+      //      }
+      //    })
+
+      //    console.log(test)
+
+      if (admins.length === 0) {
+        return res.status(400).send({
+          message: 'No Admins Found for the given coordinates',
+          status: false,
+        });
+      }
+
+      const superAdminIds = admins.map((admin) => admin.super_admin_id);
+
+
+      let products = await productModel.find({ superAdminId: { $in: superAdminIds } });
+
+      if (products.length === 0) {
+        return res.status(400).send({
+          message: 'No Products Found for the given coordinates',
+          status: false,
+        });
+      } else {
+        return res.status(200).send({
+          message: 'Get Products by Coordinates',
+          status: true,
+          data: products,
+        });
+      }
+    } catch (error) {
+      return res.status(400).send({
+        message: 'Something Went Wrong',
+        status: false,
+        error: error,
+      });
+    }
+  },
+  getProductDetails: async (req, res) => {
+    const { superAdminId } = req.params;
+
+    try {
+      // Find products based on superAdminId
+      const products = await productModel.find({ superAdminId });
+
+
+      // Extract unique values for category, brand, and formulation
+      const categories = [...new Set(products.map(product => product.category).flat())].filter(Boolean);
+      const brands = [...new Set(products.map(product => product.brand).flat())].filter(Boolean);
+      const formulations = [...new Set(products.map(product => product.formulation).flat())].filter(Boolean);
+
+
+      // Return the result
+      res.status(200).json({
+        categories,
+        brands,
+        formulations,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
   getCustomersProduct: async (req, res) => {
     try {
       let getProduct = await productModel.find({});
       let getInventoryProduct = await inventoryModel.find({});
       let getAllStore = await adminModel.find({ role_flag: "STORE_ADMIN" })
       let availableProduct=[]
-     
+
       getProduct.map(e=>{
         let storeData=[]
         getInventoryProduct.map(x=>{
@@ -184,7 +282,7 @@ module.exports = {
                   console.log('ssssssssssssss')
                 }
             })
-           
+
             })
             if(finalRes.length-1 == i){
               return res.status(200).send({
@@ -194,7 +292,7 @@ module.exports = {
               });
             }
           })
-          
+
         }else{
           return res.status(200).send({
             message: "Get All product",
@@ -202,7 +300,7 @@ module.exports = {
             data: [],
           });
         }
-        
+
       }
     } catch (error) {
       return res.status(400).send({
@@ -267,6 +365,31 @@ module.exports = {
       });
     }
   },
+  gettypeProduct: async (req, res) => {
+    try {
+      let getOneProduct = await productModel.findOne({
+        type: req.body.type,
+      });
+      if (!getOneProduct) {
+        return res.status(400).send({
+          message: "No Record Found",
+          status: false,
+        });
+      } else {
+        return res.status(200).send({
+          message: "Get One product",
+          status: true,
+          data: getOneProduct,
+        });
+      }
+    } catch (error) {
+      return res.status(400).send({
+        message: "Something Went Wrong",
+        status: false,
+        error: error,
+      });
+    }
+  },
   updateProduct: async (req, res) => {
     try {
       let updateProduct = await productModel.findOneAndUpdate(
@@ -308,7 +431,11 @@ module.exports = {
                           "noOfSales":   req.body.noOfSales,
                           "productAge":   req.body.productAge,
                           "referenceId":  req.body.referenceId,
-                          "barcode":   req.body.barcode
+                          "barcode":   req.body.barcode,
+                          "subCategory":req.body.subCategory,
+                          "type":req.body.type,
+                          "comparedPrice":req.body.comparedPrice,
+                          "productDetails":req.body.productDetails,
                   },
                 },
                 { new: true }
@@ -325,7 +452,7 @@ module.exports = {
                   data: updateProduct,
                 });
               }
-             
+
             }else{
               return res.status(400).send({
                 message: "No Record Found",
@@ -335,7 +462,7 @@ module.exports = {
           }
         })
 
-    
+
     } catch (error) {
       return res.status(400).send({
         message: "Something Went Wrong",
@@ -378,7 +505,7 @@ module.exports = {
             status: true,
           });
         }
-        
+
 
       }
     } catch (error) {

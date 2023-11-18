@@ -35,6 +35,10 @@ module.exports = {
                         formulation: req.body.formulation,
                         avgCustomerRating: req.body.avgCustomerRating,
                         collections: req.body.collections,
+                        subCategory:req.body.subCategory,
+                        type:req.body.type,
+                        comparedPrice:req.comparedPrice,
+                        productDetails:req.productDetails,
                         gift: req.body.gift,
                         personalised: req.body.personalised,
                         latest: req.body.latest,
@@ -59,12 +63,12 @@ module.exports = {
                         status: false,
                       });
                     }
-                   
-                  
+
+
                 }
               }
             })
-     
+
 
     } catch (err) {
       console.log("error", err);

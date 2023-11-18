@@ -55,8 +55,18 @@ router.post(
  * @access public
  * **/
 router.get("/getProduct/:superAdminId", Product.getProduct);
+router.get("/getProductsByCoordinates/:latitude/:longitude", Product.getProductsByCoordinates);
 router.get("/getAllProduct/", Product.getCustomersProduct);
 router.get("/getDashboard", Product.getDashboard);
+
+
+/**
+ * @api {GET} /Product/getProductFilters/:superAdminId
+ * @desc  Get unique values of category, brand, and formulation for a given superAdminId
+ * @access public
+ **/
+router.get('/getProductFilters/:superAdminId', Product.getProductDetails);
+
 
 
 /**
@@ -65,6 +75,7 @@ router.get("/getDashboard", Product.getDashboard);
  * @access public
  * **/
 router.get("/getOneProduct/:_id", Product.getOneProduct);
+router.get("/gettypeProduct", Product.gettypeProduct);
 
 /**
  * @api {UPDATE} /Product/updateProduct

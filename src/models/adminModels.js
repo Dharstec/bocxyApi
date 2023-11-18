@@ -48,4 +48,5 @@ const adminSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+adminSchema.index({ co_ordinates: '2dsphere' });
 module.exports = mongoose.model("bocxy_admins", adminSchema);
