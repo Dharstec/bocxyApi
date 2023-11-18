@@ -162,19 +162,19 @@ module.exports = {
   },
   gettypeProduct: async (req, res) => {
     try {
-      // let getOneProduct = await inventoryModel.findOne({
-      //   type: req.body.type,
-      //   storeId:req.body.storeId
-      // });
-      let getOneProduct = await inventoryModel.find({
-        $and: [{
-            type: req.body.type
-          },
-          {
-            storeId: req.body.storeId
-          }
-        ]
-      })
+      let getOneProduct = await inventoryModel.findOne({
+        type: req.body.type,
+        storeId:req.body.storeId
+      });
+      // let getOneProduct = await inventoryModel.find({
+      //   $and: [{
+      //       type: req.body.type
+      //     },
+      //     {
+      //       storeId: req.body.storeId
+      //     }
+      //   ]
+      // })
       if (!getOneProduct) {
         return res.status(400).send({
           message: "No Record Found",
