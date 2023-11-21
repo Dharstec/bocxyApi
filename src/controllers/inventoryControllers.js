@@ -162,7 +162,7 @@ module.exports = {
   },
   gettypeProduct: async (req, res) => {
     try {
-      let getOneProduct = await inventoryModel.findOne({
+      let getOneProduct = await inventoryModel.find({
         type: req.body.type,
         storeId:req.body.storeId
       });
