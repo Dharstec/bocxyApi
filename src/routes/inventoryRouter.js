@@ -39,7 +39,7 @@ router.get("/getOneInventoryProduct/:_id", inventory.getOneInventoryProduct);
 
 router.put("/updateInventoryProduct", inventory.updateProduct);
 
-router.get("/gettypeProduct", inventory.gettypeProduct);
+router.post("/gettypeProduct", inventory.gettypeProduct);
 
 /**
  * @api {DELETE} /inventory/deleteProduct
